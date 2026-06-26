@@ -179,6 +179,84 @@ AI 任务记录。
 - file_path
 - created_at
 
+## Loop 相关实体
+
+### CreativeLoop
+
+创作执行循环定义。
+
+第一版可以只内置一个：
+
+```text
+story_setting_mvp_loop
+```
+
+关键字段：
+
+- id
+- loop_key
+- name
+- version
+- definition_json
+- is_active
+- created_at
+
+### LoopRun
+
+某个项目的一次 loop 执行状态。
+
+关键字段：
+
+- id
+- project_id
+- loop_key
+- version
+- status
+- current_step_key
+- started_at
+- completed_at
+- created_at
+- updated_at
+
+状态：
+
+- not_started
+- running
+- waiting_for_user
+- blocked
+- completed
+- archived
+
+### LoopStepRun
+
+Loop 中某一步的执行记录。
+
+关键字段：
+
+- id
+- loop_run_id
+- step_key
+- status
+- input_json
+- output_json
+- user_decision_json
+- ai_job_id
+- error_message
+- started_at
+- completed_at
+- created_at
+- updated_at
+
+状态：
+
+- not_started
+- ready
+- running
+- waiting_for_user
+- completed
+- failed
+- skipped
+
 ## 第一版资产类型
 
 ```text
@@ -213,4 +291,3 @@ reveals
 第一版宁愿字段少一点，也不要把远期治理表提前塞进数据库。
 
 如果一个表不能服务 MVP 主链路，就先不要建。
-

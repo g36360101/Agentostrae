@@ -66,11 +66,14 @@ agentOS/
 2. `docs/01_product/mvp_scope.md`
 3. `docs/01_product/master_project_plan.md`
 4. `docs/01_product/roadmap.md`
-5. `docs/02_engineering/development_steps.md`
-6. `docs/02_engineering/engineering_structure.md`
-7. `docs/03_ai/ai_strategy.md`
-8. `docs/04_data/data_model_draft.md`
-9. `docs/05_operations/working_rules.md`
+5. `docs/01_product/creative_execution_loop.md`
+6. `docs/02_engineering/development_steps.md`
+7. `docs/02_engineering/engineering_structure.md`
+8. `docs/02_engineering/loop_engine_design.md`
+9. `docs/03_ai/ai_strategy.md`
+10. `docs/04_data/data_model_draft.md`
+11. `docs/05_operations/loop_mvp_execution_plan.md`
+12. `docs/05_operations/working_rules.md`
 
 ## 当前建议技术路线
 
