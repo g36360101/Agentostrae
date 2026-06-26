@@ -257,6 +257,81 @@ Loop 中某一步的执行记录。
 - failed
 - skipped
 
+### AgentTask
+
+Loop Engine 派发给 AI Agent 的受控任务。
+
+关键字段：
+
+- id
+- project_id
+- loop_run_id
+- step_run_id
+- step_key
+- task_type
+- objective
+- context_pack_id
+- input_json
+- input_refs_json
+- output_schema_key
+- constraints_json
+- status
+- created_at
+- completed_at
+
+状态：
+
+- queued
+- running
+- validating
+- repairing
+- completed
+- failed
+- blocked
+
+### AgentResult
+
+AI Agent 的原始输出、解析结果和校验状态。
+
+关键字段：
+
+- id
+- agent_task_id
+- raw_output
+- parsed_output_json
+- validation_status
+- validation_errors_json
+- normalized_entities_json
+- confidence_summary
+- risk_summary
+- created_at
+
+### ReviewItem
+
+把 AI 输出拆成用户可确认的审核项。
+
+关键字段：
+
+- id
+- project_id
+- loop_run_id
+- step_run_id
+- source_agent_result_id
+- item_type
+- item_json
+- status
+- user_decision_json
+- created_at
+- decided_at
+
+状态：
+
+- pending
+- confirmed
+- rejected
+- revised
+- merged
+
 ## 第一版资产类型
 
 ```text

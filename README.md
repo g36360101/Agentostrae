@@ -70,10 +70,11 @@ agentOS/
 6. `docs/02_engineering/development_steps.md`
 7. `docs/02_engineering/engineering_structure.md`
 8. `docs/02_engineering/loop_engine_design.md`
-9. `docs/03_ai/ai_strategy.md`
-10. `docs/04_data/data_model_draft.md`
-11. `docs/05_operations/loop_mvp_execution_plan.md`
-12. `docs/05_operations/working_rules.md`
+9. `docs/02_engineering/controlled_ai_agent_loop_engine.md`
+10. `docs/03_ai/ai_strategy.md`
+11. `docs/04_data/data_model_draft.md`
+12. `docs/05_operations/loop_mvp_execution_plan.md`
+13. `docs/05_operations/working_rules.md`
 
 ## 当前建议技术路线
 
