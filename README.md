@@ -20,6 +20,7 @@ AgentOS 的第一个可落地方向是「作品设定工具」：帮助作者把
 - 系统可以根据项目设定生成 AI 上下文包。
 - 用户可以在项目内继续和 AI 对话。
 - 用户可以导出作品资料。
+- 系统会把成功方案、废案、修改理由和审核过程沉淀为 Markdown，形成可复盘的创作经验池。
 
 ## 不做什么
 
@@ -71,10 +72,13 @@ agentOS/
 7. `docs/02_engineering/engineering_structure.md`
 8. `docs/02_engineering/loop_engine_design.md`
 9. `docs/02_engineering/controlled_ai_agent_loop_engine.md`
-10. `docs/03_ai/ai_strategy.md`
-11. `docs/04_data/data_model_draft.md`
-12. `docs/05_operations/loop_mvp_execution_plan.md`
-13. `docs/05_operations/working_rules.md`
+10. `docs/01_product/experience_pool.md`
+11. `docs/02_engineering/experience_pool_engine_design.md`
+12. `docs/03_ai/ai_strategy.md`
+13. `docs/04_data/data_model_draft.md`
+14. `docs/05_operations/loop_mvp_execution_plan.md`
+15. `docs/05_operations/experience_pool_mvp_plan.md`
+16. `docs/05_operations/working_rules.md`
 
 ## 当前建议技术路线
 

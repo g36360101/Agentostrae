@@ -332,6 +332,63 @@ AI Agent 的原始输出、解析结果和校验状态。
 - revised
 - merged
 
+### ExperienceEntry
+
+沉淀池记录。用于保存成功方案、废案、修改过程、审核结果和复盘总结。
+
+关键字段：
+
+- id
+- project_id
+- loop_run_id
+- step_run_id
+- source_type
+- source_id
+- entry_type
+- title
+- status
+- summary
+- content_markdown
+- structured_json
+- tags
+- created_at
+- updated_at
+
+entry_type：
+
+- high_concept_selection
+- core_card_revision
+- development_plan_revision
+- asset_review
+- relation_review
+- context_pack_build
+- project_chat_insight
+- export_snapshot
+- rejected_idea
+- quality_issue
+- repair_attempt
+
+状态：
+
+- draft
+- captured
+- reviewed
+- promoted_to_knowledge
+- archived
+
+### ExperienceArtifact
+
+沉淀记录导出的文件制品。第一版可以暂缓，只保存 `content_markdown`。
+
+关键字段：
+
+- id
+- experience_entry_id
+- artifact_type
+- file_path
+- content_hash
+- created_at
+
 ## 第一版资产类型
 
 ```text

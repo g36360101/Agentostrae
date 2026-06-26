@@ -91,6 +91,7 @@ User
       -> Output Validator
       -> Result Normalizer
       -> Review Gate
+      -> Experience Pool Engine
       -> Persistence Layer
       -> Transition Engine
 ```
@@ -280,6 +281,30 @@ relation_review completed -> context_pack_build ready
 ```
 
 Transition Engine 只根据规则推进，不听 AI 自己说“我觉得下一步应该是……”。
+
+### 4.10 Experience Pool Engine
+
+负责把关键步骤的结果沉淀成 Markdown。
+
+它在用户确认或流程完成后运行，而不是在 AI 原始输出后立刻运行。
+
+典型触发点：
+
+- high_concept_selection completed
+- core_card_generation completed
+- development_plan_generation completed
+- asset_review completed
+- relation_review completed
+- export completed
+
+输出：
+
+- ExperienceEntry
+- content_markdown
+- learning_notes
+- tags
+
+它保证成功方案和废案都不会丢失。
 
 ## 5. AI Agent 的“思维控制”如何实现
 
@@ -743,4 +768,3 @@ AI 失败最多重试 2 次，然后交给用户。
 8. Loop Engine 知道下一步是 development_plan_generation。
 
 如果这条链路能稳定跑通，就说明“Loop Engine 控制 AI Agent 工作”的架构成立。
-
