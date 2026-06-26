@@ -1,0 +1,173 @@
+﻿family,pnums,file,title,chars,size
+AI编排/Agent能力,,AI Output Quality Feedback Loop.docx,AI 生成后质量回流：生成内容检查、设定冲突检测、是否可保存为资产 / 关系 / 章节任务 v1.0,51205,46529
+AI编排/Agent能力,,AI Suggested Assets and Relations Save Process (1).docx,AI suggested_assets / suggested_relations 保存回资产库与关系图谱代码骨架 v1.0,27352,29002
+AI编排/Agent能力,,AI Suggested Assets and Relations Save Process.docx,AI suggested_assets / suggested_relations 保存回资产库与关系图谱代码骨架 v1.0,27352,29003
+AI编排/Agent能力,,AI 编排服务工程实现拆分 v1.1.docx,AI 编排服务工程实现拆分 v1.1,33920,35810
+AI编排/Agent能力,,AI 编排服务文档.docx,AI 编排服务实现任务拆分 v1.0,25410,32598
+AI编排/Agent能力,,AI 编排模块骨架草案.docx,AI 编排代码骨架草案 v1.0,44250,42653
+AI编排/Agent能力,,Agent Deliberation System.docx,Agent Deliberation 多 Agent 决策会议：当修复、A/B、读者模拟、工作流推进存在冲突时，如何组织多 Agent 辩论、投票、裁决与人工确认 v1.0,59675,56484
+AI编排/Agent能力,,Agent Reputation and Strategy Calibration System.docx,Agent 信誉分与策略校准：根据真实执行效果动态调整 Prompt Agent / Repair Agent / A/B Agent / Reader Agent / Workflow Agent 的权重、置信度与调用优先级 v1.0,60262,57006
+AI编排/Agent能力,,Agent 策略 A-B 与元学习文档.docx,Agent 策略 A/B 与元学习：不仅测试正文版本，也测试 Agent 策略版本，让系统自动发现哪种 Agent 工作流更有效 v1.0,53773,40340
+创作业务子系统,,Cognitive Route Design.docx,全书认知路线图：reader_knowledge_state → reveal_schedule → misdirection_plan → truth_ladder v1.0,52616,47167
+创作业务子系统,,Cognitive War Simulator.docx,认知战模拟器：作者 / 读者 / 主角 / 反派 / 配角的信息权限差异与预测模型 v1.0,49486,46457
+创作业务子系统,,Creation Workflow Console.docx,全链路创作操作台：从 story_arc 到投放包、试写、A/B、读者模拟、真实反馈、修复迭代的统一工作流总控 v1.0,50908,46056
+联邦治理/商业信任扩展,"P1-24,P1-23",Federated Governance Intelligence.docx,P1-24：Federated Governance Intelligence,83149,42373
+联邦治理/商业信任扩展,"P1-33,P1-32",Federation Governance Accountability & Ownership.docx,P1-33：Federation Governance Accountability & Ownership,75772,49260
+联邦治理/商业信任扩展,"P1-29,P1-28",Federation Governance Benchmark & Evaluation.docx,P1-29：Federation Governance Benchmark & Evaluation,67390,47818
+联邦治理/商业信任扩展,"P1-48,P1-46",Federation Governance Commercial Model Observability.docx,P1-48：Federation Governance Commercial Model Observability,67098,39844
+联邦治理/商业信任扩展,"P1-80,P1-79",Federation Governance Commercial Model Trust Knowledge Governance Calibration Outcome Monitor.docx,P1-80：Federation Governance Commercial Model Trust Knowledge Governance Calibration Outcome Monitor,80753,41475
+AI编排/Agent能力,"P1-68,P1-67",Federation Governance Commercial Model Trust Knowledge Retrieval & Agent Injection Center.docx,P1-68：Federation Governance Commercial Model Trust Knowledge Retrieval & Agent Injection Center,74714,40335
+联邦治理/商业信任扩展,"P1-58,P1-57",Federation Governance Commercial Model Trust Strategy Outcome Tracker.docx,P1-58：Federation Governance Commercial Model Trust Strategy Outcome Tracker,59762,32600
+联邦治理/商业信任扩展,"P1-35,P1-34",Federation Governance External Auditor Portal.docx,P1-35：Federation Governance External Auditor Portal,62223,40684
+联邦治理/商业信任扩展,"P1-26,P1-25",Federation Governance Knowledge Base.docx,P1-26：Federation Governance Knowledge Base,72633,37481
+联邦治理/商业信任扩展,"P1-28,P1-27",Federation Governance Learning Loop.docx,P1-28：Federation Governance Learning Loop,75020,50499
+联邦治理/商业信任扩展,"P1-27,P1-26",Federation Governance Memory Retrieval.docx,P1-27：Federation Governance Memory Retrieval,60630,44076
+联邦治理/商业信任扩展,"P1-32,P1-31",Federation Governance Operating Rhythm.docx,P1-32：Federation Governance Operating Rhythm,70857,44996
+联邦治理/商业信任扩展,"P1-30,P1-29",Federation Governance Optimization Advisor.docx,P1-30：Federation Governance Optimization Advisor,62618,44350
+联邦治理/商业信任扩展,"P1-36,P1-35",Federation Governance Trust Center.docx,P1-36：Federation Governance Trust Center,48063,36465
+联邦治理/商业信任扩展,"P1-15,P1-14",Governance Alert Center.docx,P1-15：Governance Alert Center 治理告警中心,64496,47422
+联邦治理/商业信任扩展,"P1-21,P1-16,P1-20",Governance CI Pipeline.docx,P1-21：Governance CI Pipeline,73569,52541
+联邦治理/商业信任扩展,"P1-14,P1-13",Governance Dashboard & Risk Report.docx,P1-14：Governance Dashboard & Risk Report,51678,39309
+联邦治理/商业信任扩展,"P1-22,P1-21",Governance Environment & Release Channels.docx,P1-22：Governance Environment & Release Channels,95421,60364
+联邦治理/商业信任扩展,"P1-13,P1-11",Governance Event Ledger.docx,P1-13：Governance Event Ledger 治理事件总账,50544,31987
+联邦治理/商业信任扩展,"P1-20,P1-19",Governance Policy Test Suite.docx,P1-20：Governance Policy Test Suite,74174,51785
+联邦治理/商业信任扩展,"P1-19,P1-18",Governance Policy Versioning & Diff.docx,P1-19：Governance Policy Versioning & Diff,73043,49711
+AI编排/Agent能力,,Graph-Driven Agent Orchestration.docx,图谱驱动 Agent 编排：Prompt Agent / Repair Agent / A/B Agent / Reader Agent / Workflow Agent 如何在行动前检索经验图谱并生成可解释决策 v1.0,52121,53397
+创作业务子系统,,Multi-Platform Rewrite Engine.docx,多平台改写引擎：同一 story_arc → 起点版 / 番茄版 / 晋江版 / 盐选版 的结构改写、节奏改写与 Prompt 分流 v1.0,44951,42642
+创作业务子系统,,Narrative Economy Dashboard.docx,叙事经济仪表盘：主货币增长、爽点兑现、悬念投资、伏笔复利、叙事通胀与读者信任指数 v1.0,51960,48981
+AI编排/Agent能力,"P1-07,P1-06",P1-07 Graph-Driven Agent Runtime.docx,P1-07：Graph-Driven Agent Runtime 图谱驱动 Agent 编排,59651,35182
+联邦治理/商业信任扩展,"P1-100,P1-99",P1-100- Federation Governance Commercial Model Trust Knowledge Governance Post-Resume Intervention Routing Center.docx,P1-100：Federation Governance Commercial Model Trust Knowledge Governance Post-Resume Intervention Routing Center,90806,38937
+联邦治理/商业信任扩展,"P1-101,P1-100",P1-101- Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Re-Intake Center.docx,P1-101：Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Re-Intake Center,92135,39691
+联邦治理/商业信任扩展,"P1-102,P1-101",P1-102- Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Work Item Intake Bridge.docx,P1-102：Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Work Item Intake Bridge,94565,39578
+联邦治理/商业信任扩展,"P1-103,P1-102",P1-103- Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Decision Center.docx,P1-103：Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Decision Center,96888,40607
+联邦治理/商业信任扩展,P1-104,P1-104- Federation Governance Commercial Model Trust Knowledge Governance Approved Intervention Route Candidate Center.docx,P1-104：Federation Governance Commercial Model Trust Knowledge Governance Approved Intervention Route Candidate Center,94336,38260
+联邦治理/商业信任扩展,"P1-25,P1-24",P1-25 Federation Review & Governance Council.docx,P1-25：Federation Review & Governance Council,71995,49005
+联邦治理/商业信任扩展,"P1-34,P1-33",P1-34- Federation Governance Audit & Compliance Pack.docx,P1-34：Federation Governance Audit & Compliance Pack,65021,45604
+联邦治理/商业信任扩展,"P1-42,P1-41",P1-42- Federation Governance Commercial Decision Review.docx,P1-42：Federation Governance Commercial Decision Review,47562,36347
+联邦治理/商业信任扩展,"P1-43,P1-42",P1-43- Federation Governance Commercial Execution Tracker.docx,P1-43：Federation Governance Commercial Execution Tracker,51866,36353
+联邦治理/商业信任扩展,"P1-44,P1-41",P1-44- Federation Governance Commercial Outcome Evaluation.docx,P1-44：Federation Governance Commercial Outcome Evaluation,59831,39052
+联邦治理/商业信任扩展,"P1-49,P1-48",P1-49- Federation Governance Commercial Model Auto-Triage.docx,P1-49：Federation Governance Commercial Model Auto-Triage,55324,35813
+联邦治理/商业信任扩展,"P1-50,P1-48",P1-50- Federation Governance Commercial Model Incident Management.docx,P1-50：Federation Governance Commercial Model Incident Management,58477,38499
+联邦治理/商业信任扩展,"P1-51,P1-45",P1-51- Federation Governance Commercial Model Reliability Program.docx,P1-51：Federation Governance Commercial Model Reliability Program,63296,39539
+联邦治理/商业信任扩展,"P1-54,P1-53",P1-54- Federation Governance Commercial Model Partner Trust Portal.docx,P1-54：Federation Governance Commercial Model Partner Trust Portal,64966,41160
+联邦治理/商业信任扩展,"P1-55,P1-54",P1-55- Federation Governance Commercial Model Trust Feedback Intelligence.docx,P1-55：Federation Governance Commercial Model Trust Feedback Intelligence,53989,36495
+联邦治理/商业信任扩展,"P1-56,P1-55",P1-56- Federation Governance Commercial Model Trust Strategy Optimizer.docx,P1-56：Federation Governance Commercial Model Trust Strategy Optimizer,60341,37305
+联邦治理/商业信任扩展,"P1-57,P1-56",P1-57- Federation Governance Commercial Model Trust Strategy Apply Center.docx,P1-57：Federation Governance Commercial Model Trust Strategy Apply Center,60070,33774
+联邦治理/商业信任扩展,"P1-59,P1-58",P1-59- Federation Governance Commercial Model Trust Strategy Learning Loop.docx,P1-59：Federation Governance Commercial Model Trust Strategy Learning Loop,61833,36167
+联邦治理/商业信任扩展,"P1-60,P1-59",P1-60- Federation Governance Commercial Model Trust Calibration Apply Center.docx,P1-60：Federation Governance Commercial Model Trust Calibration Apply Center,67729,37365
+联邦治理/商业信任扩展,"P1-61,P1-60",P1-61- Federation Governance Commercial Model Trust Calibration Observability.docx,P1-61：Federation Governance Commercial Model Trust Calibration Observability,57411,35619
+联邦治理/商业信任扩展,"P1-62,P1-61",P1-62- Federation Governance Commercial Model Trust Calibration Auto-Triage.docx,P1-62：Federation Governance Commercial Model Trust Calibration Auto-Triage,67077,37095
+联邦治理/商业信任扩展,"P1-63,P1-62",P1-63- Federation Governance Commercial Model Trust Calibration Remediation Planner.docx,P1-63：Federation Governance Commercial Model Trust Calibration Remediation Planner,57311,36877
+联邦治理/商业信任扩展,"P1-64,P1-63",P1-64- Federation Governance Commercial Model Trust Remediation Execution Center.docx,P1-64：Federation Governance Commercial Model Trust Remediation Execution Center,66826,38915
+联邦治理/商业信任扩展,"P1-65,P1-64",P1-65- Federation Governance Commercial Model Trust Remediation Outcome Evaluator.docx,P1-65：Federation Governance Commercial Model Trust Remediation Outcome Evaluator,61562,40661
+联邦治理/商业信任扩展,"P1-66,P1-65",P1-66- Federation Governance Commercial Model Trust Remediation Closure Center.docx,P1-66：Federation Governance Commercial Model Trust Remediation Closure Center,62180,38832
+联邦治理/商业信任扩展,"P1-67,P1-66",P1-67- Federation Governance Commercial Model Trust Knowledge Institutionalization Center.docx,P1-67：Federation Governance Commercial Model Trust Knowledge Institutionalization Center,87665,41837
+联邦治理/商业信任扩展,"P1-69,P1-68",P1-69- Federation Governance Commercial Model Trust Knowledge Effectiveness Monitor.docx,P1-69：Federation Governance Commercial Model Trust Knowledge Effectiveness Monitor,75298,39168
+联邦治理/商业信任扩展,"P1-70,P1-69",P1-70- Federation Governance Commercial Model Trust Knowledge Optimization Center.docx,P1-70：Federation Governance Commercial Model Trust Knowledge Optimization Center,85567,40396
+联邦治理/商业信任扩展,"P1-71,P1-70",P1-71- Federation Governance Commercial Model Trust Knowledge Optimization Apply Center.docx,P1-71：Federation Governance Commercial Model Trust Knowledge Optimization Apply Center,79576,43931
+联邦治理/商业信任扩展,"P1-72,P1-71",P1-72- Federation Governance Commercial Model Trust Knowledge Optimization Outcome Tracker.docx,P1-72：Federation Governance Commercial Model Trust Knowledge Optimization Outcome Tracker,89651,40091
+联邦治理/商业信任扩展,"P1-73,P1-72",P1-73- Federation Governance Commercial Model Trust Knowledge Continuous Improvement Loop.docx,P1-73：Federation Governance Commercial Model Trust Knowledge Continuous Improvement Loop,87885,43005
+联邦治理/商业信任扩展,"P1-74,P1-73",P1-74- Federation Governance Commercial Model Trust Knowledge Governance Executive Operating System.docx,P1-74：Federation Governance Commercial Model Trust Knowledge Governance Executive Operating System,73358,38564
+联邦治理/商业信任扩展,"P1-75,P1-74",P1-75- Federation Governance Commercial Model Trust Knowledge Governance Boardroom Simulator.docx,P1-75：Federation Governance Commercial Model Trust Knowledge Governance Boardroom Simulator,83766,50705
+联邦治理/商业信任扩展,"P1-76,P1-75",P1-76- Federation Governance Commercial Model Trust Knowledge Governance Decision Execution Bridge.docx,P1-76：Federation Governance Commercial Model Trust Knowledge Governance Decision Execution Bridge,83512,47364
+联邦治理/商业信任扩展,"P1-77,P1-76",P1-77- Federation Governance Commercial Model Trust Knowledge Governance Execution Outcome Monitor.docx,P1-77：Federation Governance Commercial Model Trust Knowledge Governance Execution Outcome Monitor,80203,44209
+联邦治理/商业信任扩展,"P1-78,P1-77",P1-78- Federation Governance Commercial Model Trust Knowledge Governance Decision Learning Loop.docx,P1-78：Federation Governance Commercial Model Trust Knowledge Governance Decision Learning Loop,98870,42227
+联邦治理/商业信任扩展,"P1-79,P1-78",P1-79- Federation Governance Calibration Apply Center.docx,P1-79：Federation Governance Commercial Model Trust Knowledge Governance Calibration Apply Center,90410,41568
+联邦治理/商业信任扩展,"P1-81,P1-80",P1-81- Federation Governance Commercial Model Trust Knowledge Governance Meta-Learning Center.docx,P1-81：Federation Governance Commercial Model Trust Knowledge Governance Meta-Learning Center,84871,44632
+联邦治理/商业信任扩展,"P1-82,P1-81",P1-82- Federation Governance Commercial Model Trust Knowledge Governance Meta-Policy Apply Center.docx,P1-82：Federation Governance Commercial Model Trust Knowledge Governance Meta-Policy Apply Center,82279,45165
+联邦治理/商业信任扩展,"P1-83,P1-82",P1-83- Federation Governance Commercial Model Trust Knowledge Governance Meta-Policy Outcome Monitor.docx,P1-83：Federation Governance Commercial Model Trust Knowledge Governance Meta-Policy Outcome Monitor,99431,41687
+联邦治理/商业信任扩展,"P1-84,P1-83",P1-84- Federation Governance Commercial Model Trust Knowledge Governance Autonomous Advisory Layer.docx,P1-84：Federation Governance Commercial Model Trust Knowledge Governance Autonomous Advisory Layer,91290,42898
+联邦治理/商业信任扩展,"P1-85,P1-84",P1-85- Federation Governance Commercial Model Trust Knowledge Governance Advisory Review & Decision Center.docx,P1-85：Federation Governance Commercial Model Trust Knowledge Governance Advisory Review & Decision Center,81886,45974
+联邦治理/商业信任扩展,"P1-86,P1-85",P1-86- Federation Governance Commercial Model Trust Knowledge Governance Advisory Execution Router.docx,P1-86：Federation Governance Commercial Model Trust Knowledge Governance Advisory Execution Router,89819,46252
+联邦治理/商业信任扩展,"P1-87,P1-86",P1-87- Federation Governance Commercial Model Trust Knowledge Governance Routed Candidate Intake Center.docx,P1-87：Federation Governance Commercial Model Trust Knowledge Governance Routed Candidate Intake Center,89245,48322
+联邦治理/商业信任扩展,"P1-88,P1-87",P1-88- Federation Governance Commercial Model Trust Knowledge Governance Target Workbench Adapter.docx,P1-88：Federation Governance Commercial Model Trust Knowledge Governance Target Workbench Adapter,107559,51389
+联邦治理/商业信任扩展,"P1-89,P1-88",P1-89- Federation Governance Commercial Model Trust Knowledge Governance Target Workbench Review Center.docx,P1-89：Federation Governance Commercial Model Trust Knowledge Governance Target Workbench Review Center,93685,48677
+联邦治理/商业信任扩展,"P1-90,P1-89",P1-90- Federation Governance Commercial Model Trust Knowledge Governance Target Workflow Candidate Dispatcher.docx,P1-90：Federation Governance Commercial Model Trust Knowledge Governance Target Workflow Candidate Dispatcher,88283,43813
+联邦治理/商业信任扩展,"P1-91,P1-90",P1-91- Federation Governance Commercial Model Trust Knowledge Governance Target Workflow Intake Review Center (1).docx,P1-91：Federation Governance Commercial Model Trust Knowledge Governance Target Workflow Intake Review Center,90061,43493
+联邦治理/商业信任扩展,"P1-91,P1-90",P1-91- Federation Governance Commercial Model Trust Knowledge Governance Target Workflow Intake Review Center.docx,P1-91：Federation Governance Commercial Model Trust Knowledge Governance Target Workflow Intake Review Center,90061,43494
+联邦治理/商业信任扩展,"P1-92,P1-91",P1-92 Workflow Draft Executor.docx,P1-92：Federation Governance Commercial Model Trust Knowledge Governance Workflow Draft Executor,102956,47082
+联邦治理/商业信任扩展,"P1-93,P1-92",P1-93- Federation Governance Commercial Model Trust Knowledge Governance Workflow Execution Draft Review & Activation Center.docx,P1-93：Federation Governance Commercial Model Trust Knowledge Governance Workflow Execution Draft Review & Activation Center,96552,44647
+联邦治理/商业信任扩展,"P1-94,P1-93",P1-94- Federation Governance Commercial Model Trust Knowledge Governance Activated Workflow Runtime Monitor.docx,P1-94：Federation Governance Commercial Model Trust Knowledge Governance Activated Workflow Runtime Monitor,90581,43766
+联邦治理/商业信任扩展,"P1-95,P1-94",P1-95- Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Center.docx,P1-95：Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Center,89169,40875
+联邦治理/商业信任扩展,"P1-96,P1-95",P1-96- Federation Governance Commercial Model Trust Knowledge Governance Pause Executor.docx,P1-96：Federation Governance Commercial Model Trust Knowledge Governance Pause Executor,82442,42966
+联邦治理/商业信任扩展,"P1-97,P1-96",P1-97- Federation Governance Commercial Model Trust Knowledge Governance Paused Workflow Resume Review Center.docx,P1-97：Federation Governance Commercial Model Trust Knowledge Governance Paused Workflow Resume Review Center,86703,38565
+联邦治理/商业信任扩展,"P1-98,P1-97",P1-98- Federation Governance Commercial Model Trust Knowledge Governance Resume Executor.docx,P1-98：Federation Governance Commercial Model Trust Knowledge Governance Resume Executor,90155,42959
+联邦治理/商业信任扩展,"P1-99,P1-98",P1-99- Post-Resume Runtime Watch.docx,P1-99：Federation Governance Commercial Model Trust Knowledge Governance Post-Resume Runtime Watch,83563,39026
+创作业务子系统,,Platform Variant Evaluation System.docx,平台版本对比评测器：四平台版本的追读风险、核心锁破坏、叙事经济分、平台适配分与推荐投放策略 v1.0,54011,48751
+StoryOS P1平台模块,"P1-18,P1-16",Policy Change Candidate Apply Center.docx,P1-18：Policy Change Candidate Apply Center,85431,53282
+StoryOS P1平台模块,"P1-17,P1-16",Policy Simulation Sandbox.docx,P1-17：Policy Simulation Sandbox 治理策略模拟沙盒,76529,51475
+创作业务子系统,,Reader Simulator Documentation.docx,读者模拟器：基于 reader_persona 对前 N 章进行虚拟阅读、弃读点预测、追读理由分析与评论模拟 v1.0,58440,50118
+创作业务子系统,,Reader Simulator MVP.docx,读者模拟器：基于 reader_persona 对前 N 章进行虚拟阅读、弃读点预测、追读理由分析与评论模拟 v1.0,58440,50118
+其他/待判定,,Real Feedback Loop System.docx,真实反馈回流系统：导入评论 / 完读率 / 弃读点 / 编辑反馈，校准 reader_persona、A/B 权重与修复优先级 v1.0,55691,50121
+创作业务子系统,,Serialization Dashboard MVP.docx,连载仪表盘：章节进度、伏笔状态、角色状态、世界状态、关系变化、连续性风险总览 v1.0,39746,37393
+创作业务子系统,,Story Arc Management.docx,多卷总控与全书主线管理：story_arc → volume_sequence → final_truth → 全书伏笔矩阵 v1.0,63704,52835
+StoryOS总览/API/架构,,Story Universe API Documentation.docx,API DTO / Request / Response 类型定义 v1.0,36781,35216
+StoryOS总览/API/架构,,Story Universe Workbench MVP.docx,试写 A/B 测试器：同一章节多修复方案并行生成、质量对比、追读风险对比与最佳版本选择 v1.0,49020,46515
+StoryOS P1平台模块,"P0-00,P0-01,P0-02",StoryOS Backend Implementation.docx,P0-00 / P0-01 / P0-02 首批 NestJS Controller + Service 代码骨架,40819,37762
+其他/待判定,,StoryOS Development Roadmap.docx,P0 / P1 / P2 开发落地路线图,28156,31336
+StoryOS P0基础模块,,StoryOS P0 Implementation Guide.docx,P0 第一批数据库 Prisma Schema + NestJS 模块目录结构 + API DTO 文件清单 v1.0,51805,28994
+StoryOS P0基础模块,"P0-03,P0-04,P0-05",StoryOS P0-03-P0-04-P0-05 Documentation.docx,P0-03 / P0-04 / P0-05,60227,48378
+StoryOS P0基础模块,"P0-06,P0-03,P0-04,P0-05",StoryOS P0-06.docx,P0-06：trial-writing、context-pack、chapter-draft 三个模块 Controller + Service 代码骨架 v1.0,39730,37119
+StoryOS P0基础模块,"P0-07,P0-06",StoryOS P0-07 Draft Quality Report.docx,P0-07：Draft Quality 草稿质量报告 Controller + Service + AI Schema 代码骨架 v1.0,34873,34234
+StoryOS P0基础模块,"P0-08,P0-07",StoryOS P0-08.docx,P0-08：Trial Writing Repair 修复计划、修复动作、apply-and-regenerate、before-after-comparison 代码骨架 v1.0,53809,31748
+StoryOS P0基础模块,"P0-09,P0-08",StoryOS P0-09 Knowledge Base.docx,P0-09：Knowledge Base 经验候选、Experience Record、Evidence Link 代码骨架 v1.0,40630,37103
+StoryOS P0基础模块,"P0-10,P0-00,P0-01,P0-02,P0-03,P0-04,P0-05,P0-06,P0-07,P0-08,P0-09",StoryOS P0-10 Workflow Console.docx,P0-10：Basic Workflow Console 项目仪表盘、workflow_events、next_action 推荐代码骨架 v1.0,46834,38286
+StoryOS P0基础模块,"P0-11,P0-00,P0-10",StoryOS P0-11.docx,P0-11：Basic Permission Runtime 权限检查、核心锁、隐藏真相阻断、人工确认规则代码骨架 v1.0,33836,34698
+StoryOS P1平台模块,P1-01,StoryOS P1-01.docx,P1-01：Trial A/B Test 正文修复 A/B,51186,43712
+StoryOS P1平台模块,"P1-02,P1-01",StoryOS P1-02.docx,P1-02：A/B 结果经验回流,40084,35818
+StoryOS P1平台模块,"P1-03,P1-01",StoryOS P1-03.docx,P1-03：Reader Simulation 读者模拟器,58098,46626
+StoryOS P1平台模块,"P1-04,P1-03",StoryOS P1-04.docx,P1-04：Real Feedback Import 真实反馈导入,54838,44012
+StoryOS P1平台模块,"P1-05,P1-04",StoryOS P1-05 Calibration Apply Center.docx,P1-05：Calibration Apply Center 校准应用中心,62964,34483
+StoryOS P1平台模块,"P1-06,P1-02",StoryOS P1-06 Experience Graph.docx,P1-06：Experience Graph 正式化,50896,40348
+StoryOS P1平台模块,"P1-08,P1-07",StoryOS P1-08.docx,P1-08：Agent Reputation & Strategy Memory,57048,43260
+StoryOS P1平台模块,"P1-09,P1-07",StoryOS P1-09.docx,P1-09：Agent Router & Policy Engine,70256,50358
+StoryOS P1平台模块,"P1-10,P1-09",StoryOS P1-10 Documentation.docx,P1-10：Agent Orchestration Console 前端工作台,48103,35940
+联邦治理/商业信任扩展,P1-103,StoryOS P1-103 Documentation.docx,P1-103：Federation Governance Commercial Model Trust Knowledge Governance Runtime Intervention Review Decision Center,77008,36991
+StoryOS P1平台模块,"P1-11,P1-10",StoryOS P1-11.docx,P1-11：Unified Review Queue 统一人工确认队列,55651,41235
+StoryOS P1平台模块,"P1-12,P1-11",StoryOS P1-12- Checkpoint & Rollback Center.docx,P1-12：Checkpoint & Rollback Center,64413,46287
+StoryOS P1平台模块,"P1-23,P1-22",StoryOS P1-23.docx,P1-23：Governance Multi-Project Federation,71791,46985
+联邦治理/商业信任扩展,"P1-31,P1-24,P1-30",StoryOS P1-31.docx,P1-31：Federation Governance Executive Console,57764,41266
+联邦治理/商业信任扩展,"P1-36,P1-35",StoryOS P1-36- Federation Governance Trust Center.docx,P1-36：Federation Governance Trust Center,64743,44208
+联邦治理/商业信任扩展,"P1-37,P1-36",StoryOS P1-37.docx,P1-37：Federation Governance Commercial Readiness,49218,38129
+联邦治理/商业信任扩展,"P1-38,P1-37",StoryOS P1-38.docx,P1-38：Federation Governance Commercial Deal Room,51396,37074
+联邦治理/商业信任扩展,"P1-39,P1-38",StoryOS P1-39.docx,P1-39：Federation Governance Commercial Feedback Loop,54979,40470
+联邦治理/商业信任扩展,"P1-40,P1-39",StoryOS P1-40.docx,P1-40：Federation Governance Commercial Intelligence,54383,33937
+联邦治理/商业信任扩展,"P1-41,P1-40",StoryOS P1-41- Federation Governance Commercial Strategy Simulator.docx,P1-41：Federation Governance Commercial Strategy Simulator,53419,39502
+联邦治理/商业信任扩展,"P1-45,P1-44",StoryOS P1-45.docx,P1-45：Federation Governance Commercial Learning Loop,63742,40996
+联邦治理/商业信任扩展,"P1-46,P1-45",StoryOS P1-46.docx,P1-46：Federation Governance Commercial Model Registry,54753,37050
+联邦治理/商业信任扩展,"P1-47,P1-46",StoryOS P1-47.docx,P1-47：Federation Governance Commercial Model Release CI,63626,44060
+联邦治理/商业信任扩展,"P1-52,P1-51",StoryOS P1-52.docx,P1-52：Federation Governance Commercial Model Executive Reliability Console,51605,36573
+联邦治理/商业信任扩展,"P1-53,P1-52",StoryOS P1-53.docx,P1-53：Federation Governance Commercial Model Trust & Disclosure Pack,58665,42280
+联邦治理/商业信任扩展,"P1-75,P1-74",StoryOS P1-75 Documentation.docx,P1-75：Federation Governance Commercial Model Trust Knowledge Governance Boardroom Simulator,83766,50705
+联邦治理/商业信任扩展,"P1-75,P1-74",StoryOS P1-75.docx,P1-75：Federation Governance Commercial Model Trust Knowledge Governance Boardroom Simulator,83766,50705
+StoryOS总览/API/架构,,StoryOS架构设计.docx,创作操作系统总架构收束版,21686,30978
+创作业务子系统,,Trial Writing Auto Repair System.docx,试写反馈自动修复器：根据 draft_quality_report 自动修复 chapter_task / prompt_route / opening_hook / payoff_plan 并重写前 N 章 v1.0,46507,44223
+创作业务子系统,,Volume Management System.docx,卷级管理系统：volume_outline → chapter_tasks → volume_memory → 卷级伏笔回收与阶段性结算 v1.0,50337,45722
+创作业务子系统,,作品设定生成器：完整产品结构规划案.docx,一、产品总定位,16435,37556
+其他/待判定,,关系图谱工作台 MVP (1).docx,关系图谱可视化 v1：节点 / 边 / 筛选 / 隐藏关系展示规范 v1.0,37513,39591
+其他/待判定,,关系图谱工作台 MVP.docx,关系图谱 P1 页面 + pending_relations 手动匹配流程代码骨架 v1.0,51316,31771
+创作业务子系统,,创作经验知识图谱.docx,创作经验知识图谱：风险码、平台、类型、读者画像、Prompt、修复动作与真实效果之间的关系网络 v1.0,47366,44585
+创作业务子系统,,平台适配与读者画像系统设计.docx,平台适配与读者画像：起点 / 番茄 / 晋江 / 盐选的叙事经济权重、节奏模型与爽点密度配置 v1.0,36896,37279
+创作业务子系统,,投放包自动生成器文档.docx,投放包自动生成：起点项目书 / 番茄前十章测试包 / 晋江人设关系包 / 盐选短中篇方案包 v1.0,50807,48064
+其他/待判定,,故事宇宙工作台 MVP (1).docx,数据库表结构 + 接口请求/响应示例 v1.0,35339,38377
+其他/待判定,,故事宇宙工作台 MVP (10).docx,项目级知识资产与经验库：把每次修复、A/B、读者反馈、真实数据沉淀为可复用的类型经验、平台经验、Prompt 经验与作者经验 v1.0,48329,36659
+其他/待判定,,故事宇宙工作台 MVP (2).docx,前端组件拆分与页面路由结构 v1.0,17766,24169
+其他/待判定,,故事宇宙工作台 MVP (3).docx,前端 React Query Hooks + API Client 代码骨架 v1.0,41019,36713
+其他/待判定,,故事宇宙工作台 MVP (4).docx,前端 P0 页面组件代码骨架 v1.0,36237,28511
+其他/待判定,,故事宇宙工作台 MVP (5).docx,图谱与 AI 上下文联动：选中节点 / 边 → 构建 context_pack 的交互与接口方案 v1.0,34547,30848
+其他/待判定,,故事宇宙工作台 MVP (6).docx,Token 预算与上下文裁剪策略：selected 优先、邻居降级、隐藏内容阻断、摘要压缩 v1.0,37887,37922
+其他/待判定,,故事宇宙工作台 MVP (7).docx,AI 上下文质量评分与风险诊断：缺失设定、关系断裂、隐藏真相泄露、Token 过载预警 v1.0,29910,35175
+其他/待判定,,故事宇宙工作台 MVP (8).docx,上下文自动修复接口：根据 risk_diagnostics 一键补充资产、降低邻居深度、切换 safe_brief、移除隐藏内容并重建 context_pack v1.0,41296,40000
+其他/待判定,,故事宇宙工作台 MVP (9).docx,正文试写启动器：从投放包 → chapter_tasks → platform_prompt_route → 前 N 章正文草稿 → 质量回流 v1.0,48446,45768
+MVP落地/产品实现,,故事宇宙工作台 MVP 低保真页面布局稿说明.docx,Figma 低保真页面布局稿说明 v1.0,14127,28955
+MVP落地/产品实现,,故事宇宙工作台 MVP 后端接口实现任务拆分.docx,后端接口实现任务拆分 v1.0,23008,31235
+MVP落地/产品实现,,故事宇宙工作台 MVP 后端文档.docx,后端 P0 接口 Controller + Service 代码骨架 v1.0,45724,38846
+MVP落地/产品实现,,故事宇宙工作台 MVP 开发任务清单 v1.0.docx,一、任务拆分总原则,13534,26406
+MVP落地/产品实现,,故事宇宙工作台 MVP 数据库迁移文件草案 (1).docx,数据库 Migration 文件草案 v1.0,32499,25015
+MVP落地/产品实现,,故事宇宙工作台 MVP 数据库迁移文件草案.docx,数据库 Migration 文件草案 v1.0,32499,25014
+MVP落地/产品实现,,故事宇宙工作台 MVP 联调清单.docx,P0 前后端联调清单 + Mock 数据测试流程 v1.0,23501,32775
+MVP落地/产品实现,,故事宇宙工作台 MVP 设计规范.docx,Figma 组件库清单 + 页面 Frame 命名规范 + 交互连线清单 v1.0,19589,27383
+MVP落地/产品实现,,故事宇宙工作台 MVP 页面原型与交互说明.docx,页面原型与交互说明 v1.0,11181,25425
+其他/待判定,,故事宇宙工作台 MVP.docx,AI Prompt 与结构化输出模板 v1.0,20719,28481
+MVP落地/产品实现,,故事宇宙工作台_MVP_PRD_1.0.docx,面向长篇小说、网文、剧本、游戏叙事与 AI 创作的作品设定生成与叙事管理系统,7476,54038
+MVP落地/产品实现,,故事宇宙工作台产品开发企划案.docx,面向长篇小说、网文、剧本、游戏叙事与 AI 创作的作品设定生成与叙事管理系统,17731,39323
