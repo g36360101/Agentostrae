@@ -64,12 +64,13 @@ agentOS/
 
 1. `docs/00_overview/project_brief.md`
 2. `docs/01_product/mvp_scope.md`
-3. `docs/01_product/roadmap.md`
-4. `docs/02_engineering/development_steps.md`
-5. `docs/02_engineering/engineering_structure.md`
-6. `docs/03_ai/ai_strategy.md`
-7. `docs/04_data/data_model_draft.md`
-8. `docs/05_operations/working_rules.md`
+3. `docs/01_product/master_project_plan.md`
+4. `docs/01_product/roadmap.md`
+5. `docs/02_engineering/development_steps.md`
+6. `docs/02_engineering/engineering_structure.md`
+7. `docs/03_ai/ai_strategy.md`
+8. `docs/04_data/data_model_draft.md`
+9. `docs/05_operations/working_rules.md`
 
 ## 当前建议技术路线
 
@@ -93,4 +94,3 @@ agentOS/
 2. 建立 Project / Asset / Relation / ContextPack 的最小数据模型。
 3. 实现“创建项目 -> 生成高概念 -> 保存作品核心卡”的第一条链路。
 4. 再补资产抽取、上下文包和导出。
-
