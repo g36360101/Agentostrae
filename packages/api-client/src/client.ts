@@ -1,6 +1,8 @@
 import {
   apiErrorResponseSchema,
   authResponseSchema,
+  developmentPlanListResponseSchema,
+  developmentPlanResponseSchema,
   healthResponseSchema,
   highConceptCandidateListResponseSchema,
   logoutResponseSchema,
@@ -11,6 +13,8 @@ import {
   type AuthResponse,
   type CreateProjectIdeaInput,
   type CreateProjectInput,
+  type DevelopmentPlanListResponse,
+  type DevelopmentPlanResponse,
   type HealthResponse,
   type HighConceptCandidateListResponse,
   type LoginInput,
@@ -21,6 +25,7 @@ import {
   type ProjectResponse,
   type RegisterInput,
   type UpdateCoreCardInput,
+  type UpdateDevelopmentPlanInput,
   type UpdateProjectInput,
 } from "@agentos/shared";
 
@@ -163,6 +168,47 @@ export class ApiClient {
       `/projects/${projectId}/core-cards`,
       { method: "PATCH", body: JSON.stringify(input) },
       projectCoreCardResponseSchema,
+    );
+  }
+
+  async generateDevelopmentPlan(
+    projectId: string,
+  ): Promise<DevelopmentPlanResponse> {
+    return this.request(
+      `/projects/${projectId}/development-plan`,
+      { method: "POST" },
+      developmentPlanResponseSchema,
+    );
+  }
+
+  async getDevelopmentPlan(
+    projectId: string,
+  ): Promise<DevelopmentPlanResponse> {
+    return this.request(
+      `/projects/${projectId}/development-plan`,
+      {},
+      developmentPlanResponseSchema,
+    );
+  }
+
+  async updateDevelopmentPlan(
+    projectId: string,
+    input: UpdateDevelopmentPlanInput,
+  ): Promise<DevelopmentPlanResponse> {
+    return this.request(
+      `/projects/${projectId}/development-plan`,
+      { method: "PUT", body: JSON.stringify(input) },
+      developmentPlanResponseSchema,
+    );
+  }
+
+  async listDevelopmentPlanVersions(
+    projectId: string,
+  ): Promise<DevelopmentPlanListResponse> {
+    return this.request(
+      `/projects/${projectId}/development-plan/versions`,
+      {},
+      developmentPlanListResponseSchema,
     );
   }
 

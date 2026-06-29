@@ -2,6 +2,7 @@
 
 import { ApiClient, ApiClientError } from "@agentos/api-client";
 import type {
+  DevelopmentPlan,
   HighConceptCandidate,
   Project,
   ProjectCoreCard,
@@ -79,6 +80,14 @@ export function ProjectDetail({
   const [savingCoreCard, setSavingCoreCard] = useState(false);
   const [saveError, setSaveError] = useState("");
 
+  const [devPlan, setDevPlan] = useState<DevelopmentPlan | null>(null);
+  const [loadingDevPlan, setLoadingDevPlan] = useState(false);
+  const [devPlanError, setDevPlanError] = useState("");
+  const [generatingDevPlan, setGeneratingDevPlan] = useState(false);
+  const [isEditingDevPlan, setIsEditingDevPlan] = useState(false);
+  const [devPlanEditText, setDevPlanEditText] = useState("");
+  const [savingDevPlan, setSavingDevPlan] = useState(false);
+
   const loadProject = useCallback(async () => {
     try {
       const response = await api.getProject(projectId);
@@ -122,11 +131,30 @@ export function ProjectDetail({
     }
   }, [projectId]);
 
+  const loadDevPlan = useCallback(async () => {
+    setLoadingDevPlan(true);
+    setDevPlanError("");
+    try {
+      const response = await api.getDevelopmentPlan(projectId);
+      setDevPlan(response.data as DevelopmentPlan);
+    } catch (err: unknown) {
+      const msg = toMessage(err);
+      if (msg.includes("404")) {
+        setDevPlan(null);
+      } else {
+        setDevPlanError(msg);
+      }
+    } finally {
+      setLoadingDevPlan(false);
+    }
+  }, [projectId]);
+
   useEffect(() => {
     void loadProject();
     void loadCandidates();
     void loadCoreCard();
-  }, [loadProject, loadCandidates, loadCoreCard]);
+    void loadDevPlan();
+  }, [loadProject, loadCandidates, loadCoreCard, loadDevPlan]);
 
   const handleIdeaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -216,6 +244,42 @@ export function ProjectDetail({
       setSaveError(toMessage(err));
     } finally {
       setSavingCoreCard(false);
+    }
+  };
+
+  const handleGenerateDevPlan = async () => {
+    setGeneratingDevPlan(true);
+    setDevPlanError("");
+    try {
+      const response = await api.generateDevelopmentPlan(projectId);
+      setDevPlan(response.data as DevelopmentPlan);
+    } catch (err: unknown) {
+      setDevPlanError(toMessage(err));
+    } finally {
+      setGeneratingDevPlan(false);
+    }
+  };
+
+  const handleStartEditDevPlan = () => {
+    if (!devPlan) return;
+    setDevPlanEditText(devPlan.contentMarkdown);
+    setDevPlanError("");
+    setIsEditingDevPlan(true);
+  };
+
+  const handleSaveDevPlan = async () => {
+    setSavingDevPlan(true);
+    setDevPlanError("");
+    try {
+      const response = await api.updateDevelopmentPlan(projectId, {
+        contentMarkdown: devPlanEditText,
+      });
+      setDevPlan(response.data as DevelopmentPlan);
+      setIsEditingDevPlan(false);
+    } catch (err: unknown) {
+      setDevPlanError(toMessage(err));
+    } finally {
+      setSavingDevPlan(false);
     }
   };
 
@@ -663,6 +727,105 @@ export function ProjectDetail({
                 读者承诺
               </p>
               <p className="text-sm">{coreCard.readerPromise}</p>
+            </div>
+          </div>
+        )}
+      </section>
+
+      <section className="mb-10 border-t border-[var(--border)] pt-8">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-semibold">作品开发案</h2>
+          {devPlan && !isEditingDevPlan && (
+            <button
+              onClick={handleStartEditDevPlan}
+              className="rounded-md border border-[var(--border)] px-3 py-1 text-xs transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            >
+              编辑
+            </button>
+          )}
+        </div>
+        {loadingDevPlan ? (
+          <p className="text-sm text-[var(--muted)]">加载中…</p>
+        ) : devPlanError ? (
+          <p className="text-sm text-red-400">{devPlanError}</p>
+        ) : !devPlan ? (
+          <div className="space-y-3">
+            <p className="text-sm text-[var(--muted)]">
+              尚未生成开发案。需要先保存核心卡，然后生成开发案。
+            </p>
+            {coreCard && (
+              <button
+                onClick={handleGenerateDevPlan}
+                disabled={generatingDevPlan}
+                className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm text-[var(--bg)] transition hover:opacity-90 disabled:opacity-50"
+              >
+                {generatingDevPlan ? "生成中…" : "生成作品开发案"}
+              </button>
+            )}
+          </div>
+        ) : isEditingDevPlan ? (
+          <div className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
+            <div className="mb-1 text-xs text-[var(--muted)]">
+              Markdown 格式
+            </div>
+            <textarea
+              value={devPlanEditText}
+              onChange={(e) => setDevPlanEditText(e.target.value)}
+              rows={20}
+              className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-sm outline-none focus:border-[var(--accent)]"
+            />
+            {devPlanError && <p className="text-sm text-red-400">{devPlanError}</p>}
+            <div className="flex gap-2">
+              <button
+                onClick={handleSaveDevPlan}
+                disabled={savingDevPlan}
+                className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm text-[var(--bg)] transition hover:opacity-90 disabled:opacity-50"
+              >
+                {savingDevPlan ? "保存中…" : "保存修改"}
+              </button>
+              <button
+                onClick={() => setIsEditingDevPlan(false)}
+                className="rounded-md border border-[var(--border)] px-4 py-2 text-sm transition hover:border-[var(--accent)]"
+              >
+                取消
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
+            <div className="border-b border-[var(--border)] pb-3">
+              <p className="text-sm text-[var(--muted)]">
+                版本 {devPlan.version} · {formatDate(devPlan.createdAt)}
+              </p>
+            </div>
+            <div className="prose prose-sm max-w-none dark:prose-invert">
+              {devPlan.contentMarkdown.split("\n").map((line, i) => {
+                if (line.startsWith("# ")) {
+                  return <h1 key={i} className="text-2xl font-bold mt-4 mb-2">{line.replace("# ", "")}</h1>;
+                }
+                if (line.startsWith("## ")) {
+                  return <h2 key={i} className="text-xl font-semibold mt-4 mb-2">{line.replace("## ", "")}</h2>;
+                }
+                if (line.startsWith("### ")) {
+                  return <h3 key={i} className="text-lg font-medium mt-3 mb-1">{line.replace("### ", "")}</h3>;
+                }
+                if (line.startsWith("- ")) {
+                  return <li key={i} className="ml-4">{line.replace("- ", "")}</li>;
+                }
+                if (line.trim() === "") {
+                  return <div key={i} className="h-2" />;
+                }
+                return <p key={i} className="text-sm leading-relaxed">{line}</p>;
+              })}
+            </div>
+            <div className="border-t border-[var(--border)] pt-3">
+              <button
+                onClick={handleGenerateDevPlan}
+                disabled={generatingDevPlan}
+                className="rounded-md border border-[var(--border)] px-3 py-1 text-xs transition hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-50"
+              >
+                {generatingDevPlan ? "生成中…" : "重新生成新版本"}
+              </button>
             </div>
           </div>
         )}

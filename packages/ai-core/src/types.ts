@@ -1,5 +1,6 @@
 import type {
   CoreCardContent,
+  DevelopmentPlanContent,
   GenerateHighConceptsOutput,
   HighConceptCandidateContent,
 } from "@agentos/shared";
@@ -13,11 +14,16 @@ export interface GenerateCoreCardInput {
   candidate: HighConceptCandidateContent;
 }
 
+export interface GenerateDevelopmentPlanInput {
+  coreCard: CoreCardContent;
+}
+
 export interface AiProvider {
   readonly name: string;
   readonly model: string;
   generateHighConcepts(input: GenerateHighConceptsInput): Promise<GenerateHighConceptsOutput>;
   generateCoreCard(input: GenerateCoreCardInput): Promise<CoreCardContent>;
+  generateDevelopmentPlan(input: GenerateDevelopmentPlanInput): Promise<DevelopmentPlanContent>;
 }
 
 export interface AcceptanceSample {
@@ -27,5 +33,6 @@ export interface AcceptanceSample {
   highConcepts: GenerateHighConceptsOutput;
   selectedCandidateIndex: number;
   coreCard: CoreCardContent;
+  developmentPlan: DevelopmentPlanContent;
   invalidOutput: unknown;
 }

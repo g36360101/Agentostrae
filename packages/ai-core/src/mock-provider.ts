@@ -1,11 +1,13 @@
 import {
   coreCardContentSchema,
+  developmentPlanContentSchema,
   generateHighConceptsOutputSchema,
   type CoreCardContent,
+  type DevelopmentPlanContent,
   type GenerateHighConceptsOutput,
 } from "@agentos/shared";
 import { acceptanceSamples, findSampleByIdea } from "./samples";
-import type { AiProvider, GenerateCoreCardInput, GenerateHighConceptsInput } from "./types";
+import type { AiProvider, GenerateCoreCardInput, GenerateDevelopmentPlanInput, GenerateHighConceptsInput } from "./types";
 
 export class MockAiProvider implements AiProvider {
   readonly name = "mock";
@@ -26,5 +28,15 @@ export class MockAiProvider implements AiProvider {
         ),
       ) ?? acceptanceSamples[0];
     return coreCardContentSchema.parse(matchingSample.coreCard);
+  }
+
+  async generateDevelopmentPlan(
+    input: GenerateDevelopmentPlanInput,
+  ): Promise<DevelopmentPlanContent> {
+    const matchingSample =
+      acceptanceSamples.find((sample) =>
+        sample.coreCard.title === input.coreCard.title,
+      ) ?? acceptanceSamples[0];
+    return developmentPlanContentSchema.parse(matchingSample.developmentPlan);
   }
 }

@@ -16,6 +16,7 @@ enum ProjectStatus {
 enum AiTaskType {
   generate_high_concepts
   generate_core_card
+  generate_development_plan
 }
 
 enum AiJobStatus {
@@ -63,6 +64,7 @@ model Project {
   ideas                 ProjectIdea[]
   highConceptCandidates HighConceptCandidate[]
   coreCards             ProjectCoreCard[]
+  developmentPlans     DevelopmentPlan[]
   aiJobs                AiJob[]
   createdAt             DateTime               @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt             DateTime               @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -161,6 +163,7 @@ model AiJob {
   errorMessage String?                @map("error_message") @db.Text
   tokenUsage   Int?                   @map("token_usage")
   candidates   HighConceptCandidate[]
+  developmentPlans DevelopmentPlan[]
   completedAt  DateTime?              @map("completed_at") @db.Timestamptz(3)
   createdAt    DateTime               @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt    DateTime               @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -168,4 +171,22 @@ model AiJob {
   @@index([projectId])
   @@index([status])
   @@map("ai_jobs")
+}
+
+model DevelopmentPlan {
+  id                       String    @id @default(uuid()) @db.Uuid
+  projectId                String    @map("project_id") @db.Uuid
+  project                  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sourceCoreCardId         String    @map("source_core_card_id") @db.Uuid
+  aiJobId                  String    @map("ai_job_id") @db.Uuid
+  aiJob                    AiJob     @relation(fields: [aiJobId], references: [id])
+  contentMarkdown          String    @map("content_markdown") @db.Text
+  structuredJson           Json      @map("structured_json")
+  version                  Int       @default(1)
+  createdAt                DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([projectId, version])
+  @@index([sourceCoreCardId])
+  @@map("development_plans")
 }
