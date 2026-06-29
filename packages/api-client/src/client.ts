@@ -2,14 +2,19 @@ import {
   apiErrorResponseSchema,
   authResponseSchema,
   healthResponseSchema,
+  highConceptCandidateListResponseSchema,
   logoutResponseSchema,
+  projectIdeaResponseSchema,
   projectListResponseSchema,
   projectResponseSchema,
-  type CreateProjectInput,
   type AuthResponse,
+  type CreateProjectIdeaInput,
+  type CreateProjectInput,
   type HealthResponse,
+  type HighConceptCandidateListResponse,
   type LoginInput,
   type LogoutResponse,
+  type ProjectIdeaResponse,
   type ProjectListResponse,
   type ProjectResponse,
   type RegisterInput,
@@ -94,6 +99,37 @@ export class ApiClient {
       `/projects/${projectId}`,
       { method: "PATCH", body: JSON.stringify(input) },
       projectResponseSchema,
+    );
+  }
+
+  async createProjectIdea(
+    projectId: string,
+    input: CreateProjectIdeaInput,
+  ): Promise<ProjectIdeaResponse> {
+    return this.request(
+      `/projects/${projectId}/ideas`,
+      { method: "POST", body: JSON.stringify(input) },
+      projectIdeaResponseSchema,
+    );
+  }
+
+  async generateHighConcepts(
+    projectId: string,
+  ): Promise<HighConceptCandidateListResponse> {
+    return this.request(
+      `/projects/${projectId}/high-concepts`,
+      { method: "POST" },
+      highConceptCandidateListResponseSchema,
+    );
+  }
+
+  async listHighConceptCandidates(
+    projectId: string,
+  ): Promise<HighConceptCandidateListResponse> {
+    return this.request(
+      `/projects/${projectId}/high-concepts`,
+      {},
+      highConceptCandidateListResponseSchema,
     );
   }
 

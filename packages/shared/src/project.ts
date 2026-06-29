@@ -56,6 +56,8 @@ export const createProjectIdeaInputSchema = z.object({
   aiCreativityLevel: z.number().min(0).max(1).default(0.7),
 });
 
+export const projectIdeaResponseSchema = apiSuccessSchema(projectIdeaSchema);
+
 export type ProjectStatus = z.infer<typeof projectStatusSchema>;
 export type Project = z.infer<typeof projectSchema>;
 export type CreateProjectInput = z.infer<typeof createProjectInputSchema>;
@@ -64,3 +66,4 @@ export type ProjectResponse = z.infer<typeof projectResponseSchema>;
 export type ProjectListResponse = z.infer<typeof projectListResponseSchema>;
 export type ProjectIdea = z.infer<typeof projectIdeaSchema>;
 export type CreateProjectIdeaInput = z.infer<typeof createProjectIdeaInputSchema>;
+export type ProjectIdeaResponse = z.infer<typeof projectIdeaResponseSchema>;

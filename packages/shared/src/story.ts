@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { entityTimestampsSchema, idSchema } from "./common";
+import { apiSuccessSchema, entityTimestampsSchema, idSchema } from "./common";
 
 export const highConceptCandidateContentSchema = z.object({
   title: z.string().trim().min(1).max(120),
@@ -30,6 +30,10 @@ export const generateHighConceptsOutputSchema = z.object({
   candidates: z.array(highConceptCandidateContentSchema).min(3).max(5),
 });
 
+export const highConceptCandidateListResponseSchema = apiSuccessSchema(
+  z.array(highConceptCandidateSchema),
+);
+
 export const coreCardContentSchema = z.object({
   title: z.string().trim().min(1).max(120),
   genre: z.string().trim().min(1).max(80),
@@ -58,5 +62,8 @@ export const projectCoreCardSchema = coreCardContentSchema
 export type HighConceptCandidateContent = z.infer<typeof highConceptCandidateContentSchema>;
 export type HighConceptCandidate = z.infer<typeof highConceptCandidateSchema>;
 export type GenerateHighConceptsOutput = z.infer<typeof generateHighConceptsOutputSchema>;
+export type HighConceptCandidateListResponse = z.infer<
+  typeof highConceptCandidateListResponseSchema
+>;
 export type CoreCardContent = z.infer<typeof coreCardContentSchema>;
 export type ProjectCoreCard = z.infer<typeof projectCoreCardSchema>;
