@@ -3,6 +3,7 @@
 import { ApiClient, ApiClientError } from "@agentos/api-client";
 import type { Project } from "@agentos/shared";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { type FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 
 type LoadState = "loading" | "ready" | "error";
@@ -21,6 +22,7 @@ export function ProjectsWorkspace() {
   const [loadErrorCode, setLoadErrorCode] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState("");
+  const router = useRouter();
 
   const loadProjects = useCallback(async () => {
     setLoadState("loading");
@@ -58,8 +60,7 @@ export function ProjectsWorkspace() {
         ...(genre ? { genre } : {}),
         ...(premise ? { premise } : {}),
       });
-      setProjects((current) => [response.data, ...current]);
-      form.reset();
+      router.push(`/projects/${response.data.id}`);
     } catch (error: unknown) {
       setCreateError(toMessage(error));
     } finally {
