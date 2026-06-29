@@ -4,12 +4,14 @@ import {
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
 } from "@nestjs/common";
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ActorContextService } from "../../actor/actor-context.service";
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { CoreCardsService } from "./core-cards.service";
+import { updateCoreCardInputSchema } from "@agentos/shared";
 
 @Controller("projects/:projectId/core-cards")
 export class CoreCardsController {
@@ -60,6 +62,23 @@ export class CoreCardsController {
       throw new NotFoundException({
         code: "PROJECT_NOT_FOUND",
         message: "项目不存在或无权访问",
+      });
+    }
+    return { data: card };
+  }
+
+  @Patch()
+  async update(
+    @Param("projectId") projectId: string,
+    @Body() rawBody: unknown,
+  ) {
+    const actor = await this.actorContext.getCurrentActor();
+    const body = updateCoreCardInputSchema.parse(rawBody);
+    const card = await this.coreCards.update(projectId, body, actor);
+    if (!card) {
+      throw new NotFoundException({
+        code: "PROJECT_NOT_FOUND",
+        message: "项目不存在、无权访问或尚无核心卡",
       });
     }
     return { data: card };

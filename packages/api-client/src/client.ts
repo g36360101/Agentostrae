@@ -20,6 +20,7 @@ import {
   type ProjectListResponse,
   type ProjectResponse,
   type RegisterInput,
+  type UpdateCoreCardInput,
   type UpdateProjectInput,
 } from "@agentos/shared";
 
@@ -150,6 +151,17 @@ export class ApiClient {
     return this.request(
       `/projects/${projectId}/core-cards`,
       {},
+      projectCoreCardResponseSchema,
+    );
+  }
+
+  async updateCoreCard(
+    projectId: string,
+    input: UpdateCoreCardInput,
+  ): Promise<ProjectCoreCardResponse> {
+    return this.request(
+      `/projects/${projectId}/core-cards`,
+      { method: "PATCH", body: JSON.stringify(input) },
       projectCoreCardResponseSchema,
     );
   }

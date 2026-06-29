@@ -4,7 +4,7 @@ import type { Actor } from "../../actor/actor-context.service";
 import { PrismaService } from "../../database/prisma.service";
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { AiOrchestratorService } from "../ai-orchestrator/ai-orchestrator.service";
-import type { CoreCardContent } from "@agentos/shared";
+import type { CoreCardContent, UpdateCoreCardInput } from "@agentos/shared";
 
 @Injectable()
 export class CoreCardsService {
@@ -112,6 +112,37 @@ export class CoreCardsService {
     const record = await this.prisma.projectCoreCard.findFirst({
       where: { projectId },
       orderBy: { version: "desc" },
+    });
+
+    return record;
+  }
+
+  async update(
+    projectId: string,
+    input: UpdateCoreCardInput,
+    actor: Actor,
+  ): Promise<unknown | null> {
+    const project = await this.prisma.project.findFirst({
+      where: { id: projectId, ownerId: actor.id },
+      select: { id: true },
+    });
+
+    if (!project) {
+      return null;
+    }
+
+    const latestCard = await this.prisma.projectCoreCard.findFirst({
+      where: { projectId },
+      orderBy: { version: "desc" },
+    });
+
+    if (!latestCard) {
+      return null;
+    }
+
+    const record = await this.prisma.projectCoreCard.update({
+      where: { id: latestCard.id },
+      data: input as Record<string, unknown>,
     });
 
     return record;

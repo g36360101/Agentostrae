@@ -6,6 +6,7 @@ import type {
   Project,
   ProjectCoreCard,
   ProjectIdea,
+  UpdateCoreCardInput,
 } from "@agentos/shared";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -73,6 +74,10 @@ export function ProjectDetail({
   const [selectingCandidate, setSelectingCandidate] = useState<string | null>(
     null,
   );
+  const [isEditingCoreCard, setIsEditingCoreCard] = useState(false);
+  const [editForm, setEditForm] = useState<UpdateCoreCardInput>({});
+  const [savingCoreCard, setSavingCoreCard] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   const loadProject = useCallback(async () => {
     try {
@@ -171,12 +176,46 @@ export function ProjectDetail({
     try {
       const response = await api.createCoreCard(projectId, candidateId);
       setCoreCard(response.data as ProjectCoreCard);
-      // Refresh candidates to show selected state
       await loadCandidates();
     } catch (err: unknown) {
       setCoreCardError(toMessage(err));
     } finally {
       setSelectingCandidate(null);
+    }
+  };
+
+  const handleStartEdit = () => {
+    if (!coreCard) return;
+    setEditForm({
+      title: coreCard.title,
+      genre: coreCard.genre ?? undefined,
+      logline: coreCard.logline,
+      readerPromise: coreCard.readerPromise,
+      worldviewSummary: coreCard.worldviewSummary,
+      protagonistSummary: coreCard.protagonistSummary,
+      protagonistGap: coreCard.protagonistGap,
+      centralConflict: coreCard.centralConflict,
+      antagonistForce: coreCard.antagonistForce,
+      longTermMystery: coreCard.longTermMystery,
+      themeStatement: coreCard.themeStatement,
+      targetReader: coreCard.targetReader,
+    });
+    setSaveError("");
+    setIsEditingCoreCard(true);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingCoreCard(true);
+    setSaveError("");
+    try {
+      const response = await api.updateCoreCard(projectId, editForm);
+      setCoreCard(response.data as ProjectCoreCard);
+      setIsEditingCoreCard(false);
+    } catch (err: unknown) {
+      setSaveError(toMessage(err));
+    } finally {
+      setSavingCoreCard(false);
     }
   };
 
@@ -410,7 +449,17 @@ export function ProjectDetail({
       </section>
 
       <section className="mb-10 border-t border-[var(--border)] pt-8">
-        <h2 className="mb-4 text-lg font-semibold">作品核心卡</h2>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-semibold">作品核心卡</h2>
+          {coreCard && !isEditingCoreCard && (
+            <button
+              onClick={handleStartEdit}
+              className="rounded-md border border-[var(--border)] px-3 py-1 text-xs transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            >
+              编辑
+            </button>
+          )}
+        </div>
         {loadingCoreCard ? (
           <p className="text-sm text-[var(--muted)]">加载中…</p>
         ) : coreCardError ? (
@@ -419,6 +468,142 @@ export function ProjectDetail({
           <p className="text-sm text-[var(--muted)]">
             尚未保存核心卡。从高概念候选中选择一个方向来生成核心卡。
           </p>
+        ) : isEditingCoreCard ? (
+          <form
+            onSubmit={handleSaveEdit}
+            className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4"
+          >
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs text-[var(--muted)]">标题</label>
+                <input
+                  value={editForm.title ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, title: e.target.value }))}
+                  className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs text-[var(--muted)]">题材</label>
+                <input
+                  value={editForm.genre ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, genre: e.target.value }))}
+                  className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs text-[var(--muted)]">一句话承诺</label>
+              <textarea
+                value={editForm.logline ?? ""}
+                onChange={(e) => setEditForm((f) => ({ ...f, logline: e.target.value }))}
+                rows={2}
+                className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-xs text-[var(--muted)]">世界观概述</label>
+              <textarea
+                value={editForm.worldviewSummary ?? ""}
+                onChange={(e) => setEditForm((f) => ({ ...f, worldviewSummary: e.target.value }))}
+                rows={3}
+                className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs text-[var(--muted)]">主角</label>
+                <textarea
+                  value={editForm.protagonistSummary ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, protagonistSummary: e.target.value }))}
+                  rows={2}
+                  className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs text-[var(--muted)]">主角缺陷</label>
+                <textarea
+                  value={editForm.protagonistGap ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, protagonistGap: e.target.value }))}
+                  rows={2}
+                  className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs text-[var(--muted)]">核心冲突</label>
+                <textarea
+                  value={editForm.centralConflict ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, centralConflict: e.target.value }))}
+                  rows={2}
+                  className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs text-[var(--muted)]">对立力量</label>
+                <textarea
+                  value={editForm.antagonistForce ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, antagonistForce: e.target.value }))}
+                  rows={2}
+                  className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs text-[var(--muted)]">长期悬念</label>
+              <textarea
+                value={editForm.longTermMystery ?? ""}
+                onChange={(e) => setEditForm((f) => ({ ...f, longTermMystery: e.target.value }))}
+                rows={2}
+                className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs text-[var(--muted)]">主题</label>
+                <textarea
+                  value={editForm.themeStatement ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, themeStatement: e.target.value }))}
+                  rows={2}
+                  className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs text-[var(--muted)]">读者承诺</label>
+                <textarea
+                  value={editForm.readerPromise ?? ""}
+                  onChange={(e) => setEditForm((f) => ({ ...f, readerPromise: e.target.value }))}
+                  rows={2}
+                  className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs text-[var(--muted)]">目标读者</label>
+              <input
+                value={editForm.targetReader ?? ""}
+                onChange={(e) => setEditForm((f) => ({ ...f, targetReader: e.target.value }))}
+                className="w-full rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+              />
+            </div>
+            {saveError && <p className="text-sm text-red-400">{saveError}</p>}
+            <div className="flex gap-2">
+              <button
+                type="submit"
+                disabled={savingCoreCard}
+                className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm text-[var(--bg)] transition hover:opacity-90 disabled:opacity-50"
+              >
+                {savingCoreCard ? "保存中…" : "保存修改"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsEditingCoreCard(false)}
+                className="rounded-md border border-[var(--border)] px-4 py-2 text-sm transition hover:border-[var(--accent)]"
+              >
+                取消
+              </button>
+            </div>
+          </form>
         ) : (
           <div className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
             <div className="border-b border-[var(--border)] pb-4">
