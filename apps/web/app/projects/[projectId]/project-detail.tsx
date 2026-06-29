@@ -2,6 +2,7 @@
 
 import { ApiClient, ApiClientError } from "@agentos/api-client";
 import type {
+  ChatMessage,
   DevelopmentPlan,
   HighConceptCandidate,
   Project,
@@ -99,6 +100,11 @@ export function ProjectDetail({
   const [relationsError, setRelationsError] = useState("");
   const [extractingRelations, setExtractingRelations] = useState(false);
 
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [chatInput, setChatInput] = useState("");
+  const [sendingChat, setSendingChat] = useState(false);
+  const [chatError, setChatError] = useState("");
+
   const loadProject = useCallback(async () => {
     try {
       const response = await api.getProject(projectId);
@@ -186,6 +192,15 @@ export function ProjectDetail({
     }
   }, [projectId]);
 
+  const loadChatMessages = useCallback(async () => {
+    try {
+      const response = await api.listChatMessages(projectId);
+      setChatMessages(response.data as ChatMessage[]);
+    } catch (err: unknown) {
+      setChatError(toMessage(err));
+    }
+  }, [projectId]);
+
   useEffect(() => {
     void loadProject();
     void loadCandidates();
@@ -193,7 +208,8 @@ export function ProjectDetail({
     void loadDevPlan();
     void loadAssets();
     void loadRelations();
-  }, [loadProject, loadCandidates, loadCoreCard, loadDevPlan, loadAssets, loadRelations]);
+    void loadChatMessages();
+  }, [loadProject, loadCandidates, loadCoreCard, loadDevPlan, loadAssets, loadRelations, loadChatMessages]);
 
   const handleIdeaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -381,6 +397,22 @@ export function ProjectDetail({
       await loadRelations();
     } catch (err: unknown) {
       setRelationsError(toMessage(err));
+    }
+  };
+
+  const handleSendChat = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+    setSendingChat(true);
+    setChatError("");
+    try {
+      await api.sendChatMessage(projectId, { content: chatInput.trim() });
+      setChatInput("");
+      await loadChatMessages();
+    } catch (err: unknown) {
+      setChatError(toMessage(err));
+    } finally {
+      setSendingChat(false);
     }
   };
 
@@ -1097,6 +1129,65 @@ export function ProjectDetail({
             ))}
           </div>
         )}
+      </section>
+
+      <section className="mb-10 border-t border-[var(--border)] pt-8">
+        <h2 className="mb-4 text-lg font-semibold">项目对话</h2>
+        <div className="space-y-4">
+          {chatMessages.length === 0 ? (
+            <p className="text-sm text-[var(--muted)]">
+              开始与 AI 助手对话。AI 将基于已确认的项目设定回答问题。
+            </p>
+          ) : (
+            <div className="max-h-96 space-y-3 overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
+              {chatMessages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`max-w-[80%] rounded-lg px-4 py-2 text-sm ${
+                      msg.role === "user"
+                        ? "bg-[var(--accent)] text-[var(--bg)]"
+                        : "border border-[var(--border)] bg-[var(--bg)]"
+                    }`}
+                  >
+                    <p className="whitespace-pre-wrap">{msg.content}</p>
+                    {msg.citedAssetIds.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {msg.citedAssetIds.map((id) => (
+                          <span
+                            key={id}
+                            className="rounded-full bg-[var(--accent)]/20 px-2 py-0.5 text-xs text-[var(--accent)]"
+                          >
+                            资产 {id.slice(0, 8)}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {chatError && <p className="text-sm text-red-400">{chatError}</p>}
+          <form onSubmit={handleSendChat} className="flex gap-2">
+            <input
+              type="text"
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+              placeholder="输入问题…（如：主角是谁？世界观设定？）"
+              className="flex-1 rounded-md border border-[var(--border)] bg-transparent px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+            />
+            <button
+              type="submit"
+              disabled={sendingChat}
+              className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm text-[var(--bg)] transition hover:opacity-90 disabled:opacity-50"
+            >
+              {sendingChat ? "发送中…" : "发送"}
+            </button>
+          </form>
+        </div>
       </section>
 
       <div className="mt-8">

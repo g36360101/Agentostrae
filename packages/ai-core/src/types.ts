@@ -29,6 +29,21 @@ export interface ExtractRelationsInput {
   developmentPlan: DevelopmentPlanContent;
 }
 
+export interface ChatInput {
+  messages: { role: "user" | "assistant"; content: string }[];
+  contextPack: {
+    coreCard: CoreCardContent;
+    confirmedAssets: ExtractedAsset[];
+    confirmedRelations: ExtractedRelation[];
+  };
+}
+
+export interface ChatOutput {
+  content: string;
+  citedAssetNames: string[];
+  citedRelationPairs: { source: string; target: string }[];
+}
+
 export interface AiProvider {
   readonly name: string;
   readonly model: string;
@@ -37,6 +52,7 @@ export interface AiProvider {
   generateDevelopmentPlan(input: GenerateDevelopmentPlanInput): Promise<DevelopmentPlanContent>;
   extractAssets(input: ExtractAssetsInput): Promise<ExtractedAsset[]>;
   extractRelations(input: ExtractRelationsInput): Promise<ExtractedRelation[]>;
+  chat(input: ChatInput): Promise<ChatOutput>;
 }
 
 export interface AcceptanceSample {

@@ -1,6 +1,8 @@
 import {
   apiErrorResponseSchema,
   authResponseSchema,
+  chatMessageListResponseSchema,
+  chatMessageResponseSchema,
   developmentPlanListResponseSchema,
   developmentPlanResponseSchema,
   healthResponseSchema,
@@ -15,6 +17,8 @@ import {
   storyRelationListResponseSchema,
   storyRelationResponseSchema,
   type AuthResponse,
+  type ChatMessageListResponse,
+  type ChatMessageResponse,
   type CreateProjectIdeaInput,
   type CreateProjectInput,
   type DevelopmentPlanListResponse,
@@ -28,6 +32,7 @@ import {
   type ProjectListResponse,
   type ProjectResponse,
   type RegisterInput,
+  type SendChatMessageInput,
   type StoryAssetListResponse,
   type StoryAssetResponse,
   type StoryRelationListResponse,
@@ -329,6 +334,25 @@ export class ApiClient {
       `/projects/${projectId}/relations/${relationId}/reject`,
       { method: "POST" },
       storyRelationResponseSchema,
+    );
+  }
+
+  async sendChatMessage(
+    projectId: string,
+    input: SendChatMessageInput,
+  ): Promise<ChatMessageResponse> {
+    return this.request(
+      `/projects/${projectId}/chat`,
+      { method: "POST", body: JSON.stringify(input) },
+      chatMessageResponseSchema,
+    );
+  }
+
+  async listChatMessages(projectId: string): Promise<ChatMessageListResponse> {
+    return this.request(
+      `/projects/${projectId}/chat/messages`,
+      {},
+      chatMessageListResponseSchema,
     );
   }
 

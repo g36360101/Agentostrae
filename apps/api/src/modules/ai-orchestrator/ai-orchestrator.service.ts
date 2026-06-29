@@ -328,4 +328,123 @@ export class AiOrchestratorService {
       throw error;
     }
   }
+
+  async buildContextPack(projectId: string): Promise<{
+    coreCard: CoreCardContent;
+    confirmedAssets: ExtractedAsset[];
+    confirmedRelations: ExtractedRelation[];
+  }> {
+    const coreCard = await this.prisma.projectCoreCard.findFirst({
+      where: { projectId },
+      orderBy: { version: "desc" },
+    });
+
+    const assets = await this.prisma.storyAsset.findMany({
+      where: { projectId, status: "confirmed" },
+    });
+
+    const relations = await this.prisma.storyRelation.findMany({
+      where: { projectId, status: "confirmed" },
+      include: { sourceAsset: true, targetAsset: true },
+    });
+
+    return {
+      coreCard: (coreCard ? {
+        title: coreCard.title,
+        logline: coreCard.logline,
+        genre: coreCard.genre,
+        readerPromise: coreCard.readerPromise,
+        worldviewSummary: coreCard.worldviewSummary,
+        protagonistSummary: coreCard.protagonistSummary,
+        protagonistGap: coreCard.protagonistGap,
+        centralConflict: coreCard.centralConflict,
+        antagonistForce: coreCard.antagonistForce,
+        longTermMystery: coreCard.longTermMystery,
+        themeStatement: coreCard.themeStatement,
+        targetReader: coreCard.targetReader,
+        canonConstraints: coreCard.canonConstraints as string[],
+      } : {
+        title: "",
+        logline: "",
+        genre: null,
+        readerPromise: "",
+        worldviewSummary: "",
+        protagonistSummary: "",
+        protagonistGap: "",
+        centralConflict: "",
+        antagonistForce: "",
+        longTermMystery: "",
+        themeStatement: "",
+        targetReader: "",
+        canonConstraints: [],
+      }) as CoreCardContent,
+      confirmedAssets: assets.map((a) => ({
+        name: a.name,
+        assetType: a.assetType as ExtractedAsset["assetType"],
+        description: a.description,
+        narrativeFunction: a.narrativeFunction,
+        evidenceText: a.evidenceText,
+        spoilerLevel: a.spoilerLevel as ExtractedAsset["spoilerLevel"],
+      })),
+      confirmedRelations: relations.map((r) => ({
+        sourceName: r.sourceAsset.name,
+        targetName: r.targetAsset.name,
+        relationType: r.relationType as ExtractedRelation["relationType"],
+        evidenceText: r.evidenceText,
+        spoilerLevel: r.spoilerLevel as ExtractedRelation["spoilerLevel"],
+      })),
+    };
+  }
+
+  async chat(options: {
+    projectId: string;
+    messages: { role: "user" | "assistant"; content: string }[];
+    contextPack: {
+      coreCard: CoreCardContent;
+      confirmedAssets: ExtractedAsset[];
+      confirmedRelations: ExtractedRelation[];
+    };
+  }): Promise<{ content: string; citedAssetNames: string[]; citedRelationPairs: { source: string; target: string }[] }> {
+    const { projectId } = options;
+
+    const job = await this.prisma.aiJob.create({
+      data: {
+        projectId,
+        taskType: "chat",
+        status: "pending",
+        provider: "mock",
+        model: "agentos-deterministic-v1",
+        inputJson: { messageCount: options.messages.length },
+      },
+    });
+
+    try {
+      const provider = new MockAiProvider();
+      const output = await provider.chat({
+        messages: options.messages,
+        contextPack: options.contextPack,
+      });
+
+      await this.prisma.aiJob.update({
+        where: { id: job.id },
+        data: {
+          status: "succeeded",
+          outputJson: output as unknown as Prisma.InputJsonValue,
+          completedAt: new Date(),
+        },
+      });
+
+      return output;
+    } catch (error) {
+      await this.prisma.aiJob.update({
+        where: { id: job.id },
+        data: {
+          status: "failed",
+          errorMessage:
+            error instanceof Error ? error.message : "Unknown error",
+        },
+      });
+      throw error;
+    }
+  }
 }

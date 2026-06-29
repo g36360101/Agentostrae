@@ -19,6 +19,7 @@ enum AiTaskType {
   generate_development_plan
   extract_assets
   extract_relations
+  chat
 }
 
 enum AiJobStatus {
@@ -102,6 +103,7 @@ model Project {
   developmentPlans     DevelopmentPlan[]
   assets                StoryAsset[]
   relations             StoryRelation[]
+  chatMessages         ChatMessage[]
   aiJobs                AiJob[]
   createdAt             DateTime               @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt             DateTime               @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -281,4 +283,20 @@ model StoryRelation {
   @@index([sourceAssetId])
   @@index([targetAssetId])
   @@map("story_relations")
+}
+
+model ChatMessage {
+  id               String   @id @default(uuid()) @db.Uuid
+  projectId        String   @map("project_id") @db.Uuid
+  project          Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  role             String   @db.VarChar(20)
+  content          String   @db.Text
+  citedAssetIds    Json     @map("cited_asset_ids")
+  citedRelationIds Json     @map("cited_relation_ids")
+  contextSnapshot  Json     @map("context_snapshot")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([projectId])
+  @@index([createdAt])
+  @@map("chat_messages")
 }

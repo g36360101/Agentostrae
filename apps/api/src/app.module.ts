@@ -4,6 +4,7 @@ import { DatabaseModule } from "./database/database.module";
 import { HealthModule } from "./health/health.module";
 import { AiOrchestratorModule } from "./modules/ai-orchestrator/ai-orchestrator.module";
 import { AuthModule } from "./modules/auth/auth.module";
+import { ChatModule } from "./modules/chat/chat.module";
 import { CoreCardsModule } from "./modules/core-cards/core-cards.module";
 import { DevelopmentPlansModule } from "./modules/development-plans/development-plans.module";
 import { IdeasModule } from "./modules/ideas/ideas.module";
@@ -23,6 +24,7 @@ import { ReviewModule } from "./modules/review/review.module";
     CoreCardsModule,
     DevelopmentPlansModule,
     ReviewModule,
+    ChatModule,
     AiOrchestratorModule,
   ],
 })
