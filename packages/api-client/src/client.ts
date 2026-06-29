@@ -4,6 +4,7 @@ import {
   healthResponseSchema,
   highConceptCandidateListResponseSchema,
   logoutResponseSchema,
+  projectCoreCardResponseSchema,
   projectIdeaResponseSchema,
   projectListResponseSchema,
   projectResponseSchema,
@@ -14,6 +15,7 @@ import {
   type HighConceptCandidateListResponse,
   type LoginInput,
   type LogoutResponse,
+  type ProjectCoreCardResponse,
   type ProjectIdeaResponse,
   type ProjectListResponse,
   type ProjectResponse,
@@ -130,6 +132,25 @@ export class ApiClient {
       `/projects/${projectId}/high-concepts`,
       {},
       highConceptCandidateListResponseSchema,
+    );
+  }
+
+  async createCoreCard(
+    projectId: string,
+    candidateId: string,
+  ): Promise<ProjectCoreCardResponse> {
+    return this.request(
+      `/projects/${projectId}/core-cards`,
+      { method: "POST", body: JSON.stringify({ candidateId }) },
+      projectCoreCardResponseSchema,
+    );
+  }
+
+  async getCoreCard(projectId: string): Promise<ProjectCoreCardResponse> {
+    return this.request(
+      `/projects/${projectId}/core-cards`,
+      {},
+      projectCoreCardResponseSchema,
     );
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { PrismaService } from "../../database/prisma.service";
 import { MockAiProvider } from "@agentos/ai-core";
+import type { CoreCardContent } from "@agentos/shared";
 
 interface GenerateOptions {
   projectId: string;
@@ -76,6 +77,69 @@ export class AiOrchestratorService {
       });
 
       return candidates;
+    } catch (error) {
+      await this.prisma.aiJob.update({
+        where: { id: job.id },
+        data: {
+          status: "failed",
+          errorMessage:
+            error instanceof Error ? error.message : "Unknown error",
+        },
+      });
+      throw error;
+    }
+  }
+
+  async generateCoreCard(options: {
+    projectId: string;
+    candidateId: string;
+    candidateTitle: string;
+    candidateLogline: string | null;
+    candidateGenre: string | null;
+    candidateCoreHook: string | null;
+  }): Promise<CoreCardContent> {
+    const { projectId, candidateId } = options;
+
+    const job = await this.prisma.aiJob.create({
+      data: {
+        projectId,
+        taskType: "generate_core_card",
+        status: "pending",
+        provider: "mock",
+        model: "agentos-deterministic-v1",
+        inputJson: { candidateId },
+      },
+    });
+
+    try {
+      const provider = new MockAiProvider();
+      const output = await provider.generateCoreCard({
+        candidate: {
+          title: options.candidateTitle,
+          logline: options.candidateLogline ?? "",
+          genre: options.candidateGenre ?? "",
+          coreHook: options.candidateCoreHook ?? "",
+          mainConflict: "",
+          protagonistDrive: "",
+          worldDifference: "",
+          emotionalPromise: "",
+          targetReader: "",
+          serializationPotential: "",
+          expansionDirection: "",
+          riskNotes: [],
+        },
+      });
+
+      await this.prisma.aiJob.update({
+        where: { id: job.id },
+        data: {
+          status: "succeeded",
+          outputJson: output,
+          completedAt: new Date(),
+        },
+      });
+
+      return output;
     } catch (error) {
       await this.prisma.aiJob.update({
         where: { id: job.id },

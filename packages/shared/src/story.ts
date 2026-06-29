@@ -59,6 +59,10 @@ export const projectCoreCardSchema = coreCardContentSchema
   })
   .merge(entityTimestampsSchema);
 
+export const projectCoreCardResponseSchema = apiSuccessSchema(
+  projectCoreCardSchema,
+);
+
 export type HighConceptCandidateContent = z.infer<typeof highConceptCandidateContentSchema>;
 export type HighConceptCandidate = z.infer<typeof highConceptCandidateSchema>;
 export type GenerateHighConceptsOutput = z.infer<typeof generateHighConceptsOutputSchema>;
@@ -67,3 +71,4 @@ export type HighConceptCandidateListResponse = z.infer<
 >;
 export type CoreCardContent = z.infer<typeof coreCardContentSchema>;
 export type ProjectCoreCard = z.infer<typeof projectCoreCardSchema>;
+export type ProjectCoreCardResponse = z.infer<typeof projectCoreCardResponseSchema>;

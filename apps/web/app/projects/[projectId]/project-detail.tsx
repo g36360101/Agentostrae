@@ -4,6 +4,7 @@ import { ApiClient, ApiClientError } from "@agentos/api-client";
 import type {
   HighConceptCandidate,
   Project,
+  ProjectCoreCard,
   ProjectIdea,
 } from "@agentos/shared";
 import Link from "next/link";
@@ -66,6 +67,13 @@ export function ProjectDetail({
   const [generating, setGenerating] = useState(false);
   const [generateError, setGenerateError] = useState("");
 
+  const [coreCard, setCoreCard] = useState<ProjectCoreCard | null>(null);
+  const [loadingCoreCard, setLoadingCoreCard] = useState(false);
+  const [coreCardError, setCoreCardError] = useState("");
+  const [selectingCandidate, setSelectingCandidate] = useState<string | null>(
+    null,
+  );
+
   const loadProject = useCallback(async () => {
     try {
       const response = await api.getProject(projectId);
@@ -91,10 +99,29 @@ export function ProjectDetail({
     }
   }, [projectId]);
 
+  const loadCoreCard = useCallback(async () => {
+    setLoadingCoreCard(true);
+    setCoreCardError("");
+    try {
+      const response = await api.getCoreCard(projectId);
+      setCoreCard(response.data as ProjectCoreCard);
+    } catch (err: unknown) {
+      const msg = toMessage(err);
+      if (msg.includes("404")) {
+        setCoreCard(null);
+      } else {
+        setCoreCardError(msg);
+      }
+    } finally {
+      setLoadingCoreCard(false);
+    }
+  }, [projectId]);
+
   useEffect(() => {
     void loadProject();
     void loadCandidates();
-  }, [loadProject, loadCandidates]);
+    void loadCoreCard();
+  }, [loadProject, loadCandidates, loadCoreCard]);
 
   const handleIdeaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,6 +163,20 @@ export function ProjectDetail({
       setGenerateError(toMessage(err));
     } finally {
       setGenerating(false);
+    }
+  };
+
+  const handleSelectCandidate = async (candidateId: string) => {
+    setSelectingCandidate(candidateId);
+    try {
+      const response = await api.createCoreCard(projectId, candidateId);
+      setCoreCard(response.data as ProjectCoreCard);
+      // Refresh candidates to show selected state
+      await loadCandidates();
+    } catch (err: unknown) {
+      setCoreCardError(toMessage(err));
+    } finally {
+      setSelectingCandidate(null);
     }
   };
 
@@ -323,13 +364,37 @@ export function ProjectDetail({
             {candidates.map((candidate) => (
               <div
                 key={candidate.id}
-                className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 transition hover:border-[var(--accent)]"
+                className={`rounded-lg border bg-[var(--surface)] p-4 transition ${
+                  coreCard?.sourceCandidateId === candidate.id
+                    ? "border-[var(--accent)]"
+                    : "border-[var(--border)] hover:border-[var(--accent)]"
+                }`}
               >
-                <div className="mb-2 flex items-center gap-2">
-                  <h3 className="font-semibold">{candidate.title}</h3>
-                  <span className="rounded-full border border-[var(--border)] px-2 py-0.5 text-xs text-[var(--muted)]">
-                    {candidate.genre}
-                  </span>
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold">{candidate.title}</h3>
+                    <span className="rounded-full border border-[var(--border)] px-2 py-0.5 text-xs text-[var(--muted)]">
+                      {candidate.genre}
+                    </span>
+                    {coreCard?.sourceCandidateId === candidate.id && (
+                      <span className="rounded-full bg-[var(--accent)] px-2 py-0.5 text-xs text-[var(--bg)]">
+                        已选择
+                      </span>
+                    )}
+                  </div>
+                  {coreCard?.sourceCandidateId !== candidate.id && (
+                    <button
+                      onClick={() => handleSelectCandidate(candidate.id)}
+                      disabled={
+                        !!selectingCandidate || !!coreCard
+                      }
+                      className="rounded-md border border-[var(--border)] px-3 py-1 text-xs transition hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-50"
+                    >
+                      {selectingCandidate === candidate.id
+                        ? "处理中…"
+                        : "选择此方向"}
+                    </button>
+                  )}
                 </div>
                 <p className="mb-2 text-sm text-[var(--muted)]">
                   {candidate.logline}
@@ -340,6 +405,80 @@ export function ProjectDetail({
                 </p>
               </div>
             ))}
+          </div>
+        )}
+      </section>
+
+      <section className="mb-10 border-t border-[var(--border)] pt-8">
+        <h2 className="mb-4 text-lg font-semibold">作品核心卡</h2>
+        {loadingCoreCard ? (
+          <p className="text-sm text-[var(--muted)]">加载中…</p>
+        ) : coreCardError ? (
+          <p className="text-sm text-red-400">{coreCardError}</p>
+        ) : !coreCard ? (
+          <p className="text-sm text-[var(--muted)]">
+            尚未保存核心卡。从高概念候选中选择一个方向来生成核心卡。
+          </p>
+        ) : (
+          <div className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
+            <div className="border-b border-[var(--border)] pb-4">
+              <h3 className="mb-1 font-serif text-2xl">{coreCard.title}</h3>
+              <p className="text-sm text-[var(--muted)]">
+                版本 {coreCard.version} · {coreCard.genre}
+              </p>
+            </div>
+            <div>
+              <p className="mb-1 text-xs uppercase tracking-wide text-[var(--accent)]">
+                一句话承诺
+              </p>
+              <p className="text-sm">{coreCard.logline}</p>
+            </div>
+            <div>
+              <p className="mb-1 text-xs uppercase tracking-wide text-[var(--accent)]">
+                世界观概述
+              </p>
+              <p className="text-sm">{coreCard.worldviewSummary}</p>
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <p className="mb-1 text-xs uppercase tracking-wide text-[var(--accent)]">
+                  主角
+                </p>
+                <p className="text-sm">{coreCard.protagonistSummary}</p>
+              </div>
+              <div>
+                <p className="mb-1 text-xs uppercase tracking-wide text-[var(--accent)]">
+                  主角缺陷
+                </p>
+                <p className="text-sm">{coreCard.protagonistGap}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <p className="mb-1 text-xs uppercase tracking-wide text-[var(--accent)]">
+                  核心冲突
+                </p>
+                <p className="text-sm">{coreCard.centralConflict}</p>
+              </div>
+              <div>
+                <p className="mb-1 text-xs uppercase tracking-wide text-[var(--accent)]">
+                  对立力量
+                </p>
+                <p className="text-sm">{coreCard.antagonistForce}</p>
+              </div>
+            </div>
+            <div>
+              <p className="mb-1 text-xs uppercase tracking-wide text-[var(--accent)]">
+                主题
+              </p>
+              <p className="text-sm">{coreCard.themeStatement}</p>
+            </div>
+            <div>
+              <p className="mb-1 text-xs uppercase tracking-wide text-[var(--accent)]">
+                读者承诺
+              </p>
+              <p className="text-sm">{coreCard.readerPromise}</p>
+            </div>
           </div>
         )}
       </section>
