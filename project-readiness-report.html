@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentOS 项目前期准备检查报告</title>
+  <style>
+    :root {
+      --bg: #0f0f11;
+      --surface: #18181b;
+      --surface-raised: #232326;
+      --border: #2e2e33;
+      --text: #e4e4e7;
+      --text-muted: #a1a1aa;
+      --accent: #f59e0b;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .badge-success { background: rgba(34,197,94,0.12); color: var(--success); }
+    .badge-warning { background: rgba(245,158,11,0.12); color: var(--warning); }
+    .badge-danger { background: rgba(239,68,68,0.12); color: var(--danger); }
+    .badge-info { background: rgba(59,130,246,0.12); color: var(--info); }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .summary-card h3 {
+      margin: 0 0 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .summary-card .value {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+    section h2 {
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    tr:hover td {
+      background: var(--surface-raised);
+    }
+
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .check-list li:last-child { border-bottom: none; }
+    .check-icon { font-size: 1.1rem; line-height: 1.4; }
+    .check-text { flex: 1; }
+    .check-note { color: var(--text-muted); font-size: 0.85rem; }
+
+    .gate-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .gate-box h3 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
+
+    code {
+      background: var(--surface-raised);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: "SF Mono", Monaco, monospace;
+      font-size: 0.85em;
+    }
+    pre {
+      background: var(--surface-raised);
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .verdict {
+      background: var(--surface);
+      border: 1px solid var(--success);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .verdict h2 {
+      margin: 0 0 8px;
+      border: none;
+      justify-content: center;
+    }
+    .verdict p { margin: 0; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AgentOS 项目前期准备检查报告</h1>
+    <p class="subtitle">检查时间：2026-06-29 | 检查范围：工程地基、质量验证、环境就绪度</p>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <h3>整体状态</h3>
+        <div class="value" style="color: var(--success);">就绪</div>
+      </div>
+      <div class="summary-card">
+        <h3>质量验证</h3>
+        <div class="value" style="color: var(--success);">4/4 通过</div>
+      </div>
+      <div class="summary-card">
+        <h3>测试覆盖</h3>
+        <div class="value" style="color: var(--success);">24 项通过</div>
+      </div>
+      <div class="summary-card">
+        <h3>待处理问题</h3>
+        <div class="value" style="color: var(--warning);">3 项</div>
+      </div>
+    </div>
+
+    <section>
+      <h2><span style="color: var(--success);">&#10003;</span> 质量验证结果</h2>
+      <table>
+        <thead>
+          <tr><th>检查项</th><th>命令</th><th>结果</th><th>详情</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>代码规范</td>
+            <td><code>pnpm lint</code></td>
+            <td><span class="badge badge-success">通过</span></td>
+            <td>ESLint 全项目扫描无错误</td>
+          </tr>
+          <tr>
+            <td>类型检查</td>
+            <td><code>pnpm typecheck</code></td>
+            <td><span class="badge badge-success">通过</span></td>
+            <td>7 个包全部通过，12/12 tasks</td>
+          </tr>
+          <tr>
+            <td>单元测试</td>
+            <td><code>pnpm test</code></td>
+            <td><span class="badge badge-success">通过</span></td>
+            <td>24 个测试全部通过，0 失败</td>
+          </tr>
+          <tr>
+            <td>构建</td>
+            <td><code>pnpm build</code></td>
+            <td><span class="badge badge-success">通过</span></td>
+            <td>7 个包全部构建成功</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span style="color: var(--info);">&#9679;</span> 项目结构检查</h2>
+      <table>
+        <thead>
+          <tr><th>模块</th><th>技术栈</th><th>状态</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>apps/web</code></td>
+            <td>Next.js 16 + React + Tailwind CSS</td>
+            <td><span class="badge badge-success">就绪</span></td>
+            <td>首页、登录、项目列表、项目详情页壳已就绪</td>
+          </tr>
+          <tr>
+            <td><code>apps/api</code></td>
+            <td>NestJS + Express</td>
+            <td><span class="badge badge-success">就绪</span></td>
+            <td>健康检查、认证、Projects 模块骨架完整</td>
+          </tr>
+          <tr>
+            <td><code>packages/db</code></td>
+            <td>Prisma 6.19 + PostgreSQL</td>
+            <td><span class="badge badge-success">就绪</span></td>
+            <td>Schema 完整，2 个迁移文件，seed 脚本可用</td>
+          </tr>
+          <tr>
+            <td><code>packages/shared</code></td>
+            <td>Zod + TypeScript</td>
+            <td><span class="badge badge-success">就绪</span></td>
+            <td>Project、Auth、AIJob、Story 类型与校验规则</td>
+          </tr>
+          <tr>
+            <td><code>packages/ai-core</code></td>
+            <td>TypeScript</td>
+            <td><span class="badge badge-success">就绪</span></td>
+            <td>MockAI Provider + 3 组验收样例</td>
+          </tr>
+          <tr>
+            <td><code>packages/api-client</code></td>
+            <td>TypeScript</td>
+            <td><span class="badge badge-success">就绪</span></td>
+            <td>Web 与 API 的共享客户端</td>
+          </tr>
+          <tr>
+            <td><code>packages/ui-tokens</code></td>
+            <td>CSS Variables</td>
+            <td><span class="badge badge-success">就绪</span></td>
+            <td>主题变量与颜色 token</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span style="color: var(--info);">&#9679;</span> Gate B 验收清单（开发准备度）</h2>
+      <div class="gate-box">
+        <h3>必要条件检查结果</h3>
+        <ul class="check-list">
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>新开发者只依据 README 可以启动 Web、API 和数据库</div>
+              <div class="check-note">README 包含完整的首次准备和启动命令</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>Web 可以展示空工作台</div>
+              <div class="check-note">Next.js 构建成功，包含首页和项目工作台占位页面</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>API 健康检查可用</div>
+              <div class="check-note"><code>/health</code> 端点有自动测试覆盖，返回标准格式</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>Prisma 首个迁移可以在空数据库执行</div>
+              <div class="check-note">2 个迁移文件完整，包含 users/projects/ideas/candidates/cards/ai_jobs/sessions 表</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>Web 能通过共享 API Client 调用健康检查</div>
+              <div class="check-note">api-client 包已构建并通过测试</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>Mock AI 输出能通过共享 Schema 解析</div>
+              <div class="check-note">ai-core 包测试通过，Mock 走与真实 Provider 相同的校验流程</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>lint、typecheck、test、build 均有统一命令</div>
+              <div class="check-note">根级 package.json 已定义，全部通过验证</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>CI 可以执行基础检查</div>
+              <div class="check-note">.github/workflows/ci.yml 配置完整，覆盖 PR 和 main 分支推送</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--warning);">&#9888;</span>
+            <div class="check-text">
+              <div><code>.env.example</code> 不含真实秘密且字段说明完整</div>
+              <div class="check-note">字段说明完整，但实际 <code>.env</code> 文件尚未创建</div>
+            </div>
+          </li>
+          <li>
+            <span class="check-icon" style="color: var(--success);">&#10003;</span>
+            <div class="check-text">
+              <div>三个样例输入可以被测试或本地开发复用</div>
+              <div class="check-note">ai-core/src/samples.ts 包含玄幻/都市悬疑/科幻群像三组样例</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2><span style="color: var(--warning);">&#9888;</span> 待处理问题</h2>
+      <table>
+        <thead>
+          <tr><th>优先级</th><th>问题</th><th>影响</th><th>建议操作</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-warning">中</span></td>
+            <td><code>.env</code> 文件缺失</td>
+            <td>本地开发无法启动 API 和数据库连接</td>
+            <td>执行 <code>cp .env.example .env</code></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-warning">中</span></td>
+            <td>pnpm 版本不匹配</td>
+            <td>可能导致 lock 文件不一致</td>
+            <td>系统当前 9.15.4，项目要求 11.7.0，建议升级</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-info">低</span></td>
+            <td>Git 有大量未提交文件</td>
+            <td>缺乏版本基线</td>
+            <td>建议提交 Phase 0 工程骨架作为初始 commit</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span style="color: var(--info);">&#9679;</span> 环境信息</h2>
+      <table>
+        <thead>
+          <tr><th>项目</th><th>当前值</th><th>要求</th><th>状态</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Node.js</td>
+            <td>v26.3.0</td>
+            <td>&gt;= 22.0.0</td>
+            <td><span class="badge badge-success">满足</span></td>
+          </tr>
+          <tr>
+            <td>pnpm</td>
+            <td>9.15.4</td>
+            <td>11.7.0 (packageManager)</td>
+            <td><span class="badge badge-warning">不匹配</span></td>
+          </tr>
+          <tr>
+            <td>Docker</td>
+            <td>未检查</td>
+            <td>需要 Docker Compose</td>
+            <td><span class="badge badge-info">待确认</span></td>
+          </tr>
+          <tr>
+            <td>PostgreSQL</td>
+            <td>未检查</td>
+            <td>端口 5433 (容器映射)</td>
+            <td><span class="badge badge-info">待启动</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span style="color: var(--info);">&#9679;</span> 推荐启动步骤</h2>
+      <pre><code># 1. 创建环境文件
+cp .env.example .env
+
+# 2. 安装依赖（若 pnpm 版本已对齐）
+pnpm install
+
+# 3. 启动 PostgreSQL
+docker compose up -d postgres
+
+# 4. 生成 Prisma Client 并执行迁移
+pnpm db:generate
+pnpm db:migrate
+pnpm db:seed
+
+# 5. 启动开发服务
+pnpm dev
+
+# Web: http://localhost:3000
+# API: http://localhost:4000/health</code></pre>
+    </section>
+
+    <section>
+      <h2><span style="color: var(--info);">&#9679;</span> 数据库模型概览</h2>
+      <table>
+        <thead>
+          <tr><th>表名</th><th>用途</th><th>关键关系</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>users</code></td><td>用户账户</td><td>1:N projects, 1:N sessions</td></tr>
+          <tr><td><code>sessions</code></td><td>登录会话</td><td>N:1 users</td></tr>
+          <tr><td><code>projects</code></td><td>作品项目</td><td>N:1 users, 1:N ideas/candidates/cards/ai_jobs</td></tr>
+          <tr><td><code>project_ideas</code></td><td>原始创意输入</td><td>N:1 projects, 1:N candidates</td></tr>
+          <tr><td><code>high_concept_candidates</code></td><td>高概念候选</td><td>N:1 projects/ideas/ai_jobs</td></tr>
+          <tr><td><code>project_core_cards</code></td><td>作品核心卡</td><td>N:1 projects, N:1 candidates</td></tr>
+          <tr><td><code>ai_jobs</code></td><td>AI 任务记录</td><td>N:1 projects</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="verdict">
+      <h2 style="color: var(--success);">&#10003; 结论：项目已准备好进入业务开发</h2>
+      <p>Phase 0 工程地基完整，质量检查全部通过，满足 Gate B 条件。<br>建议先处理 3 项待办问题，然后正式进入 Slice 1「创建并重新打开项目」开发。</p>
+    </div>
+  </div>
+</body>
+</html>

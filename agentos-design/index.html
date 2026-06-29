@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AgentOS 设计交付</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101114;--panel:#17191d;--line:#2a2d33;--text:#f0eee8;--muted:#969a9f;--amber:#d7ae61;--green:#70b88c;--blue:#78a9d6;--red:#d77b77}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;letter-spacing:0}a{color:inherit;text-decoration:none}
+    header{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 40px;position:sticky;top:0;background:rgba(16,17,20,.96);z-index:3}.brand{font-family:Georgia,"Noto Serif SC",serif;font-size:19px}.brand span{color:var(--amber)}.meta{margin-left:auto;color:var(--muted);font-size:13px}
+    main{max-width:1240px;margin:auto;padding:56px 40px 80px}.intro{display:grid;grid-template-columns:1.25fr .75fr;gap:64px;padding-bottom:48px;border-bottom:1px solid var(--line)}h1{font:400 42px/1.2 Georgia,"Noto Serif SC",serif;margin:0 0 18px}.lead{font-size:17px;line-height:1.9;color:#c4c2bc;max-width:720px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);align-self:end}.stat{background:var(--panel);padding:18px}.stat b{font:400 25px Georgia,serif;color:var(--amber);display:block}.stat span{font-size:12px;color:var(--muted)}
+    h2{font:400 26px Georgia,"Noto Serif SC",serif;margin:48px 0 20px}.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}.tile{border:1px solid var(--line);background:var(--panel);min-height:260px;position:relative;overflow:hidden;transition:.2s}.tile:hover{border-color:#61543b;transform:translateY(-2px)}.tile.wide{grid-row:span 2;min-height:536px}.shot{position:absolute;inset:0;background-size:cover;background-position:center}.workspace{background-image:linear-gradient(rgba(12,13,15,.14),rgba(12,13,15,.78)),url('assets/tiandao-draft-cover.png');background-position:60% 35%}.mobile{background:#18201d}.mobile:before,.mobile:after{content:"";position:absolute;width:116px;height:228px;top:22px;border:1px solid #445049;border-radius:20px;background:#101412}.mobile:before{left:52px}.mobile:after{left:184px}.details{position:absolute;left:0;right:0;bottom:0;padding:24px;background:linear-gradient(transparent,rgba(12,13,15,.98) 38%)}.eyebrow{font-size:11px;color:var(--amber);text-transform:uppercase}.details h3{font:400 23px Georgia,"Noto Serif SC",serif;margin:8px 0}.details p{color:#aaaead;font-size:13px;line-height:1.7;margin:0 0 16px}.open{display:inline-flex;align-items:center;gap:8px;color:var(--text);font-size:13px}.open i{font-style:normal;color:var(--amber)}
+    .flow{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);margin-top:16px}.step{padding:19px;border-right:1px solid var(--line)}.step:last-child{border:0}.step b{font-size:13px}.step p{font-size:12px;color:var(--muted);line-height:1.6;margin:7px 0 0}.num{color:var(--amber);font:400 18px Georgia,serif;margin-bottom:10px}.links{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.link{padding:13px 14px;border:1px solid var(--line);font-size:13px;color:#b8b8b6}.link:hover{color:var(--amber);border-color:#61543b}
+    @media(max-width:760px){header{padding:0 20px}.meta{display:none}main{padding:36px 20px}.intro,.grid{grid-template-columns:1fr;gap:26px}h1{font-size:34px}.tile.wide{grid-row:auto;min-height:400px}.flow,.links{grid-template-columns:1fr 1fr}.step:nth-child(2){border-right:0}.step{border-bottom:1px solid var(--line)}}
+  </style>
+</head>
+<body>
+  <header><div class="brand"><span>A</span>gentOS</div><div class="meta">作品设定工具 · 设计交付 v1.0</div></header>
+  <main>
+    <section class="intro">
+      <div><h1>让灵感逐步成为<br>可信、可用的作品设定</h1><div class="lead">这套设计围绕创作者真正要完成的判断展开：选择作品方向、确认核心设定、审核 AI 候选内容，并让每一次创作决策有清楚的来路。</div></div>
+      <div class="stats"><div class="stat"><b>8</b><span>Web 核心页面</span></div><div class="stat"><b>3</b><span>小程序场景</span></div><div class="stat"><b>1</b><span>统一内容系统</span></div></div>
+    </section>
+    <h2>核心设计稿</h2>
+    <section class="grid">
+      <a class="tile wide" href="boards/web-workspace.html"><div class="shot workspace"></div><div class="details"><div class="eyebrow">Web · Main workspace</div><h3>项目工作台</h3><p>从项目状态、创作推进、待审核资产到世界设定总览，建立完整的桌面创作中心。</p><span class="open">打开设计稿 <i>→</i></span></div></a>
+      <a class="tile" href="boards/miniapp-flow.html"><div class="shot mobile"></div><div class="details"><div class="eyebrow">Mini Program · Mobile flow</div><h3>小程序三屏流程</h3><span class="open">打开设计稿 <i>→</i></span></div></a>
+      <a class="tile" href="pages/asset-review.html"><div class="details" style="top:0;background:#17191d"><div class="eyebrow">Web · Review</div><h3>资产审核</h3><p>AI 产出进入正史之前的关键确认界面。</p><span class="open">打开页面 <i>→</i></span></div></a>
+    </section>
+    <h2>体验主线</h2>
+    <section class="flow"><div class="step"><div class="num">01</div><b>记录灵感</b><p>输入故事原点与创作偏好。</p></div><div class="step"><div class="num">02</div><b>选择方向</b><p>比较高概念的承诺与风险。</p></div><div class="step"><div class="num">03</div><b>建立正史</b><p>确认核心卡、开发案和设定。</p></div><div class="step"><div class="num">04</div><b>持续创作</b><p>带着可信上下文与 AI 协作。</p></div></section>
+    <h2>完整 Web 页面</h2>
+    <section class="links"><a class="link" href="pages/project-list.html">项目列表</a><a class="link" href="pages/idea-input.html">创意输入</a><a class="link" href="pages/high-concepts.html">高概念候选</a><a class="link" href="pages/core-card.html">作品核心卡</a><a class="link" href="pages/dev-plan.html">作品开发案</a><a class="link" href="pages/project-workspace.html">项目工作台</a><a class="link" href="pages/asset-review.html">资产审核</a><a class="link" href="pages/ai-chat.html">AI 对话</a></section>
+  </main>
+</body>
+</html>
+

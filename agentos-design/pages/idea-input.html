@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意输入 — AgentOS</title>
+    <style id="theme-vars">
+/* AgentOS Brand Design System */
+/* Tone: Professional, focused creation tool — dark theme with warm neutral accents */
+
+:root {
+  /* === Color System === */
+  /* Background layers */
+  --color-bg-base: #0f0f12;
+  --color-bg-elevated: #18181d;
+  --color-bg-surface: #1e1e24;
+  --color-bg-overlay: #26262e;
+  --color-bg-hover: #2a2a34;
+  --color-bg-active: #31313c;
+
+  /* Brand primary — warm amber for creative energy */
+  --color-primary: #d4a853;
+  --color-primary-hover: #dfb962;
+  --color-primary-active: #c49a44;
+  --color-primary-muted: rgba(212, 168, 83, 0.12);
+  --color-primary-subtle: rgba(212, 168, 83, 0.06);
+
+  /* Text hierarchy */
+  --color-text-primary: #eae8e4;
+  --color-text-secondary: #a09e99;
+  --color-text-tertiary: #6d6b67;
+  --color-text-inverse: #0f0f12;
+  --color-text-accent: #d4a853;
+
+  /* Borders */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.14);
+  --color-border-active: rgba(212, 168, 83, 0.4);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* State colors — semantic only */
+  --state-success: #4ade80;
+  --state-success-muted: rgba(74, 222, 128, 0.12);
+  --state-warning: #fbbf24;
+  --state-warning-muted: rgba(251, 191, 36, 0.12);
+  --state-error: #f87171;
+  --state-error-muted: rgba(248, 113, 113, 0.12);
+  --state-info: #60a5fa;
+  --state-info-muted: rgba(96, 165, 250, 0.12);
+
+  /* Asset status colors */
+  --status-suggested: #818cf8;
+  --status-confirmed: #4ade80;
+  --status-rejected: #f87171;
+  --status-reviewing: #fbbf24;
+  --status-archived: #6d6b67;
+
+  /* Spoiler levels */
+  --spoiler-none: #4ade80;
+  --spoiler-low: #60a5fa;
+  --spoiler-medium: #fbbf24;
+  --spoiler-high: #f97316;
+  --spoiler-ending: #f87171;
+
+  /* === Typography === */
+  --font-display: 'DM Serif Display', Georgia, 'Noto Serif SC', serif;
+  --font-body: 'Inter', -apple-system, 'Noto Sans SC', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-xs-leading: 1rem;
+  --text-sm: 0.8125rem;
+  --text-sm-leading: 1.25rem;
+  --text-base: 0.875rem;
+  --text-base-leading: 1.5rem;
+  --text-lg: 1rem;
+  --text-lg-leading: 1.625rem;
+  --text-xl: 1.125rem;
+  --text-xl-leading: 1.75rem;
+  --text-2xl: 1.375rem;
+  --text-2xl-leading: 1.875rem;
+  --text-3xl: 1.75rem;
+  --text-3xl-leading: 2.25rem;
+  --text-4xl: 2.25rem;
+  --text-4xl-leading: 2.75rem;
+
+  /* === Spacing === */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* === Shape === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* === Shadows — surface-led, minimal shadow alpha === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(212, 168, 83, 0.15);
+
+  /* === Transitions === */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* === Component Patterns === */
+.card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+
+.card:hover {
+  border-color: var(--color-border-hover);
+}
+
+.card-interactive:hover {
+  border-color: var(--color-border-active);
+  box-shadow: var(--shadow-glow);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  line-height: var(--text-xs-leading);
+}
+
+.badge-suggested {
+  background: rgba(129, 140, 248, 0.15);
+  color: #818cf8;
+}
+
+.badge-confirmed {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+}
+
+.badge-rejected {
+  background: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+}
+
+.badge-reviewing {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-ghost:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+/* Progress bar */
+.progress-track {
+  width: 100%;
+  height: 3px;
+  background: var(--color-bg-overlay);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+/* Step indicator */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+}
+
+.step-indicator.active {
+  color: var(--color-primary);
+}
+
+.step-indicator.completed {
+  color: var(--state-success);
+}
+
+/* Tooltip */
+.tooltip {
+  background: var(--color-bg-overlay);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-bg-base); color: var(--color-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="bg-base text-[#eae8e4] font-[Inter,sans-serif] antialiased">
+  <div class="flex h-screen">
+
+    <!-- ==================== Sidebar ==================== -->
+    <aside class="w-60 bg-elevated border-r border-white/[0.08] flex flex-col shrink-0">
+
+      <!-- Logo / Brand -->
+      <div class="flex items-center gap-2.5 px-5 h-14 shrink-0 border-b border-white/[0.08]">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          <path d="M8 7h8"/>
+          <path d="M8 11h5"/>
+        </svg>
+        <span class="text-base font-semibold tracking-wide" style="font-family: 'DM Serif Display', serif; color: #d4a853;">AgentOS</span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 py-3 px-3 flex flex-col gap-0.5 overflow-y-auto">
+
+        <!-- SLOT: activeNavItem — set data-active="true" on the current page's nav item -->
+
+        <!-- 项目列表 Projects -->
+        <a href="projects.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="projects"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <span>项目列表</span>
+        </a>
+
+        <!-- 创作循环 Creation Loop -->
+        <a href="creation-loop.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="loop"
+           data-active="true">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-3.5-7.1"/>
+            <polyline points="21 3 21 9 15 9"/>
+          </svg>
+          <span>创作循环</span>
+        </a>
+
+        <!-- 设定资产 Story Assets -->
+        <a href="story-assets.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="assets"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+          <span>设定资产</span>
+        </a>
+
+        <!-- AI 对话 AI Chat -->
+        <a href="ai-chat.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="chat"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>AI 对话</span>
+        </a>
+
+        <!-- 经验池 Experience Pool -->
+        <a href="experience-pool.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="experience"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 8V21H3V8"/>
+            <rect x="1" y="3" width="22" height="5" rx="1"/>
+            <path d="M10 12h4"/>
+          </svg>
+          <span>经验池</span>
+        </a>
+
+      </nav>
+
+      <!-- User Area (bottom) -->
+      <div class="border-t border-white/[0.08] px-4 py-3 flex items-center gap-3 shrink-0">
+        <div class="w-8 h-8 rounded-full bg-overlay flex items-center justify-center text-xs font-semibold text-[#a09e99]">
+          U
+        </div>
+        <span class="flex-1 text-sm text-[#a09e99] truncate">用户名</span>
+        <button class="text-[#6d6b67] hover:text-[#a09e99] transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ==================== Main Area ==================== -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- Top Bar -->
+      <header class="h-14 bg-elevated border-b border-white/[0.08] flex items-center px-6 shrink-0">
+
+        <!-- SLOT: breadcrumb -->
+        <nav class="flex items-center gap-1.5 text-xs text-[#6d6b67] mr-4">
+          <span>AgentOS</span>
+          <span class="text-[#31313c]">/</span>
+          <span>我的项目</span>
+          <span class="text-[#31313c]">/</span>
+          <span>天道草稿</span>
+          <span class="text-[#31313c]">/</span>
+          <span class="text-[#a09e99]">创意输入</span>
+        </nav>
+
+        <!-- SLOT: pageTitle -->
+        <h1 class="text-base font-semibold text-[#eae8e4] flex-1 min-w-0 truncate" style="font-family: 'DM Serif Display', serif;">
+          创意输入
+        </h1>
+
+        <!-- Right actions -->
+        <div class="flex items-center gap-2 ml-4 shrink-0">
+          <!-- Search -->
+          <button class="btn-ghost p-2 rounded-md hover:bg-hover transition-colors" title="搜索">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+          <!-- Notification bell -->
+          <button class="btn-ghost p-2 rounded-md hover:bg-hover transition-colors relative" title="通知">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+          </button>
+          <!-- Export button -->
+          <button class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md border border-primary text-primary hover:bg-primary hover:text-base transition-colors" title="导出">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>导出</span>
+          </button>
+        </div>
+
+      </header>
+
+      <!-- Page Content Area -->
+      <main class="flex-1 overflow-auto p-6">
+
+        <!-- ===== Idea Input Page Content ===== -->
+        <div class="max-w-2xl mx-auto">
+
+          <!-- Section Header -->
+          <div class="mb-8">
+            <h2 class="text-2xl text-[#eae8e4] mb-2" style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; line-height: 1.875rem;">
+              输入你的创意
+            </h2>
+            <p class="text-sm text-[#a09e99]">从一句话开始，让 AI 帮你展开方向</p>
+          </div>
+
+          <!-- Main Textarea (Hero Element) -->
+          <div class="relative mb-6">
+            <textarea
+              id="idea-textarea"
+              class="idea-textarea w-full min-h-40 rounded-lg p-4 text-sm leading-relaxed resize-y"
+              style="background: var(--color-bg-surface); border: 1px solid var(--color-border); color: var(--color-text-primary);"
+              rows="6"
+              placeholder="一个失忆修仙者发现自己其实是天道写废的草稿。"
+              oninput="updateCharCount()"
+            ></textarea>
+            <div class="absolute bottom-3 right-3 text-xs text-[#6d6b67] select-none">
+              <span id="char-count">0</span> 字
+            </div>
+          </div>
+
+          <!-- Collapsible Preferences Section -->
+          <div class="mb-8">
+            <button class="toggle-btn" id="pref-toggle" onclick="togglePreferences()">
+              <span class="toggle-arrow">&#9656;</span>
+              <span>展开创作偏好</span>
+            </button>
+
+            <div class="preferences-panel mt-4" id="pref-panel">
+              <div class="rounded-lg p-6" style="background: var(--color-bg-elevated); border: 1px solid var(--color-border);">
+                <div class="grid grid-cols-2 gap-5">
+
+                  <!-- 目标题材 -->
+                  <div>
+                    <label class="block text-xs font-medium text-[#a09e99] mb-2">目标题材</label>
+                    <select class="custom-select form-input">
+                      <option value="" disabled selected>选择题材...</option>
+                      <option value="xuanhuan">玄幻</option>
+                      <option value="dushi">都市</option>
+                      <option value="kehuan">科幻</option>
+                      <option value="qihuan">奇幻</option>
+                      <option value="wuxia">武侠</option>
+                      <option value="xuanyi">悬疑</option>
+                      <option value="yanqing">言情</option>
+                      <option value="lishi">历史</option>
+                    </select>
+                  </div>
+
+                  <!-- 作品长度 -->
+                  <div>
+                    <label class="block text-xs font-medium text-[#a09e99] mb-2">作品长度</label>
+                    <select class="custom-select form-input">
+                      <option value="" disabled selected>选择长度...</option>
+                      <option value="short">短篇</option>
+                      <option value="medium">中篇</option>
+                      <option value="long">长篇</option>
+                      <option value="xlong">超长篇</option>
+                    </select>
+                  </div>
+
+                  <!-- 读者爽点 -->
+                  <div>
+                    <label class="block text-xs font-medium text-[#a09e99] mb-2">读者爽点</label>
+                    <input type="text" class="form-input" placeholder="升级打脸、扮猪吃虎">
+                  </div>
+
+                  <!-- 禁忌内容 -->
+                  <div>
+                    <label class="block text-xs font-medium text-[#a09e99] mb-2">禁忌内容</label>
+                    <input type="text" class="form-input" placeholder="不要血腥暴力">
+                  </div>
+
+                  <!-- 参考气质 -->
+                  <div>
+                    <label class="block text-xs font-medium text-[#a09e99] mb-2">参考气质</label>
+                    <input type="text" class="form-input" placeholder="类似诡秘之主">
+                  </div>
+
+                  <!-- AI 大胆程度 -->
+                  <div>
+                    <label class="block text-xs font-medium text-[#a09e99] mb-2">AI 大胆程度</label>
+                    <div class="flex items-center gap-3 mt-1">
+                      <span class="text-xs text-[#6d6b67] shrink-0">保守</span>
+                      <input type="range" min="0" max="100" value="50" class="creativity-slider flex-1" id="creativity-slider" oninput="updateCreativityLabel()">
+                      <span class="text-xs text-[#6d6b67] shrink-0">大胆</span>
+                    </div>
+                    <div class="text-center text-xs text-primary mt-1.5 font-medium" id="creativity-label">平衡</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Row -->
+          <div class="flex items-center justify-between">
+            <button class="btn-ghost px-4 py-2 text-sm" onclick="clearForm()">
+              清空
+            </button>
+            <button class="btn-primary px-5 py-2.5 text-sm" data-dom-id="btn-generate-concepts">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.2 5.6 21.2 8 14 2 9.2h7.6z"/>
+              </svg>
+              生成高概念候选
+            </button>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Character count for textarea
+    function updateCharCount() {
+      const textarea = document.getElementById('idea-textarea');
+      const count = document.getElementById('char-count');
+      count.textContent = textarea.value.length;
+    }
+
+    // Toggle preferences panel
+    function togglePreferences() {
+      const btn = document.getElementById('pref-toggle');
+      const panel = document.getElementById('pref-panel');
+      const isOpen = panel.classList.contains('expanded');
+
+      if (isOpen) {
+        panel.classList.remove('expanded');
+        btn.classList.remove('open');
+        btn.querySelector('span:last-child').textContent = '展开创作偏好';
+      } else {
+        panel.classList.add('expanded');
+        btn.classList.add('open');
+        btn.querySelector('span:last-child').textContent = '收起创作偏好';
+      }
+    }
+
+    // Creativity slider label
+    function updateCreativityLabel() {
+      const slider = document.getElementById('creativity-slider');
+      const label = document.getElementById('creativity-label');
+      const val = parseInt(slider.value);
+      if (val <= 33) {
+        label.textContent = '保守';
+      } else if (val <= 66) {
+        label.textContent = '平衡';
+      } else {
+        label.textContent = '大胆';
+      }
+    }
+
+    // Clear form
+    function clearForm() {
+      document.getElementById('idea-textarea').value = '';
+      document.getElementById('char-count').textContent = '0';
+      document.querySelectorAll('.form-input').forEach(el => {
+        if (el.tagName === 'SELECT') {
+          el.selectedIndex = 0;
+        } else {
+          el.value = '';
+        }
+      });
+      document.getElementById('creativity-slider').value = 50;
+      document.getElementById('creativity-label').textContent = '平衡';
+    }
+  </script>
+
+    <style>
+    /* Sidebar nav active state driven by data-active attribute */
+    .nav-item[data-active="true"] {
+      border-left: 3px solid #d4a853;
+      background: rgba(212, 168, 83, 0.06);
+      color: #d4a853;
+    }
+    .nav-item[data-active="true"] svg {
+      color: #d4a853;
+    }
+    .nav-item {
+      border-left: 3px solid transparent;
+      transition: all 150ms ease;
+    }
+    .nav-item:hover:not([data-active="true"]) {
+      background: rgba(255, 255, 255, 0.04);
+      border-left-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Idea textarea hero glow */
+    .idea-textarea {
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .idea-textarea:focus {
+      border-color: rgba(212, 168, 83, 0.5);
+      box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.10), 0 0 20px rgba(212, 168, 83, 0.08);
+      outline: none;
+    }
+
+    /* Custom select styling */
+    .custom-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236d6b67' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2.25rem;
+    }
+
+    /* Slider styling */
+    .creativity-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 9999px;
+      background: var(--color-bg-overlay);
+      outline: none;
+      transition: background 200ms ease;
+    }
+    .creativity-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      cursor: pointer;
+      border: 2px solid var(--color-bg-base);
+      box-shadow: 0 0 6px rgba(212, 168, 83, 0.3);
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+    .creativity-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(212, 168, 83, 0.5);
+    }
+    .creativity-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      cursor: pointer;
+      border: 2px solid var(--color-bg-base);
+      box-shadow: 0 0 6px rgba(212, 168, 83, 0.3);
+    }
+
+    /* Smooth collapse transition */
+    .preferences-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 350ms ease, opacity 300ms ease;
+      opacity: 0;
+    }
+    .preferences-panel.expanded {
+      max-height: 600px;
+      opacity: 1;
+    }
+
+    /* Form inputs shared style */
+    .form-input {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text-primary);
+      font-size: var(--text-sm);
+      padding: var(--space-3) var(--space-4);
+      transition: border-color 200ms ease;
+      width: 100%;
+    }
+    .form-input::placeholder {
+      color: var(--color-text-tertiary);
+    }
+    .form-input:focus {
+      border-color: rgba(212, 168, 83, 0.4);
+      outline: none;
+    }
+
+    /* Toggle button for preferences */
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) 0;
+      transition: color 150ms ease;
+    }
+    .toggle-btn:hover {
+      color: var(--color-text-primary);
+    }
+    .toggle-arrow {
+      display: inline-block;
+      transition: transform 200ms ease;
+      font-size: 0.7rem;
+    }
+    .toggle-btn.open .toggle-arrow {
+      transform: rotate(90deg);
+    }
+  </style>
+</body>
+</html>

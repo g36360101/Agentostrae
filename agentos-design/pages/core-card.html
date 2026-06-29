@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentOS</title>
+    <style id="theme-vars">
+/* AgentOS Brand Design System */
+/* Tone: Professional, focused creation tool — dark theme with warm neutral accents */
+
+:root {
+  /* === Color System === */
+  /* Background layers */
+  --color-bg-base: #0f0f12;
+  --color-bg-elevated: #18181d;
+  --color-bg-surface: #1e1e24;
+  --color-bg-overlay: #26262e;
+  --color-bg-hover: #2a2a34;
+  --color-bg-active: #31313c;
+
+  /* Brand primary — warm amber for creative energy */
+  --color-primary: #d4a853;
+  --color-primary-hover: #dfb962;
+  --color-primary-active: #c49a44;
+  --color-primary-muted: rgba(212, 168, 83, 0.12);
+  --color-primary-subtle: rgba(212, 168, 83, 0.06);
+
+  /* Text hierarchy */
+  --color-text-primary: #eae8e4;
+  --color-text-secondary: #a09e99;
+  --color-text-tertiary: #6d6b67;
+  --color-text-inverse: #0f0f12;
+  --color-text-accent: #d4a853;
+
+  /* Borders */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.14);
+  --color-border-active: rgba(212, 168, 83, 0.4);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* State colors — semantic only */
+  --state-success: #4ade80;
+  --state-success-muted: rgba(74, 222, 128, 0.12);
+  --state-warning: #fbbf24;
+  --state-warning-muted: rgba(251, 191, 36, 0.12);
+  --state-error: #f87171;
+  --state-error-muted: rgba(248, 113, 113, 0.12);
+  --state-info: #60a5fa;
+  --state-info-muted: rgba(96, 165, 250, 0.12);
+
+  /* Asset status colors */
+  --status-suggested: #818cf8;
+  --status-confirmed: #4ade80;
+  --status-rejected: #f87171;
+  --status-reviewing: #fbbf24;
+  --status-archived: #6d6b67;
+
+  /* Spoiler levels */
+  --spoiler-none: #4ade80;
+  --spoiler-low: #60a5fa;
+  --spoiler-medium: #fbbf24;
+  --spoiler-high: #f97316;
+  --spoiler-ending: #f87171;
+
+  /* === Typography === */
+  --font-display: 'DM Serif Display', Georgia, 'Noto Serif SC', serif;
+  --font-body: 'Inter', -apple-system, 'Noto Sans SC', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-xs-leading: 1rem;
+  --text-sm: 0.8125rem;
+  --text-sm-leading: 1.25rem;
+  --text-base: 0.875rem;
+  --text-base-leading: 1.5rem;
+  --text-lg: 1rem;
+  --text-lg-leading: 1.625rem;
+  --text-xl: 1.125rem;
+  --text-xl-leading: 1.75rem;
+  --text-2xl: 1.375rem;
+  --text-2xl-leading: 1.875rem;
+  --text-3xl: 1.75rem;
+  --text-3xl-leading: 2.25rem;
+  --text-4xl: 2.25rem;
+  --text-4xl-leading: 2.75rem;
+
+  /* === Spacing === */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* === Shape === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* === Shadows — surface-led, minimal shadow alpha === */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(212, 168, 83, 0.15);
+
+  /* === Transitions === */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* === Component Patterns === */
+.card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+
+.card:hover {
+  border-color: var(--color-border-hover);
+}
+
+.card-interactive:hover {
+  border-color: var(--color-border-active);
+  box-shadow: var(--shadow-glow);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  line-height: var(--text-xs-leading);
+}
+
+.badge-suggested {
+  background: rgba(129, 140, 248, 0.15);
+  color: #818cf8;
+}
+
+.badge-confirmed {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+}
+
+.badge-rejected {
+  background: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+}
+
+.badge-reviewing {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-ghost:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+/* Progress bar */
+.progress-track {
+  width: 100%;
+  height: 3px;
+  background: var(--color-bg-overlay);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+/* Step indicator */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+}
+
+.step-indicator.active {
+  color: var(--color-primary);
+}
+
+.step-indicator.completed {
+  color: var(--state-success);
+}
+
+/* Tooltip */
+.tooltip {
+  background: var(--color-bg-overlay);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-bg-base); color: var(--color-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="bg-base text-[#eae8e4] font-[Inter,sans-serif] antialiased">
+  <div class="flex h-screen">
+
+    <!-- ==================== Sidebar ==================== -->
+    <aside class="w-60 bg-elevated border-r border-white/[0.08] flex flex-col shrink-0">
+
+      <!-- Logo / Brand -->
+      <div class="flex items-center gap-2.5 px-5 h-14 shrink-0 border-b border-white/[0.08]">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          <path d="M8 7h8"/>
+          <path d="M8 11h5"/>
+        </svg>
+        <span class="text-base font-semibold tracking-wide" style="font-family: 'DM Serif Display', serif; color: #d4a853;">AgentOS</span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 py-3 px-3 flex flex-col gap-0.5 overflow-y-auto">
+
+        <!-- SLOT: activeNavItem — "创作循环" is active -->
+
+        <!-- 项目列表 Projects -->
+        <a href="projects.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="projects"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <span>项目列表</span>
+        </a>
+
+        <!-- 创作循环 Creation Loop — ACTIVE -->
+        <a href="creation-loop.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="loop"
+           data-active="true">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-3.5-7.1"/>
+            <polyline points="21 3 21 9 15 9"/>
+          </svg>
+          <span>创作循环</span>
+        </a>
+
+        <!-- 设定资产 Story Assets -->
+        <a href="story-assets.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="assets"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+          <span>设定资产</span>
+        </a>
+
+        <!-- AI 对话 AI Chat -->
+        <a href="ai-chat.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="chat"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>AI 对话</span>
+        </a>
+
+        <!-- 经验池 Experience Pool -->
+        <a href="experience-pool.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="experience"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 8V21H3V8"/>
+            <rect x="1" y="3" width="22" height="5" rx="1"/>
+            <path d="M10 12h4"/>
+          </svg>
+          <span>经验池</span>
+        </a>
+
+      </nav>
+
+      <!-- User Area (bottom) -->
+      <div class="border-t border-white/[0.08] px-4 py-3 flex items-center gap-3 shrink-0">
+        <div class="w-8 h-8 rounded-full bg-overlay flex items-center justify-center text-xs font-semibold text-[#a09e99]">
+          U
+        </div>
+        <span class="flex-1 text-sm text-[#a09e99] truncate">用户名</span>
+        <button class="text-[#6d6b67] hover:text-[#a09e99] transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ==================== Main Area ==================== -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- Top Bar -->
+      <header class="h-14 bg-elevated border-b border-white/[0.08] flex items-center px-6 shrink-0">
+
+        <!-- SLOT: breadcrumb -->
+        <nav class="flex items-center gap-1.5 text-xs text-[#6d6b67] mr-4">
+          <a href="projects.html" class="hover:text-[#a09e99] transition-colors">AgentOS</a>
+          <span>/</span>
+          <a href="projects.html" class="hover:text-[#a09e99] transition-colors">我的项目</a>
+          <span>/</span>
+          <a href="creation-loop.html" class="hover:text-[#a09e99] transition-colors">天道草稿</a>
+          <span>/</span>
+          <span class="text-[#a09e99]">作品核心卡</span>
+        </nav>
+
+        <!-- SLOT: pageTitle -->
+        <h1 class="text-base font-semibold text-[#eae8e4] flex-1 min-w-0 truncate" style="font-family: 'DM Serif Display', serif;">
+          作品核心卡
+        </h1>
+
+        <!-- Right actions -->
+        <div class="flex items-center gap-2 ml-4 shrink-0">
+          <!-- Search -->
+          <button class="btn-ghost p-2 rounded-md hover:bg-hover transition-colors" title="搜索">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+          <!-- Notification bell -->
+          <button class="btn-ghost p-2 rounded-md hover:bg-hover transition-colors relative" title="通知">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+          </button>
+          <!-- Export button -->
+          <button class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md border border-primary text-primary hover:bg-primary hover:text-base transition-colors" title="导出">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>导出</span>
+          </button>
+        </div>
+
+      </header>
+
+      <!-- Page Content Area -->
+      <main class="flex-1 overflow-auto p-6">
+
+        <!-- Core Card Page Content -->
+        <div class="max-w-6xl mx-auto">
+
+          <!-- Page subtitle -->
+          <p class="text-sm text-[#6d6b67] mb-6">作品核心卡是整个项目的权威参照文档，所有后续创作以此为基础。</p>
+
+          <!-- Two-column form -->
+          <div class="flex gap-6 items-start">
+
+            <!-- ===== Left Column — Core Information (60%) ===== -->
+            <div class="w-[60%] space-y-6">
+
+              <!-- Section heading -->
+              <div class="pb-3 border-b border-white/[0.08]">
+                <h2 class="text-2xl text-[#eae8e4]" style="font-family: 'DM Serif Display', serif;">核心设定</h2>
+              </div>
+
+              <!-- Field: 作品名 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">作品名</label>
+                <input type="text" class="core-input" value="天道草稿人" />
+              </div>
+
+              <!-- Field: 类型/题材 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">类型 / 题材</label>
+                <input type="text" class="core-input" value="玄幻 / 升级流 / 元叙事" />
+              </div>
+
+              <!-- Field: 一句话卖点 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">一句话卖点</label>
+                <textarea class="core-textarea" rows="2">一个发现自己只是某位作者草稿中角色的修仙者，决定越界修改「剧本」，从纸面世界杀向创作者的桌面——用故事本身去对抗命运。</textarea>
+              </div>
+
+              <!-- Field: 读者承诺 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">读者承诺</label>
+                <textarea class="core-textarea" rows="2">如果你曾被一个角色"本该有更好结局"的遗憾刺痛过，这本书就是为那个不甘心而写的——每一步升级都颠覆你对"元设定"的理解。</textarea>
+              </div>
+
+              <!-- Field: 世界观摘要 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">世界观摘要</label>
+                <textarea class="core-textarea" rows="4">修仙界"天道"由多层「叙事层」构成，每一层都是一个独立故事世界。底层世界的角色若修炼到极致，可感知上层叙事的存在。主角所在的「第三层」正面临被上层作者「废弃重写」的危机。存在一个被称为"稿纸深渊"的禁区，废弃设定与被删角色在那里挣扎求存。</textarea>
+              </div>
+
+              <!-- Field: 不可破坏设定 (amber-tinted border) -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">
+                  不可破坏设定
+                  <span class="ml-2 inline-flex items-center gap-1 text-xs text-[#d4a853]">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                      <path d="M2 17l10 5 10-5"/>
+                    </svg>
+                    关键设定
+                  </span>
+                </label>
+                <textarea class="core-textarea field-amber-border" rows="3">1. 修仙体系基于「叙事层突破」，每一层的规则由上一层定义；2. "稿纸深渊"是唯一不受叙事层管辖的灰色地带；3. 上层作者的存在仅能通过「情节裂痕」被间接感知，不可直接对峙；4. 主角的每一次升级实质是"对自身设定的重写"。</textarea>
+              </div>
+
+            </div>
+
+            <!-- ===== Right Column — Character & Conflict (40%) ===== -->
+            <div class="w-[40%] space-y-6">
+
+              <!-- Section heading -->
+              <div class="pb-3 border-b border-white/[0.08]">
+                <h2 class="text-2xl text-[#eae8e4]" style="font-family: 'DM Serif Display', serif;">主角与冲突</h2>
+              </div>
+
+              <!-- Field: 主角摘要 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">主角摘要</label>
+                <textarea class="core-textarea" rows="3" placeholder="描述你的主角：背景、性格、核心驱动力...">陆鸣，24岁，第三层修仙界末流宗门弟子。天赋平庸却异常执着，对"既定命运"有本能的反抗意识。在一次秘境探索中意外发现世界边缘的「情节裂痕」，从此踏上改写自身命运的道路。</textarea>
+              </div>
+
+              <!-- Field: 主角缺口 (amber left border — key field) -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">
+                  主角缺口
+                  <span class="ml-2 inline-flex items-center gap-1 text-xs text-[#d4a853]">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    叙事锚点
+                  </span>
+                </label>
+                <textarea class="core-textarea field-amber-left" rows="2" placeholder="主角最深层的不完整之处...">不信任任何人给予的"善意"，因为整个世界的规则本身就是被设计好的。他渴望「真实的自由」，却无法定义何为真实。</textarea>
+              </div>
+
+              <!-- Field: 核心矛盾 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">核心矛盾</label>
+                <textarea class="core-textarea" rows="2" placeholder="驱动整个故事的核心张力...">自由意志 vs 被叙事命运——当主角发现自己的一切挣扎可能是上层作者"写得更好"的情节时，反抗本身是否也是一种被设计好的戏剧性？</textarea>
+              </div>
+
+              <!-- Field: 反派/对立力量 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">反派 / 对立力量</label>
+                <textarea class="core-textarea" rows="2" placeholder="与主角核心矛盾对立的力量...">「天章阁」——维护各层叙事秩序的最高权力机构，由被上层作者"钦定"的角色组成。阁主表面是守护者，实则是上层作者意志的执行程序。</textarea>
+              </div>
+
+              <!-- Field: 长线悬念 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">长线悬念</label>
+                <textarea class="core-textarea" rows="2" placeholder="贯穿全书的核心疑问...">上层作者是否已经知道主角觉醒？如果是，那么主角的一切反抗是否都在"剧情大纲"之中？能否真正超出叙事的控制？</textarea>
+              </div>
+
+              <!-- Field: 主题表达 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">主题表达</label>
+                <input type="text" class="core-input" value="真正的自由不是挣脱牢笼，而是成为那个书写牢笼的人。" />
+              </div>
+
+              <!-- Field: 目标读者 -->
+              <div>
+                <label class="block text-sm text-[#a09e99] mb-2">目标读者</label>
+                <input type="text" class="core-input" value="18-35岁男性，网文深度读者，偏好智斗/元设定/反套路" />
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ===== Bottom Action Bar ===== -->
+          <div class="mt-8 pt-5 border-t border-white/[0.08] flex items-center justify-between">
+            <!-- Left: ghost link -->
+            <a href="high-concept.html" class="btn-ghost text-sm text-[#6d6b67] hover:text-[#a09e99] inline-flex items-center gap-2 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+              </svg>
+              返回重选高概念
+            </a>
+
+            <!-- Right: action buttons -->
+            <div class="flex items-center gap-3">
+              <!-- Save button (secondary) -->
+              <button class="btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                  <polyline points="17 21 17 13 7 13 7 21"/>
+                  <polyline points="7 3 7 8 15 8"/>
+                </svg>
+                保存核心卡
+              </button>
+
+              <!-- Generate plan button (primary amber) -->
+              <button class="btn-primary" data-dom-id="btn-generate-plan">
+                生成开发案
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+    <style>
+    /* Sidebar nav active state driven by data-active attribute */
+    .nav-item[data-active="true"] {
+      border-left: 3px solid #d4a853;
+      background: rgba(212, 168, 83, 0.06);
+      color: #d4a853;
+    }
+    .nav-item[data-active="true"] svg {
+      color: #d4a853;
+    }
+    .nav-item {
+      border-left: 3px solid transparent;
+      transition: all 150ms ease;
+    }
+    .nav-item:hover:not([data-active="true"]) {
+      background: rgba(255, 255, 255, 0.04);
+      border-left-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Core card form styles */
+    .core-input,
+    .core-textarea {
+      width: 100%;
+      background: #1e1e24;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      color: #eae8e4;
+      font-size: 0.8125rem;
+      line-height: 1.5rem;
+      padding: 0.75rem 1rem;
+      transition: border-color 150ms ease;
+      outline: none;
+    }
+    .core-input:focus,
+    .core-textarea:focus {
+      border-color: rgba(212, 168, 83, 0.4);
+      box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.08);
+    }
+    .core-input::placeholder,
+    .core-textarea::placeholder {
+      color: #6d6b67;
+    }
+    .core-textarea {
+      resize: none;
+    }
+
+    /* Amber accent fields — key narrative anchors */
+    .field-amber-left {
+      border-left: 4px solid rgba(212, 168, 83, 0.3);
+    }
+
+    .field-amber-border {
+      border: 1px solid rgba(212, 168, 83, 0.3);
+    }
+    .field-amber-border:focus {
+      border-color: rgba(212, 168, 83, 0.5);
+    }
+  </style>
+</body>
+</html>

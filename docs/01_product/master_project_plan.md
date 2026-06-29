@@ -90,21 +90,27 @@ suggested -> confirmed / rejected
 
 ### 推荐技术栈
 
-- 前端：React + TypeScript，优先 Next.js 或 Vite。
+- Monorepo：pnpm workspace / Turborepo。
+- Web 端：Next.js + React + TypeScript。
+- 微信小程序：Taro + React + TypeScript。
 - 后端：NestJS + TypeScript。
 - 数据库：PostgreSQL。
 - ORM：Prisma。
 - API 数据校验：Zod 或 class-validator。
 - AI 调用层：统一 AIOrchestratorService。
-- 前端请求：React Query。
+- 请求状态：TanStack Query。
+- 缓存 / 队列：Redis + BullMQ。
 
 ### 交付物
 
 - `apps/web` 可启动。
+- `apps/miniapp` 可启动或至少完成 Taro 工程初始化。
 - `apps/api` 可启动。
 - `packages/shared` 有基础类型。
+- `packages/api-client` 有 Web 和小程序共用 API client 草案。
 - `packages/db` 有 Prisma schema 草案。
 - `packages/ai-core` 有 AI task 类型和 Mock 输出。
+- `packages/ui-tokens` 有基础设计 token 草案。
 - `.env.example`。
 - 本地启动说明。
 
@@ -557,4 +563,3 @@ MVP 完成不是指“没有 bug”，而是指：
 能保存项目，能保存核心卡，能保存开发案，能保存资产，能保存关系，能保存上下文，能导出成果。
 
 只要这个基础成立，后面的图谱、试写、读者模拟、反馈回流才会有根。
-

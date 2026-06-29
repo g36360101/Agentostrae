@@ -9,16 +9,21 @@
 - 共享类型包。
 - 数据库包。
 - AI 核心包。
+- 内容样例和 Mock 输出样例。
 - 本地环境说明。
 
 建议命令后续再执行，不在文档阶段强行生成：
 
 ```text
-apps/web        React / Next.js 前端
-apps/api        NestJS 后端
-packages/shared 共享 TypeScript 类型
-packages/db     Prisma schema 和迁移
-packages/ai-core AI 任务定义和 Prompt 模板
+apps/web            Next.js Web 主工作台
+apps/miniapp        Taro React 微信小程序
+apps/api            NestJS 后端
+packages/shared     共享 TypeScript 类型、枚举、Zod schema
+packages/api-client  Web 和小程序共用 API client
+packages/db         Prisma schema 和迁移
+packages/ai-core    AI 任务定义和 Prompt 模板
+packages/ui-tokens  跨端设计 token
+assets/samples      样例项目、Mock 输出和导出样例
 ```
 
 ## 阶段 1：最小数据模型
@@ -75,7 +80,7 @@ POST   /projects/:projectId/exports
 
 ## 阶段 3：前端 P0 页面
 
-页面顺序：
+Web 页面顺序：
 
 1. 登录 / 注册。
 2. 项目列表。
@@ -89,6 +94,19 @@ POST   /projects/:projectId/exports
 10. 导出页。
 
 项目工作台应该成为中心页，而不是做一堆分散工具。
+
+小程序第一版页面：
+
+1. 微信登录。
+2. 项目列表。
+3. 快速记录灵感。
+4. 项目状态。
+5. 核心卡查看。
+6. 候选资产轻量审核。
+7. AI 任务状态。
+8. 简单项目对话。
+
+小程序不承担复杂编辑、复杂图谱和文档导出。
 
 ## 阶段 4：AI Mock 到真实调用
 
@@ -114,6 +132,15 @@ structured_output_schema
 - extract_story_relations
 - build_context_pack_summary
 - project_chat
+
+Mock 输出最低要求：
+
+- 高概念候选不能只有标题和简介，必须包含主角驱动力、世界差异点、情绪承诺和风险。
+- 核心卡必须包含读者承诺、主角缺口、对立力量、主题表达和不可破坏设定。
+- 开发案必须能抽取至少 10 个资产，并明确标出谜团、伏笔和待确认项。
+- 资产必须带叙事功能、剧透等级、来源证据和待补问题。
+- 关系必须带证据文本、是否隐藏、剧透等级和叙事影响。
+- project_chat 的回答必须说明引用了哪些已确认资产，不能把候选内容当成正史。
 
 ## 阶段 5：验收闭环
 
@@ -142,4 +169,3 @@ structured_output_schema
 - 一个可验收的用户动作。
 
 不要写只存在于脑海里的“平台能力”。
-

@@ -1,0 +1,180 @@
+{
+  "data": [
+    {
+      "id": "page-project-list",
+      "title": "项目列表",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1740000000000,
+      "canvasData": {
+        "x": 1240,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/project-list.html",
+        "interactions": [
+          {
+            "domId": "project-card-1",
+            "targetPageId": "page-project-workspace",
+            "transitionLabel": "打开项目"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-project-workspace",
+      "title": "项目工作台",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1740000001000,
+      "canvasData": {
+        "x": 1860,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/project-workspace.html",
+        "interactions": [
+          {
+            "domId": "btn-review-assets",
+            "targetPageId": "page-asset-review",
+            "transitionLabel": "审核资产"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-idea-input",
+      "title": "创意输入",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1740000002000,
+      "canvasData": {
+        "x": 12,
+        "y": 12,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/idea-input.html",
+        "interactions": [
+          {
+            "domId": "btn-generate-concepts",
+            "targetPageId": "page-high-concepts",
+            "transitionLabel": "生成高概念"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-high-concepts",
+      "title": "高概念候选",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1740000003000,
+      "canvasData": {
+        "x": 912,
+        "y": -312,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/high-concepts.html",
+        "interactions": [
+          {
+            "domId": "btn-select-concept",
+            "targetPageId": "page-core-card",
+            "transitionLabel": "确认方向"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-core-card",
+      "title": "作品核心卡",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1740000004000,
+      "canvasData": {
+        "x": 1240,
+        "y": 377,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/core-card.html",
+        "interactions": [
+          {
+            "domId": "btn-generate-plan",
+            "targetPageId": "page-dev-plan",
+            "transitionLabel": "生成开发案"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-dev-plan",
+      "title": "作品开发案",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1740000005000,
+      "canvasData": {
+        "x": 1860,
+        "y": 377,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/dev-plan.html",
+        "interactions": [
+          {
+            "domId": "btn-review-assets",
+            "targetPageId": "page-asset-review",
+            "transitionLabel": "审核资产"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-asset-review",
+      "title": "资产审核",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1740000006000,
+      "canvasData": {
+        "x": 2480,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/asset-review.html",
+        "interactions": [
+          {
+            "domId": "btn-start-chat",
+            "targetPageId": "page-ai-chat",
+            "transitionLabel": "开始对话"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-ai-chat",
+      "title": "AI 对话",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1740000007000,
+      "canvasData": {
+        "x": 3100,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/ai-chat.html",
+        "interactions": []
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": false,
+    "deviceType": "desktop",
+    "projectName": "AgentOS 作品设定工具",
+    "showEdge": false
+  }
+}

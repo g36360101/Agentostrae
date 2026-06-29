@@ -18,8 +18,9 @@
 
 建议技术：
 
-- React + TypeScript。
-- Next.js 或 Vite。
-- React Query。
+- Next.js + React + TypeScript。
+- TanStack Query。
+- Tailwind CSS + shadcn/ui。
 - 表单校验用 Zod。
 
+Web 端是完整创作工作台。微信小程序放在 `apps/miniapp`，使用 Taro React，承担轻量入口和移动端审核。

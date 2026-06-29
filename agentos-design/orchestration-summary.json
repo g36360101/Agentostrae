@@ -1,0 +1,299 @@
+{
+  "project": {
+    "name": "AgentOS 作品设定工具",
+    "path": "/Users/lu/001AI/agentOS/agentos-design",
+    "operation": "create",
+    "deviceType": "desktop",
+    "language": "zh-CN",
+    "dashboardMode": false,
+    "replicationMode": null,
+    "sourceUrl": null,
+    "visualSpecExcerpt": null,
+    "styleDefinitionBrief": "Dark theme creative workspace, warm amber accent, Inter + DM Serif Display, professional tool feel for authors",
+    "designRead": "B2C creative tool / authors & writers / calm professional focus / medium density / avoid neon AI glow",
+    "designDials": {
+      "layoutVariance": 2,
+      "motionIntensity": 1,
+      "visualDensity": 3
+    },
+    "styleContinuityAnchors": {
+      "colorSystem": {
+        "primaryColorRole": "warm amber #d4a853 used for CTAs, active states, and creative energy accents",
+        "brandHuePolicy": "single amber hue; all category/identity styling uses neutral tints",
+        "stateColors": "semantic success/warning/error/info for asset status and spoiler levels"
+      },
+      "shapeSystem": "restrained radius: 4/8/12px max, no large rounded shapes",
+      "typographySystem": "DM Serif Display for headings, Inter for body, JetBrains Mono for code/data",
+      "spacingSystem": "8px base grid, compact but breathable",
+      "componentLanguage": "dark surface cards with subtle borders, minimal shadows",
+      "surfaceAndDepth": "border-led surfaces, shadow only for floating layers (modals/dropdowns)",
+      "imageryAndIconography": "minimal decorative imagery, icon-first for categories",
+      "interactionTone": "subtle transitions, no flashy animations"
+    },
+    "sharedProjectShellContract": {
+      "navigationShell": "left sidebar navigation with project list + top breadcrumb bar",
+      "primaryColorSystem": "warm amber #d4a853 as single brand hue",
+      "typographySystem": "DM Serif Display headings, Inter body text",
+      "radiusScale": "4/8/12px restrained radius scale",
+      "surfaceDepthModel": "border-led card surfaces, shadow only for modals",
+      "ctaStyle": "amber filled primary CTA, ghost secondary",
+      "alignmentRules": "left-aligned content, consistent 24px sidebar width"
+    },
+    "generationTree": {
+      "root": {
+        "nodeId": "gen-project-shell",
+        "kind": "project-shell",
+        "pageIds": ["page-project-list", "page-project-workspace", "page-idea-input", "page-high-concepts", "page-core-card", "page-dev-plan", "page-asset-review", "page-ai-chat"],
+        "output": "partials/project-shell.html",
+        "sharedRegions": ["sidebar-nav", "top-bar"],
+        "privateRegions": [],
+        "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+        "status": "planned",
+        "children": [
+          {
+            "nodeId": "gen-page-project-list",
+            "kind": "page-leaf",
+            "pageIds": ["page-project-list"],
+            "output": "pages/project-list.html",
+            "sharedRegions": [],
+            "privateRegions": ["project grid", "create project CTA"],
+            "mutableSlots": ["activeNavItem", "pageTitle"],
+            "status": "planned",
+            "children": []
+          },
+          {
+            "nodeId": "gen-page-project-workspace",
+            "kind": "page-leaf",
+            "pageIds": ["page-project-workspace"],
+            "output": "pages/project-workspace.html",
+            "sharedRegions": [],
+            "privateRegions": ["project dashboard content"],
+            "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+            "status": "planned",
+            "children": []
+          },
+          {
+            "nodeId": "gen-page-idea-input",
+            "kind": "page-leaf",
+            "pageIds": ["page-idea-input"],
+            "output": "pages/idea-input.html",
+            "sharedRegions": [],
+            "privateRegions": ["idea form content"],
+            "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+            "status": "planned",
+            "children": []
+          },
+          {
+            "nodeId": "gen-page-high-concepts",
+            "kind": "page-leaf",
+            "pageIds": ["page-high-concepts"],
+            "output": "pages/high-concepts.html",
+            "sharedRegions": [],
+            "privateRegions": ["concept cards comparison"],
+            "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+            "status": "planned",
+            "children": []
+          },
+          {
+            "nodeId": "gen-page-core-card",
+            "kind": "page-leaf",
+            "pageIds": ["page-core-card"],
+            "output": "pages/core-card.html",
+            "sharedRegions": [],
+            "privateRegions": ["core card form fields"],
+            "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+            "status": "planned",
+            "children": []
+          },
+          {
+            "nodeId": "gen-page-dev-plan",
+            "kind": "page-leaf",
+            "pageIds": ["page-dev-plan"],
+            "output": "pages/dev-plan.html",
+            "sharedRegions": [],
+            "privateRegions": ["development plan content"],
+            "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+            "status": "planned",
+            "children": []
+          },
+          {
+            "nodeId": "gen-page-asset-review",
+            "kind": "page-leaf",
+            "pageIds": ["page-asset-review"],
+            "output": "pages/asset-review.html",
+            "sharedRegions": [],
+            "privateRegions": ["asset review queue"],
+            "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+            "status": "planned",
+            "children": []
+          },
+          {
+            "nodeId": "gen-page-ai-chat",
+            "kind": "page-leaf",
+            "pageIds": ["page-ai-chat"],
+            "output": "pages/ai-chat.html",
+            "sharedRegions": [],
+            "privateRegions": ["chat interface"],
+            "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+            "status": "planned",
+            "children": []
+          }
+        ]
+      }
+    }
+  },
+  "designSource": {
+    "operatingMode": "free-explore",
+    "libraryIdentity": null,
+    "libraryPath": null,
+    "cssFilePath": "/Users/lu/001AI/agentOS/agentos-design/colors_and_type.css",
+    "brandPrefix": "",
+    "themeMode": "dark",
+    "designDecisionSummary": "Dark creative workspace with warm amber accents, professional tool feel",
+    "styleConstraints": {
+      "radiusMax": 12,
+      "spacingBase": 8,
+      "fontSizeBody": 14,
+      "fontSizeMin": 12,
+      "controlHeightDefault": 32,
+      "controlHeightLarge": 38
+    }
+  },
+  "pages": [
+    {
+      "nodeId": "page-project-list",
+      "slug": "project-list",
+      "title": "项目列表",
+      "htmlSrc": "pages/project-list.html",
+      "pageIndex": 1,
+      "pageType": "information-dense",
+      "businessScenario": "Project list dashboard showing all user projects",
+      "visualNorthStar": "Clean grid of project cards with status indicators, inviting 'create project' CTA",
+      "compositionPattern": "content-grid",
+      "continuityAnchors": ["sidebar nav", "card styles", "amber CTA"]
+    },
+    {
+      "nodeId": "page-project-workspace",
+      "slug": "project-workspace",
+      "title": "项目工作台",
+      "htmlSrc": "pages/project-workspace.html",
+      "pageIndex": 2,
+      "pageType": "information-dense",
+      "businessScenario": "Project dashboard with progress overview and next-step guidance",
+      "visualNorthStar": "Progress stepper bar at top with clear stage indicators, summary stats, and actionable next-step card",
+      "compositionPattern": "stacked-sections",
+      "continuityAnchors": ["sidebar nav", "progress stepper", "card styles"]
+    },
+    {
+      "nodeId": "page-idea-input",
+      "slug": "idea-input",
+      "htmlSrc": "pages/idea-input.html",
+      "pageIndex": 3,
+      "pageType": "task-driven",
+      "businessScenario": "Creative idea input form with optional preferences",
+      "visualNorthStar": "Centered large textarea with subtle glow focus, collapsible preference panel, one clear generate action",
+      "compositionPattern": "centered-form",
+      "continuityAnchors": ["sidebar nav", "form styles", "amber primary button"]
+    },
+    {
+      "nodeId": "page-high-concepts",
+      "slug": "high-concepts",
+      "htmlSrc": "pages/high-concepts.html",
+      "pageIndex": 4,
+      "pageType": "information-dense",
+      "businessScenario": "Comparison of 3-5 AI-generated concept candidates side by side",
+      "visualNorthStar": "Horizontal card comparison layout, each card with structured fields, selection state with amber glow",
+      "compositionPattern": "horizontal-comparison",
+      "continuityAnchors": ["sidebar nav", "card styles", "selection state"]
+    },
+    {
+      "nodeId": "page-core-card",
+      "slug": "core-card",
+      "htmlSrc": "pages/core-card.html",
+      "pageIndex": 5,
+      "pageType": "task-driven",
+      "businessScenario": "Structured core card form with all essential story fields",
+      "visualNorthStar": "Two-column form layout with labeled fields, DM Serif section headings, editable fields with subtle borders",
+      "compositionPattern": "two-column-form",
+      "continuityAnchors": ["sidebar nav", "form styles", "section headings"]
+    },
+    {
+      "nodeId": "page-dev-plan",
+      "slug": "dev-plan",
+      "htmlSrc": "pages/dev-plan.html",
+      "pageIndex": 6,
+      "pageType": "information-dense",
+      "businessScenario": "Long-form development plan with chapters and sections",
+      "visualNorthStar": "Scrollable document-like layout with clear chapter headers, collapsible sections, and action sidebar",
+      "compositionPattern": "document-layout",
+      "continuityAnchors": ["sidebar nav", "section headings", "collapsible sections"]
+    },
+    {
+      "nodeId": "page-asset-review",
+      "slug": "asset-review",
+      "htmlSrc": "pages/asset-review.html",
+      "pageIndex": 7,
+      "pageType": "task-driven",
+      "businessScenario": "Batch review queue for AI-suggested story assets with confirm/reject actions",
+      "visualNorthStar": "Queue-style card list with status badges, batch action toolbar, expandable detail panels",
+      "compositionPattern": "queue-list",
+      "continuityAnchors": ["sidebar nav", "badge styles", "batch action toolbar"]
+    },
+    {
+      "nodeId": "page-ai-chat",
+      "slug": "ai-chat",
+      "htmlSrc": "pages/ai-chat.html",
+      "pageIndex": 8,
+      "pageType": "task-driven",
+      "businessScenario": "Project-scoped AI chat with context pack reference panel",
+      "visualNorthStar": "Split layout: left context pack sidebar + right chat area, AI responses with asset references and suggestions",
+      "compositionPattern": "split-panel",
+      "continuityAnchors": ["sidebar nav", "chat bubble styles", "context panel"]
+    }
+  ],
+  "assets": [],
+  "wiringPlan": [
+    {
+      "sourcePageId": "page-project-list",
+      "targetPageId": "page-project-workspace",
+      "sourceDomId": "project-card-1",
+      "transitionLabel": "打开项目"
+    },
+    {
+      "sourcePageId": "page-project-workspace",
+      "targetPageId": "page-idea-input",
+      "sourceDomId": "btn-start-idea",
+      "transitionLabel": "开始创作"
+    },
+    {
+      "sourcePageId": "page-idea-input",
+      "targetPageId": "page-high-concepts",
+      "sourceDomId": "btn-generate-concepts",
+      "transitionLabel": "生成高概念"
+    },
+    {
+      "sourcePageId": "page-high-concepts",
+      "targetPageId": "page-core-card",
+      "sourceDomId": "btn-select-concept",
+      "transitionLabel": "确认方向"
+    },
+    {
+      "sourcePageId": "page-core-card",
+      "targetPageId": "page-dev-plan",
+      "sourceDomId": "btn-generate-plan",
+      "transitionLabel": "生成开发案"
+    },
+    {
+      "sourcePageId": "page-dev-plan",
+      "targetPageId": "page-asset-review",
+      "sourceDomId": "btn-review-assets",
+      "transitionLabel": "审核资产"
+    },
+    {
+      "sourcePageId": "page-asset-review",
+      "targetPageId": "page-ai-chat",
+      "sourceDomId": "btn-start-chat",
+      "transitionLabel": "开始对话"
+    }
+  ]
+}

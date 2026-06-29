@@ -25,6 +25,9 @@
 - title
 - genre
 - premise
+- target_length
+- tone_preferences
+- reader_promise
 - status
 - created_at
 - updated_at
@@ -39,6 +42,11 @@
 - project_id
 - raw_text
 - preferences
+- genre_preference
+- reader_expectation
+- taboo_notes
+- reference_vibe
+- ai_creativity_level
 - created_at
 
 ### HighConceptCandidate
@@ -55,7 +63,12 @@
 - genre
 - core_hook
 - main_conflict
+- protagonist_drive
+- world_difference
+- emotional_promise
 - target_reader
+- serialization_potential
+- expansion_direction
 - risk_notes
 - is_selected
 - ai_job_id
@@ -69,12 +82,18 @@
 - id
 - project_id
 - title
+- genre
 - logline
+- reader_promise
 - worldview_summary
 - protagonist_summary
+- protagonist_gap
 - central_conflict
+- antagonist_force
 - long_term_mystery
+- theme_statement
 - target_reader
+- canon_constraints
 - source_candidate_id
 
 ### DevelopmentPlan
@@ -102,10 +121,16 @@
 - name
 - summary
 - detail
+- narrative_function
+- first_appearance_stage
+- visibility
+- spoiler_level
+- reveal_stage
 - status
 - source
 - source_quote
 - confidence
+- open_questions
 - created_at
 - updated_at
 
@@ -128,9 +153,13 @@
 - target_asset_id
 - relation_type
 - summary
+- strength
+- is_hidden
+- spoiler_level
 - status
 - source_quote
 - confidence
+- narrative_impact
 
 ### ContextPack
 
@@ -141,10 +170,15 @@ AI 上下文包。
 - id
 - project_id
 - title
+- objective
 - summary
+- must_follow_facts
 - included_asset_ids
 - included_relation_ids
 - hidden_asset_ids
+- forbidden_reveals
+- style_constraints
+- output_requirements
 - token_estimate
 - content_json
 - created_at

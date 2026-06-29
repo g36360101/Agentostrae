@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 
 # Build output
 dist/
@@ -17,6 +18,7 @@ out/
 .cache/
 coverage/
 .turbo/
+*.tsbuildinfo
 
 # Database / generated
 .prisma/
@@ -25,4 +27,3 @@ coverage/
 .DS_Store
 .idea/
 .vscode/
-

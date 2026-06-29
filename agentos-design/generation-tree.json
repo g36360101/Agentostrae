@@ -1,0 +1,22 @@
+{
+  "root": {
+    "nodeId": "gen-project-shell",
+    "kind": "project-shell",
+    "pageIds": ["page-project-list", "page-project-workspace", "page-idea-input", "page-high-concepts", "page-core-card", "page-dev-plan", "page-asset-review", "page-ai-chat"],
+    "output": "partials/project-shell.html",
+    "sharedRegions": ["sidebar-nav", "top-bar"],
+    "privateRegions": [],
+    "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"],
+    "status": "planned",
+    "children": [
+      {"nodeId": "gen-page-project-list", "kind": "page-leaf", "pageIds": ["page-project-list"], "output": "pages/project-list.html", "sharedRegions": [], "privateRegions": ["project grid", "create project CTA"], "mutableSlots": ["activeNavItem", "pageTitle"], "status": "planned", "children": []},
+      {"nodeId": "gen-page-project-workspace", "kind": "page-leaf", "pageIds": ["page-project-workspace"], "output": "pages/project-workspace.html", "sharedRegions": [], "privateRegions": ["project dashboard content"], "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"], "status": "planned", "children": []},
+      {"nodeId": "gen-page-idea-input", "kind": "page-leaf", "pageIds": ["page-idea-input"], "output": "pages/idea-input.html", "sharedRegions": [], "privateRegions": ["idea form content"], "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"], "status": "planned", "children": []},
+      {"nodeId": "gen-page-high-concepts", "kind": "page-leaf", "pageIds": ["page-high-concepts"], "output": "pages/high-concepts.html", "sharedRegions": [], "privateRegions": ["concept cards comparison"], "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"], "status": "planned", "children": []},
+      {"nodeId": "gen-page-core-card", "kind": "page-leaf", "pageIds": ["page-core-card"], "output": "pages/core-card.html", "sharedRegions": [], "privateRegions": ["core card form fields"], "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"], "status": "planned", "children": []},
+      {"nodeId": "gen-page-dev-plan", "kind": "page-leaf", "pageIds": ["page-dev-plan"], "output": "pages/dev-plan.html", "sharedRegions": [], "privateRegions": ["development plan content"], "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"], "status": "planned", "children": []},
+      {"nodeId": "gen-page-asset-review", "kind": "page-leaf", "pageIds": ["page-asset-review"], "output": "pages/asset-review.html", "sharedRegions": [], "privateRegions": ["asset review queue"], "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"], "status": "planned", "children": []},
+      {"nodeId": "gen-page-ai-chat", "kind": "page-leaf", "pageIds": ["page-ai-chat"], "output": "pages/ai-chat.html", "sharedRegions": [], "privateRegions": ["chat interface"], "mutableSlots": ["activeNavItem", "pageTitle", "breadcrumb"], "status": "planned", "children": []}
+    ]
+  }
+}

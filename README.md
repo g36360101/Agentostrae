@@ -40,12 +40,15 @@ AgentOS 的第一个可落地方向是「作品设定工具」：帮助作者把
 ```text
 agentOS/
   apps/
-    web/                  # 前端应用，未来放作品设定工具界面
-    api/                  # 后端 API，未来放项目、资产、AI 编排服务
+    web/                  # Next.js Web 主工作台
+    miniapp/              # Taro React 微信小程序
+    api/                  # NestJS 后端 API，放项目、资产、AI 编排服务
   packages/
     shared/               # 前后端共享类型、常量、校验规则
+    api-client/           # Web 和小程序共用 API Client
     ai-core/              # AI 任务、Prompt 模板、结构化输出解析
     db/                   # 数据模型、迁移、种子数据
+    ui-tokens/            # 跨端设计 token、颜色、间距、基础文案
   docs/
     00_overview/          # 项目总览与判断
     01_product/           # 产品范围、路线图、用户故事
@@ -55,6 +58,7 @@ agentOS/
     05_operations/        # 工作规则、验收、联调、发布节奏
     99_reference/         # 从原始 172 份文档中提炼出的参考
   assets/                 # 设计素材、截图、示例导出
+  agentos-design/         # Web 与微信小程序界面设计稿、预览图
   infra/                  # Docker、部署、环境配置
   scripts/                # 辅助脚本
   tests/                  # 跨模块测试与验收用例
@@ -65,40 +69,94 @@ agentOS/
 
 1. `docs/00_overview/project_brief.md`
 2. `docs/01_product/mvp_scope.md`
-3. `docs/01_product/master_project_plan.md`
-4. `docs/01_product/roadmap.md`
-5. `docs/01_product/creative_execution_loop.md`
-6. `docs/02_engineering/development_steps.md`
-7. `docs/02_engineering/engineering_structure.md`
-8. `docs/02_engineering/loop_engine_design.md`
-9. `docs/02_engineering/controlled_ai_agent_loop_engine.md`
-10. `docs/01_product/experience_pool.md`
-11. `docs/02_engineering/experience_pool_engine_design.md`
-12. `docs/03_ai/ai_strategy.md`
-13. `docs/04_data/data_model_draft.md`
-14. `docs/05_operations/loop_mvp_execution_plan.md`
-15. `docs/05_operations/experience_pool_mvp_plan.md`
-16. `docs/05_operations/working_rules.md`
+3. `docs/01_product/content_system.md`
+4. `docs/01_product/staged_development_plan.md`
+5. `docs/01_product/master_project_plan.md`
+6. `docs/01_product/roadmap.md`
+7. `docs/01_product/creative_execution_loop.md`
+8. `docs/02_engineering/tech_stack.md`
+9. `docs/02_engineering/development_steps.md`
+10. `docs/02_engineering/engineering_structure.md`
+11. `docs/02_engineering/loop_engine_design.md`
+12. `docs/02_engineering/controlled_ai_agent_loop_engine.md`
+13. `docs/01_product/experience_pool.md`
+14. `docs/02_engineering/experience_pool_engine_design.md`
+15. `agentos-design/README.md`
+15. `docs/03_ai/ai_strategy.md`
+16. `docs/04_data/data_model_draft.md`
+17. `docs/05_operations/loop_mvp_execution_plan.md`
+18. `docs/05_operations/experience_pool_mvp_plan.md`
+19. `docs/05_operations/working_rules.md`
 
 ## 当前建议技术路线
 
-先用成熟、容易推进的组合：
+采用 TypeScript 全栈，Web 和微信小程序分端开发，共享业务协议：
 
-- 前端：Next.js 或 Vite + React + TypeScript。
+- Monorepo：pnpm workspace / Turborepo。
+- Web 端：Next.js + React + TypeScript。
+- 微信小程序：Taro + React + TypeScript。
 - 后端：NestJS + TypeScript。
 - 数据库：PostgreSQL。
 - ORM：Prisma。
+- 缓存 / 队列：Redis + BullMQ。
 - AI 层：独立 `AIOrchestratorService`，所有模型调用通过统一任务接口进入。
-- 状态与缓存：React Query。
+- 请求状态：TanStack Query。
+- Web UI：Tailwind CSS + shadcn/ui。
+- 小程序 UI：Taro 组件 + 自建业务组件。
 - 导出：先 Markdown，后 DOCX / PDF。
 
 这个选择不是为了炫技，而是为了让项目从第一周就能形成可运行闭环。
 
 ## 当前状态
 
-当前仓库是项目初始骨架，尚未写入真实业务代码。接下来最适合做的事情是：
+项目已经进入 Phase 0 工程准备阶段，当前包含：
 
-1. 创建前后端基础工程。
-2. 建立 Project / Asset / Relation / ContextPack 的最小数据模型。
-3. 实现“创建项目 -> 生成高概念 -> 保存作品核心卡”的第一条链路。
-4. 再补资产抽取、上下文包和导出。
+- pnpm workspace / Turborepo 基础配置。
+- Next.js Web 工作台应用壳。
+- NestJS API 与健康检查。
+- PostgreSQL / Prisma 第一里程碑数据模型。
+- 共享 Zod Schema 与 API Client。
+- 确定性 AI Mock 和三组验收样例。
+- lint、typecheck、test、build 与 CI 基础检查。
+
+业务功能尚未开始。第一个开发切片是“创建并重新打开项目”。
+
+## 本地启动
+
+### 环境要求
+
+- Node.js 22
+- pnpm 11.7.0
+- Docker Desktop 或其他支持 Docker Compose 的运行环境
+
+### 首次准备
+
+```bash
+cp .env.example .env
+pnpm install
+docker compose up -d postgres
+pnpm db:generate
+pnpm db:migrate
+pnpm db:seed
+```
+
+### 启动 Web 和 API
+
+```bash
+pnpm dev
+```
+
+- Web：http://localhost:3000
+- API 健康检查：http://localhost:4000/health
+
+### 质量检查
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+完整准备过程、验收 Gate 和风险边界见
+[`docs/05_operations/development_readiness_plan.md`](docs/05_operations/development_readiness_plan.md)。

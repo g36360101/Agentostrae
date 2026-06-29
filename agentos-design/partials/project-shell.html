@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentOS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="colors_and_type.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'base': '#0f0f12',
+            'elevated': '#18181d',
+            'surface': '#1e1e24',
+            'overlay': '#26262e',
+            'hover': '#2a2a34',
+            'active': '#31313c',
+            'primary': '#d4a853',
+            'primary-hover': '#dfb962',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Sidebar nav active state driven by data-active attribute */
+    .nav-item[data-active="true"] {
+      border-left: 3px solid #d4a853;
+      background: rgba(212, 168, 83, 0.06);
+      color: #d4a853;
+    }
+    .nav-item[data-active="true"] svg {
+      color: #d4a853;
+    }
+    .nav-item {
+      border-left: 3px solid transparent;
+      transition: all 150ms ease;
+    }
+    .nav-item:hover:not([data-active="true"]) {
+      background: rgba(255, 255, 255, 0.04);
+      border-left-color: rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-base text-[#eae8e4] font-[Inter,sans-serif] antialiased">
+  <div class="flex h-screen">
+
+    <!-- ==================== Sidebar ==================== -->
+    <aside class="w-60 bg-elevated border-r border-white/[0.08] flex flex-col shrink-0">
+
+      <!-- Logo / Brand -->
+      <div class="flex items-center gap-2.5 px-5 h-14 shrink-0 border-b border-white/[0.08]">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          <path d="M8 7h8"/>
+          <path d="M8 11h5"/>
+        </svg>
+        <span class="text-base font-semibold tracking-wide" style="font-family: 'DM Serif Display', serif; color: #d4a853;">AgentOS</span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 py-3 px-3 flex flex-col gap-0.5 overflow-y-auto">
+
+        <!-- SLOT: activeNavItem — set data-active="true" on the current page's nav item -->
+
+        <!-- 项目列表 Projects -->
+        <a href="projects.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="projects"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <span>项目列表</span>
+        </a>
+
+        <!-- 创作循环 Creation Loop -->
+        <a href="creation-loop.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="loop"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-3.5-7.1"/>
+            <polyline points="21 3 21 9 15 9"/>
+          </svg>
+          <span>创作循环</span>
+        </a>
+
+        <!-- 设定资产 Story Assets -->
+        <a href="story-assets.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="assets"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+            <polyline points="2 17 12 22 22 17"/>
+            <polyline points="2 12 12 17 22 12"/>
+          </svg>
+          <span>设定资产</span>
+        </a>
+
+        <!-- AI 对话 AI Chat -->
+        <a href="ai-chat.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="chat"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>AI 对话</span>
+        </a>
+
+        <!-- 经验池 Experience Pool -->
+        <a href="experience-pool.html"
+           class="nav-item flex items-center gap-3 px-3 py-2 rounded-r-md text-sm text-[#a09e99] cursor-pointer"
+           data-nav-key="experience"
+           data-active="false">
+          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 8V21H3V8"/>
+            <rect x="1" y="3" width="22" height="5" rx="1"/>
+            <path d="M10 12h4"/>
+          </svg>
+          <span>经验池</span>
+        </a>
+
+      </nav>
+
+      <!-- User Area (bottom) -->
+      <div class="border-t border-white/[0.08] px-4 py-3 flex items-center gap-3 shrink-0">
+        <div class="w-8 h-8 rounded-full bg-overlay flex items-center justify-center text-xs font-semibold text-[#a09e99]">
+          U
+        </div>
+        <span class="flex-1 text-sm text-[#a09e99] truncate">用户名</span>
+        <button class="text-[#6d6b67] hover:text-[#a09e99] transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ==================== Main Area ==================== -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- Top Bar -->
+      <header class="h-14 bg-elevated border-b border-white/[0.08] flex items-center px-6 shrink-0">
+
+        <!-- SLOT: breadcrumb -->
+        <nav class="flex items-center gap-1.5 text-xs text-[#6d6b67] mr-4">
+          <!-- SLOT: breadcrumb content goes here -->
+        </nav>
+
+        <!-- SLOT: pageTitle -->
+        <h1 class="text-base font-semibold text-[#eae8e4] flex-1 min-w-0 truncate" style="font-family: 'DM Serif Display', serif;">
+          <!-- SLOT: page title content goes here -->
+        </h1>
+
+        <!-- Right actions -->
+        <div class="flex items-center gap-2 ml-4 shrink-0">
+          <!-- Search -->
+          <button class="btn-ghost p-2 rounded-md hover:bg-hover transition-colors" title="搜索">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+          <!-- Notification bell -->
+          <button class="btn-ghost p-2 rounded-md hover:bg-hover transition-colors relative" title="通知">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+          </button>
+          <!-- Export button -->
+          <button class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md border border-primary text-primary hover:bg-primary hover:text-base transition-colors" title="导出">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>导出</span>
+          </button>
+        </div>
+
+      </header>
+
+      <!-- Page Content Area -->
+      <main class="flex-1 overflow-auto p-6">
+        <!-- SLOT: pageContent -->
+        <!-- Page-specific content goes here -->
+      </main>
+
+    </div>
+
+  </div>
+</body>
+</html>

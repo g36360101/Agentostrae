@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectStatus {
+  draft
+  active
+  archived
+}
+
+enum AiTaskType {
+  generate_high_concepts
+  generate_core_card
+}
+
+enum AiJobStatus {
+  pending
+  running
+  succeeded
+  failed
+}
+
+model User {
+  id           String    @id @default(uuid()) @db.Uuid
+  email        String    @unique @db.VarChar(320)
+  name         String    @db.VarChar(120)
+  passwordHash String    @map("password_hash") @db.VarChar(255)
+  projects     Project[]
+  sessions     Session[]
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique @map("token_hash") @db.VarChar(64)
+  expiresAt DateTime @map("expires_at") @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model Project {
+  id                    String                 @id @default(uuid()) @db.Uuid
+  ownerId               String                 @map("owner_id") @db.Uuid
+  owner                 User                   @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+  title                 String                 @db.VarChar(120)
+  genre                 String?                @db.VarChar(80)
+  premise               String?                @db.Text
+  status                ProjectStatus          @default(draft)
+  ideas                 ProjectIdea[]
+  highConceptCandidates HighConceptCandidate[]
+  coreCards             ProjectCoreCard[]
+  aiJobs                AiJob[]
+  createdAt             DateTime               @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime               @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([ownerId])
+  @@map("projects")
+}
+
+model ProjectIdea {
+  id                    String                 @id @default(uuid()) @db.Uuid
+  projectId             String                 @map("project_id") @db.Uuid
+  project               Project                @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  rawText               String                 @map("raw_text") @db.Text
+  genrePreference       String?                @map("genre_preference") @db.VarChar(80)
+  readerExpectation     String?                @map("reader_expectation") @db.Text
+  tabooNotes            String?                @map("taboo_notes") @db.Text
+  referenceVibe         String?                @map("reference_vibe") @db.Text
+  aiCreativityLevel     Float                  @default(0.7) @map("ai_creativity_level")
+  highConceptCandidates HighConceptCandidate[]
+  createdAt             DateTime               @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime               @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([projectId])
+  @@map("project_ideas")
+}
+
+model HighConceptCandidate {
+  id                     String            @id @default(uuid()) @db.Uuid
+  projectId              String            @map("project_id") @db.Uuid
+  project                Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  ideaId                 String            @map("idea_id") @db.Uuid
+  idea                   ProjectIdea       @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  aiJobId                String            @map("ai_job_id") @db.Uuid
+  aiJob                  AiJob             @relation(fields: [aiJobId], references: [id], onDelete: Restrict)
+  title                  String            @db.VarChar(120)
+  logline                String            @db.Text
+  genre                  String            @db.VarChar(80)
+  coreHook               String            @map("core_hook") @db.Text
+  mainConflict           String            @map("main_conflict") @db.Text
+  protagonistDrive       String            @map("protagonist_drive") @db.Text
+  worldDifference        String            @map("world_difference") @db.Text
+  emotionalPromise       String            @map("emotional_promise") @db.Text
+  targetReader           String            @map("target_reader") @db.Text
+  serializationPotential String            @map("serialization_potential") @db.Text
+  expansionDirection     String            @map("expansion_direction") @db.Text
+  riskNotes              Json              @map("risk_notes")
+  isSelected             Boolean           @default(false) @map("is_selected")
+  coreCards              ProjectCoreCard[]
+  createdAt              DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt              DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([projectId])
+  @@index([ideaId])
+  @@index([aiJobId])
+  @@map("high_concept_candidates")
+}
+
+model ProjectCoreCard {
+  id                 String               @id @default(uuid()) @db.Uuid
+  projectId          String               @map("project_id") @db.Uuid
+  project            Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sourceCandidateId  String               @map("source_candidate_id") @db.Uuid
+  sourceCandidate    HighConceptCandidate @relation(fields: [sourceCandidateId], references: [id], onDelete: Restrict)
+  title              String               @db.VarChar(120)
+  genre              String               @db.VarChar(80)
+  logline            String               @db.Text
+  readerPromise      String               @map("reader_promise") @db.Text
+  worldviewSummary   String               @map("worldview_summary") @db.Text
+  protagonistSummary String               @map("protagonist_summary") @db.Text
+  protagonistGap     String               @map("protagonist_gap") @db.Text
+  centralConflict    String               @map("central_conflict") @db.Text
+  antagonistForce    String               @map("antagonist_force") @db.Text
+  longTermMystery    String               @map("long_term_mystery") @db.Text
+  themeStatement     String               @map("theme_statement") @db.Text
+  targetReader       String               @map("target_reader") @db.Text
+  canonConstraints   Json                 @map("canon_constraints")
+  version            Int                  @default(1)
+  createdAt          DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([projectId, version])
+  @@index([sourceCandidateId])
+  @@map("project_core_cards")
+}
+
+model AiJob {
+  id           String                 @id @default(uuid()) @db.Uuid
+  projectId    String                 @map("project_id") @db.Uuid
+  project      Project                @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  taskType     AiTaskType             @map("task_type")
+  status       AiJobStatus            @default(pending)
+  provider     String                 @db.VarChar(80)
+  model        String                 @db.VarChar(120)
+  inputJson    Json                   @map("input_json")
+  outputJson   Json?                  @map("output_json")
+  errorMessage String?                @map("error_message") @db.Text
+  tokenUsage   Int?                   @map("token_usage")
+  candidates   HighConceptCandidate[]
+  completedAt  DateTime?              @map("completed_at") @db.Timestamptz(3)
+  createdAt    DateTime               @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime               @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([projectId])
+  @@index([status])
+  @@map("ai_jobs")
+}
