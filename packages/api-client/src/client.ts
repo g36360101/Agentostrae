@@ -10,6 +10,10 @@ import {
   projectIdeaResponseSchema,
   projectListResponseSchema,
   projectResponseSchema,
+  storyAssetListResponseSchema,
+  storyAssetResponseSchema,
+  storyRelationListResponseSchema,
+  storyRelationResponseSchema,
   type AuthResponse,
   type CreateProjectIdeaInput,
   type CreateProjectInput,
@@ -24,9 +28,15 @@ import {
   type ProjectListResponse,
   type ProjectResponse,
   type RegisterInput,
+  type StoryAssetListResponse,
+  type StoryAssetResponse,
+  type StoryRelationListResponse,
+  type StoryRelationResponse,
+  type UpdateAssetInput,
   type UpdateCoreCardInput,
   type UpdateDevelopmentPlanInput,
   type UpdateProjectInput,
+  type UpdateRelationInput,
 } from "@agentos/shared";
 
 interface ResponseSchema<T> {
@@ -209,6 +219,116 @@ export class ApiClient {
       `/projects/${projectId}/development-plan/versions`,
       {},
       developmentPlanListResponseSchema,
+    );
+  }
+
+  async extractAssets(projectId: string): Promise<StoryAssetListResponse> {
+    return this.request(
+      `/projects/${projectId}/assets/extract`,
+      { method: "POST" },
+      storyAssetListResponseSchema,
+    );
+  }
+
+  async listAssets(
+    projectId: string,
+    status?: string,
+  ): Promise<StoryAssetListResponse> {
+    const query = status ? `?status=${status}` : "";
+    return this.request(
+      `/projects/${projectId}/assets${query}`,
+      {},
+      storyAssetListResponseSchema,
+    );
+  }
+
+  async updateAsset(
+    projectId: string,
+    assetId: string,
+    input: UpdateAssetInput,
+  ): Promise<StoryAssetResponse> {
+    return this.request(
+      `/projects/${projectId}/assets/${assetId}`,
+      { method: "PATCH", body: JSON.stringify(input) },
+      storyAssetResponseSchema,
+    );
+  }
+
+  async confirmAsset(
+    projectId: string,
+    assetId: string,
+  ): Promise<StoryAssetResponse> {
+    return this.request(
+      `/projects/${projectId}/assets/${assetId}/confirm`,
+      { method: "POST" },
+      storyAssetResponseSchema,
+    );
+  }
+
+  async rejectAsset(
+    projectId: string,
+    assetId: string,
+  ): Promise<StoryAssetResponse> {
+    return this.request(
+      `/projects/${projectId}/assets/${assetId}/reject`,
+      { method: "POST" },
+      storyAssetResponseSchema,
+    );
+  }
+
+  async extractRelations(
+    projectId: string,
+  ): Promise<StoryRelationListResponse> {
+    return this.request(
+      `/projects/${projectId}/relations/extract`,
+      { method: "POST" },
+      storyRelationListResponseSchema,
+    );
+  }
+
+  async listRelations(
+    projectId: string,
+    status?: string,
+  ): Promise<StoryRelationListResponse> {
+    const query = status ? `?status=${status}` : "";
+    return this.request(
+      `/projects/${projectId}/relations${query}`,
+      {},
+      storyRelationListResponseSchema,
+    );
+  }
+
+  async updateRelation(
+    projectId: string,
+    relationId: string,
+    input: UpdateRelationInput,
+  ): Promise<StoryRelationResponse> {
+    return this.request(
+      `/projects/${projectId}/relations/${relationId}`,
+      { method: "PATCH", body: JSON.stringify(input) },
+      storyRelationResponseSchema,
+    );
+  }
+
+  async confirmRelation(
+    projectId: string,
+    relationId: string,
+  ): Promise<StoryRelationResponse> {
+    return this.request(
+      `/projects/${projectId}/relations/${relationId}/confirm`,
+      { method: "POST" },
+      storyRelationResponseSchema,
+    );
+  }
+
+  async rejectRelation(
+    projectId: string,
+    relationId: string,
+  ): Promise<StoryRelationResponse> {
+    return this.request(
+      `/projects/${projectId}/relations/${relationId}/reject`,
+      { method: "POST" },
+      storyRelationResponseSchema,
     );
   }
 

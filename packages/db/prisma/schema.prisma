@@ -17,6 +17,8 @@ enum AiTaskType {
   generate_high_concepts
   generate_core_card
   generate_development_plan
+  extract_assets
+  extract_relations
 }
 
 enum AiJobStatus {
@@ -24,6 +26,39 @@ enum AiJobStatus {
   running
   succeeded
   failed
+}
+
+enum AssetType {
+  character
+  location
+  item
+  faction
+  concept
+  event
+}
+
+enum RelationType {
+  ally
+  enemy
+  family
+  mentor
+  location_of
+  owns
+  member_of
+  related_to
+}
+
+enum ReviewStatus {
+  suggested
+  confirmed
+  rejected
+}
+
+enum SpoilerLevel {
+  none
+  minor
+  major
+  twist
 }
 
 model User {
@@ -65,6 +100,8 @@ model Project {
   highConceptCandidates HighConceptCandidate[]
   coreCards             ProjectCoreCard[]
   developmentPlans     DevelopmentPlan[]
+  assets                StoryAsset[]
+  relations             StoryRelation[]
   aiJobs                AiJob[]
   createdAt             DateTime               @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt             DateTime               @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -189,4 +226,59 @@ model DevelopmentPlan {
   @@unique([projectId, version])
   @@index([sourceCoreCardId])
   @@map("development_plans")
+}
+
+model StoryAsset {
+  id               String        @id @default(uuid()) @db.Uuid
+  projectId        String        @map("project_id") @db.Uuid
+  project          Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name             String        @db.VarChar(120)
+  assetType        AssetType     @map("asset_type")
+  description      String        @db.Text
+  narrativeFunction String       @map("narrative_function") @db.Text
+  evidenceText     String        @map("evidence_text") @db.Text
+  spoilerLevel     SpoilerLevel  @default(none) @map("spoiler_level")
+  status           ReviewStatus  @default(suggested)
+  sourcePlanId     String        @map("source_plan_id") @db.Uuid
+  confirmedBy      String?       @map("confirmed_by") @db.Uuid
+  confirmedAt      DateTime?     @map("confirmed_at") @db.Timestamptz(3)
+  rejectedBy       String?       @map("rejected_by") @db.Uuid
+  rejectedAt       DateTime?     @map("rejected_at") @db.Timestamptz(3)
+  createdAt        DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  sourceRelations  StoryRelation[] @relation("SourceAsset")
+  targetRelations  StoryRelation[] @relation("TargetAsset")
+
+  @@index([projectId])
+  @@index([status])
+  @@index([assetType])
+  @@map("story_assets")
+}
+
+model StoryRelation {
+  id           String       @id @default(uuid()) @db.Uuid
+  projectId    String       @map("project_id") @db.Uuid
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sourceAssetId String      @map("source_asset_id") @db.Uuid
+  sourceAsset  StoryAsset   @relation("SourceAsset", fields: [sourceAssetId], references: [id], onDelete: Cascade)
+  targetAssetId String      @map("target_asset_id") @db.Uuid
+  targetAsset  StoryAsset   @relation("TargetAsset", fields: [targetAssetId], references: [id], onDelete: Cascade)
+  relationType RelationType @map("relation_type")
+  evidenceText String       @map("evidence_text") @db.Text
+  spoilerLevel SpoilerLevel @default(none) @map("spoiler_level")
+  status       ReviewStatus @default(suggested)
+  sourcePlanId String       @map("source_plan_id") @db.Uuid
+  confirmedBy  String?      @map("confirmed_by") @db.Uuid
+  confirmedAt  DateTime?    @map("confirmed_at") @db.Timestamptz(3)
+  rejectedBy   String?      @map("rejected_by") @db.Uuid
+  rejectedAt   DateTime?    @map("rejected_at") @db.Timestamptz(3)
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([projectId])
+  @@index([status])
+  @@index([sourceAssetId])
+  @@index([targetAssetId])
+  @@map("story_relations")
 }

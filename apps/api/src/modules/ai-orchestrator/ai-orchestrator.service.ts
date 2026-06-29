@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
+import type { Prisma } from "@agentos/db";
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { PrismaService } from "../../database/prisma.service";
 import { MockAiProvider } from "@agentos/ai-core";
-import type { CoreCardContent, DevelopmentPlanContent } from "@agentos/shared";
+import type { CoreCardContent, DevelopmentPlanContent, ExtractedAsset, ExtractedRelation } from "@agentos/shared";
 
 interface GenerateOptions {
   projectId: string;
@@ -71,7 +72,7 @@ export class AiOrchestratorService {
         where: { id: job.id },
         data: {
           status: "succeeded",
-          outputJson: output,
+          outputJson: output as unknown as Prisma.InputJsonValue,
           completedAt: new Date(),
         },
       });
@@ -134,7 +135,7 @@ export class AiOrchestratorService {
         where: { id: job.id },
         data: {
           status: "succeeded",
-          outputJson: output,
+          outputJson: output as unknown as Prisma.InputJsonValue,
           completedAt: new Date(),
         },
       });
@@ -200,12 +201,121 @@ export class AiOrchestratorService {
         where: { id: job.id },
         data: {
           status: "succeeded",
-          outputJson: output,
+          outputJson: output as unknown as Prisma.InputJsonValue,
           completedAt: new Date(),
         },
       });
 
       return { ...output, aiJobId: job.id };
+    } catch (error) {
+      await this.prisma.aiJob.update({
+        where: { id: job.id },
+        data: {
+          status: "failed",
+          errorMessage:
+            error instanceof Error ? error.message : "Unknown error",
+        },
+      });
+      throw error;
+    }
+  }
+
+  async extractAssets(options: {
+    projectId: string;
+    planId: string;
+    contentMarkdown: string;
+  }): Promise<ExtractedAsset[]> {
+    const { projectId, planId } = options;
+
+    const job = await this.prisma.aiJob.create({
+      data: {
+        projectId,
+        taskType: "extract_assets",
+        status: "pending",
+        provider: "mock",
+        model: "agentos-deterministic-v1",
+        inputJson: { planId },
+      },
+    });
+
+    try {
+      const provider = new MockAiProvider();
+      const output = await provider.extractAssets({
+        developmentPlan: {
+          contentMarkdown: options.contentMarkdown,
+          structuredJson: {},
+        },
+      });
+
+      await this.prisma.aiJob.update({
+        where: { id: job.id },
+        data: {
+          status: "succeeded",
+          outputJson: output as unknown as Prisma.InputJsonValue,
+          completedAt: new Date(),
+        },
+      });
+
+      return output;
+    } catch (error) {
+      await this.prisma.aiJob.update({
+        where: { id: job.id },
+        data: {
+          status: "failed",
+          errorMessage:
+            error instanceof Error ? error.message : "Unknown error",
+        },
+      });
+      throw error;
+    }
+  }
+
+  async extractRelations(options: {
+    projectId: string;
+    planId: string;
+    contentMarkdown: string;
+    assets: { id: string; name: string }[];
+  }): Promise<ExtractedRelation[]> {
+    const { projectId, planId } = options;
+
+    const job = await this.prisma.aiJob.create({
+      data: {
+        projectId,
+        taskType: "extract_relations",
+        status: "pending",
+        provider: "mock",
+        model: "agentos-deterministic-v1",
+        inputJson: { planId },
+      },
+    });
+
+    try {
+      const provider = new MockAiProvider();
+      const output = await provider.extractRelations({
+        developmentPlan: {
+          contentMarkdown: options.contentMarkdown,
+          structuredJson: {},
+        },
+        assets: options.assets.map((a) => ({
+          name: a.name,
+          assetType: "character" as const,
+          description: "",
+          narrativeFunction: "",
+          evidenceText: "",
+          spoilerLevel: "none" as const,
+        })),
+      });
+
+      await this.prisma.aiJob.update({
+        where: { id: job.id },
+        data: {
+          status: "succeeded",
+          outputJson: output as unknown as Prisma.InputJsonValue,
+          completedAt: new Date(),
+        },
+      });
+
+      return output;
     } catch (error) {
       await this.prisma.aiJob.update({
         where: { id: job.id },

@@ -7,6 +7,8 @@ import type {
   Project,
   ProjectCoreCard,
   ProjectIdea,
+  StoryAsset,
+  StoryRelation,
   UpdateCoreCardInput,
 } from "@agentos/shared";
 import Link from "next/link";
@@ -88,6 +90,15 @@ export function ProjectDetail({
   const [devPlanEditText, setDevPlanEditText] = useState("");
   const [savingDevPlan, setSavingDevPlan] = useState(false);
 
+  const [assets, setAssets] = useState<StoryAsset[]>([]);
+  const [loadingAssets, setLoadingAssets] = useState(false);
+  const [assetsError, setAssetsError] = useState("");
+  const [extractingAssets, setExtractingAssets] = useState(false);
+  const [relations, setRelations] = useState<StoryRelation[]>([]);
+  const [loadingRelations, setLoadingRelations] = useState(false);
+  const [relationsError, setRelationsError] = useState("");
+  const [extractingRelations, setExtractingRelations] = useState(false);
+
   const loadProject = useCallback(async () => {
     try {
       const response = await api.getProject(projectId);
@@ -149,12 +160,40 @@ export function ProjectDetail({
     }
   }, [projectId]);
 
+  const loadAssets = useCallback(async () => {
+    setLoadingAssets(true);
+    setAssetsError("");
+    try {
+      const response = await api.listAssets(projectId);
+      setAssets(response.data as StoryAsset[]);
+    } catch (err: unknown) {
+      setAssetsError(toMessage(err));
+    } finally {
+      setLoadingAssets(false);
+    }
+  }, [projectId]);
+
+  const loadRelations = useCallback(async () => {
+    setLoadingRelations(true);
+    setRelationsError("");
+    try {
+      const response = await api.listRelations(projectId);
+      setRelations(response.data as StoryRelation[]);
+    } catch (err: unknown) {
+      setRelationsError(toMessage(err));
+    } finally {
+      setLoadingRelations(false);
+    }
+  }, [projectId]);
+
   useEffect(() => {
     void loadProject();
     void loadCandidates();
     void loadCoreCard();
     void loadDevPlan();
-  }, [loadProject, loadCandidates, loadCoreCard, loadDevPlan]);
+    void loadAssets();
+    void loadRelations();
+  }, [loadProject, loadCandidates, loadCoreCard, loadDevPlan, loadAssets, loadRelations]);
 
   const handleIdeaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -280,6 +319,68 @@ export function ProjectDetail({
       setDevPlanError(toMessage(err));
     } finally {
       setSavingDevPlan(false);
+    }
+  };
+
+  const handleExtractAssets = async () => {
+    setExtractingAssets(true);
+    setAssetsError("");
+    try {
+      const response = await api.extractAssets(projectId);
+      setAssets(response.data as StoryAsset[]);
+    } catch (err: unknown) {
+      setAssetsError(toMessage(err));
+    } finally {
+      setExtractingAssets(false);
+    }
+  };
+
+  const handleConfirmAsset = async (assetId: string) => {
+    try {
+      await api.confirmAsset(projectId, assetId);
+      await loadAssets();
+    } catch (err: unknown) {
+      setAssetsError(toMessage(err));
+    }
+  };
+
+  const handleRejectAsset = async (assetId: string) => {
+    try {
+      await api.rejectAsset(projectId, assetId);
+      await loadAssets();
+    } catch (err: unknown) {
+      setAssetsError(toMessage(err));
+    }
+  };
+
+  const handleExtractRelations = async () => {
+    setExtractingRelations(true);
+    setRelationsError("");
+    try {
+      const response = await api.extractRelations(projectId);
+      setRelations(response.data as StoryRelation[]);
+    } catch (err: unknown) {
+      setRelationsError(toMessage(err));
+    } finally {
+      setExtractingRelations(false);
+    }
+  };
+
+  const handleConfirmRelation = async (relationId: string) => {
+    try {
+      await api.confirmRelation(projectId, relationId);
+      await loadRelations();
+    } catch (err: unknown) {
+      setRelationsError(toMessage(err));
+    }
+  };
+
+  const handleRejectRelation = async (relationId: string) => {
+    try {
+      await api.rejectRelation(projectId, relationId);
+      await loadRelations();
+    } catch (err: unknown) {
+      setRelationsError(toMessage(err));
     }
   };
 
@@ -827,6 +928,173 @@ export function ProjectDetail({
                 {generatingDevPlan ? "生成中…" : "重新生成新版本"}
               </button>
             </div>
+          </div>
+        )}
+      </section>
+
+      <section className="mb-10 border-t border-[var(--border)] pt-8">
+        <h2 className="mb-4 text-lg font-semibold">资产审核</h2>
+        {loadingAssets ? (
+          <p className="text-sm text-[var(--muted)]">加载中…</p>
+        ) : assetsError ? (
+          <p className="text-sm text-red-400">{assetsError}</p>
+        ) : assets.length === 0 ? (
+          <div className="space-y-3">
+            <p className="text-sm text-[var(--muted)]">
+              尚未抽取资产。先生成开发案，然后抽取资产。
+            </p>
+            {devPlan && (
+              <button
+                onClick={handleExtractAssets}
+                disabled={extractingAssets}
+                className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm text-[var(--bg)] transition hover:opacity-90 disabled:opacity-50"
+              >
+                {extractingAssets ? "抽取中…" : "抽取资产"}
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <div className="flex gap-2">
+              <button
+                onClick={handleExtractAssets}
+                disabled={extractingAssets}
+                className="rounded-md border border-[var(--border)] px-3 py-1 text-xs transition hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-50"
+              >
+                {extractingAssets ? "抽取中…" : "重新抽取"}
+              </button>
+            </div>
+            {assets.map((asset) => (
+              <div
+                key={asset.id}
+                className={`rounded-lg border bg-[var(--surface)] p-4 transition ${
+                  asset.status === "confirmed"
+                    ? "border-green-400/30"
+                    : asset.status === "rejected"
+                      ? "border-red-400/30 opacity-60"
+                      : "border-[var(--border)]"
+                }`}
+              >
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold">{asset.name}</h3>
+                    <span className="rounded-full border border-[var(--border)] px-2 py-0.5 text-xs text-[var(--muted)]">
+                      {asset.assetType}
+                    </span>
+                    <span className={`rounded-full px-2 py-0.5 text-xs ${
+                      asset.status === "confirmed"
+                        ? "bg-green-400/20 text-green-400"
+                        : asset.status === "rejected"
+                          ? "bg-red-400/20 text-red-400"
+                          : "bg-yellow-400/20 text-yellow-400"
+                    }`}>
+                      {asset.status === "confirmed" ? "已确认" : asset.status === "rejected" ? "已拒绝" : "待审核"}
+                    </span>
+                  </div>
+                  {asset.status === "suggested" && (
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() => handleConfirmAsset(asset.id)}
+                        className="rounded-md border border-green-400/30 px-2 py-0.5 text-xs text-green-400 transition hover:bg-green-400/10"
+                      >
+                        确认
+                      </button>
+                      <button
+                        onClick={() => handleRejectAsset(asset.id)}
+                        className="rounded-md border border-red-400/30 px-2 py-0.5 text-xs text-red-400 transition hover:bg-red-400/10"
+                      >
+                        拒绝
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <p className="mb-1 text-sm text-[var(--muted)]">{asset.description}</p>
+                <p className="text-xs text-[var(--accent)]">叙事功能：{asset.narrativeFunction}</p>
+                <p className="mt-1 text-xs text-[var(--muted)]">证据：{asset.evidenceText}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="mb-10 border-t border-[var(--border)] pt-8">
+        <h2 className="mb-4 text-lg font-semibold">关系审核</h2>
+        {loadingRelations ? (
+          <p className="text-sm text-[var(--muted)]">加载中…</p>
+        ) : relationsError ? (
+          <p className="text-sm text-red-400">{relationsError}</p>
+        ) : relations.length === 0 ? (
+          <div className="space-y-3">
+            <p className="text-sm text-[var(--muted)]">
+              尚未抽取关系。先抽取资产，然后抽取关系。
+            </p>
+            {assets.length > 0 && (
+              <button
+                onClick={handleExtractRelations}
+                disabled={extractingRelations}
+                className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm text-[var(--bg)] transition hover:opacity-90 disabled:opacity-50"
+              >
+                {extractingRelations ? "抽取中…" : "抽取关系"}
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <div className="flex gap-2">
+              <button
+                onClick={handleExtractRelations}
+                disabled={extractingRelations}
+                className="rounded-md border border-[var(--border)] px-3 py-1 text-xs transition hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-50"
+              >
+                {extractingRelations ? "抽取中…" : "重新抽取"}
+              </button>
+            </div>
+            {relations.map((relation) => (
+              <div
+                key={relation.id}
+                className={`rounded-lg border bg-[var(--surface)] p-4 transition ${
+                  relation.status === "confirmed"
+                    ? "border-green-400/30"
+                    : relation.status === "rejected"
+                      ? "border-red-400/30 opacity-60"
+                      : "border-[var(--border)]"
+                }`}
+              >
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">{relation.sourceAssetId}</span>
+                    <span className="text-xs text-[var(--accent)]">{relation.relationType}</span>
+                    <span className="font-semibold">{relation.targetAssetId}</span>
+                    <span className={`rounded-full px-2 py-0.5 text-xs ${
+                      relation.status === "confirmed"
+                        ? "bg-green-400/20 text-green-400"
+                        : relation.status === "rejected"
+                          ? "bg-red-400/20 text-red-400"
+                          : "bg-yellow-400/20 text-yellow-400"
+                    }`}>
+                      {relation.status === "confirmed" ? "已确认" : relation.status === "rejected" ? "已拒绝" : "待审核"}
+                    </span>
+                  </div>
+                  {relation.status === "suggested" && (
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() => handleConfirmRelation(relation.id)}
+                        className="rounded-md border border-green-400/30 px-2 py-0.5 text-xs text-green-400 transition hover:bg-green-400/10"
+                      >
+                        确认
+                      </button>
+                      <button
+                        onClick={() => handleRejectRelation(relation.id)}
+                        className="rounded-md border border-red-400/30 px-2 py-0.5 text-xs text-red-400 transition hover:bg-red-400/10"
+                      >
+                        拒绝
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <p className="text-xs text-[var(--muted)]">证据：{relation.evidenceText}</p>
+              </div>
+            ))}
           </div>
         )}
       </section>

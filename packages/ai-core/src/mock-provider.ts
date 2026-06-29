@@ -7,7 +7,7 @@ import {
   type GenerateHighConceptsOutput,
 } from "@agentos/shared";
 import { acceptanceSamples, findSampleByIdea } from "./samples";
-import type { AiProvider, GenerateCoreCardInput, GenerateDevelopmentPlanInput, GenerateHighConceptsInput } from "./types";
+import type { AiProvider, ExtractAssetsInput, ExtractRelationsInput, GenerateCoreCardInput, GenerateDevelopmentPlanInput, GenerateHighConceptsInput } from "./types";
 
 export class MockAiProvider implements AiProvider {
   readonly name = "mock";
@@ -38,5 +38,21 @@ export class MockAiProvider implements AiProvider {
         sample.coreCard.title === input.coreCard.title,
       ) ?? acceptanceSamples[0];
     return developmentPlanContentSchema.parse(matchingSample.developmentPlan);
+  }
+
+  async extractAssets(input: ExtractAssetsInput) {
+    const matchingSample =
+      acceptanceSamples.find((sample) =>
+        sample.developmentPlan.contentMarkdown === input.developmentPlan.contentMarkdown,
+      ) ?? acceptanceSamples[0];
+    return matchingSample.extractedAssets;
+  }
+
+  async extractRelations(input: ExtractRelationsInput) {
+    const matchingSample =
+      acceptanceSamples.find((sample) =>
+        sample.developmentPlan.contentMarkdown === input.developmentPlan.contentMarkdown,
+      ) ?? acceptanceSamples[0];
+    return matchingSample.extractedRelations;
   }
 }

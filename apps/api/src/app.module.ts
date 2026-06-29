@@ -9,6 +9,7 @@ import { DevelopmentPlansModule } from "./modules/development-plans/development-
 import { IdeasModule } from "./modules/ideas/ideas.module";
 import { HighConceptsModule } from "./modules/high-concepts/high-concepts.module";
 import { ProjectsModule } from "./modules/projects/projects.module";
+import { ReviewModule } from "./modules/review/review.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProjectsModule } from "./modules/projects/projects.module";
     HighConceptsModule,
     CoreCardsModule,
     DevelopmentPlansModule,
+    ReviewModule,
     AiOrchestratorModule,
   ],
 })

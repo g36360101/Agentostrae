@@ -2,9 +2,11 @@ import {
   coreCardContentSchema,
   developmentPlanContentSchema,
   generateHighConceptsOutputSchema,
-  type CoreCardContent,
-  type DevelopmentPlanContent,
-  type HighConceptCandidateContent,
+} from "@agentos/shared";
+import type {
+  CoreCardContent,
+  DevelopmentPlanContent,
+  HighConceptCandidateContent,
 } from "@agentos/shared";
 import type { AcceptanceSample } from "./types";
 
@@ -284,6 +286,25 @@ const fantasy: AcceptanceSample = {
     canonConstraints: ["AI 建议不能自动成为正史。", "每次规则改写必须付出可追踪代价。"],
   }),
   developmentPlan: fantasyPlan,
+  extractedAssets: [
+    { name: "陆离", assetType: "character", description: "失忆修仙者，实际是天道删除的草稿", narrativeFunction: "主角，推动自我发现和规则对抗的核心人物", evidenceText: "开发案「主要角色」章节明确描述", spoilerLevel: "minor" },
+    { name: "司命院长老", assetType: "character", description: "司命院最高负责人，知道天道版本系统的全部历史", narrativeFunction: "对立力量的代表，维护现有秩序", evidenceText: "开发案「主要角色」章节", spoilerLevel: "none" },
+    { name: "废案宗宗主", assetType: "character", description: "被删除后重新凝聚的修士，掌控多种废弃功法", narrativeFunction: "提供废弃设定力量的导师型人物", evidenceText: "开发案「主要角色」章节", spoilerLevel: "none" },
+    { name: "天道版本系统", assetType: "concept", description: "维护世界的系统，每次迭代删除不合规范的草稿", narrativeFunction: "核心设定，驱动全部冲突的世界规则", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "司命院", assetType: "faction", description: "维护当前版本的官方机构，负责修订世界", narrativeFunction: "代表秩序与控制的官方力量", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "废案宗", assetType: "faction", description: "由被删除修士组成的地下组织", narrativeFunction: "提供对抗官方秩序的资源和情报", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "边境小城", assetType: "location", description: "陆离最初发现异常记忆碎片的地方", narrativeFunction: "第一阶段自我发现的主要场景", evidenceText: "开发案「核心冲突线」章节", spoilerLevel: "none" },
+    { name: "禁地", assetType: "location", description: "保存历代被删除旧版本设定的地方", narrativeFunction: "关键场景，陆离获取废弃设定的来源", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "minor" },
+    { name: "记忆碎片", assetType: "item", description: "触发规则重写的异常记忆", narrativeFunction: "核心道具，驱动剧情升级的关键物品", evidenceText: "开发案「核心冲突线」章节", spoilerLevel: "minor" },
+    { name: "废弃功法", assetType: "item", description: "被天道删除的旧版本功法", narrativeFunction: "赋予独特能力但引来清除的双刃剑", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+  ],
+  extractedRelations: [
+    { sourceName: "陆离", targetName: "废案宗", relationType: "member_of", evidenceText: "陆离进入废案宗寻求庇护和力量", spoilerLevel: "minor" },
+    { sourceName: "废案宗", targetName: "司命院", relationType: "enemy", evidenceText: "废案宗与司命院在设定合法性上对立", spoilerLevel: "none" },
+    { sourceName: "废案宗宗主", targetName: "废案宗", relationType: "member_of", evidenceText: "宗主是废案宗的领导者", spoilerLevel: "none" },
+    { sourceName: "陆离", targetName: "记忆碎片", relationType: "owns", evidenceText: "陆离拥有并收集自己的记忆碎片", spoilerLevel: "minor" },
+    { sourceName: "司命院长老", targetName: "司命院", relationType: "member_of", evidenceText: "长老是司命院的最高负责人", spoilerLevel: "none" },
+  ],
   invalidOutput: { candidates: [{ title: "字段不足" }] },
 };
 
@@ -340,6 +361,25 @@ const mystery: AcceptanceSample = {
     canonConstraints: ["每次结论必须有可回溯证据。", "隐藏真相不得出现在普通摘要。"],
   }),
   developmentPlan: mysteryPlan,
+  extractedAssets: [
+    { name: "沈知微", assetType: "character", description: "失眠的社区医生，少数能看见删除过程的人", narrativeFunction: "主角，推动揭露城市删除系统的核心人物", evidenceText: "开发案「主要角色」章节", spoilerLevel: "none" },
+    { name: "城市系统管理员", assetType: "character", description: "数据管理局核心成员，负责删除异常人口", narrativeFunction: "对立力量，代表系统维护者的视角", evidenceText: "开发案「主要角色」章节", spoilerLevel: "minor" },
+    { name: "神秘联络人", assetType: "character", description: "通过加密处方联系沈知微的匿名者", narrativeFunction: "提供内部情报的信息来源", evidenceText: "开发案「主要角色」章节", spoilerLevel: "minor" },
+    { name: "统一数据平台", assetType: "concept", description: "城市运行的核心系统，暗中删除异常人口", narrativeFunction: "核心设定，驱动全部冲突的系统", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "城市数据管理局", assetType: "faction", description: "维护数据平台的官方机构", narrativeFunction: "代表秩序与控制的官方力量", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "基层医疗网络", assetType: "faction", description: "暗中承担预测城市风险实验的医疗系统", narrativeFunction: "连接主角职业与系统阴谋的桥梁", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "minor" },
+    { name: "社区医院", assetType: "location", description: "沈知微工作的场所，凌晨病人的首诊地", narrativeFunction: "第一阶段异常发现的主要场景", evidenceText: "开发案「核心冲突线」章节", spoilerLevel: "none" },
+    { name: "加密处方", assetType: "item", description: "神秘联络人用来传递信息的媒介", narrativeFunction: "连接主角与反抗力量的关键道具", evidenceText: "开发案「主要角色」章节", spoilerLevel: "minor" },
+    { name: "死亡记录", assetType: "item", description: "沈知微妹妹的七个不同版本死亡记录", narrativeFunction: "核心线索，揭示系统篡改历史的证据", evidenceText: "开发案「谜团与伏笔」章节", spoilerLevel: "major" },
+    { name: "七天倒计时", assetType: "concept", description: "被删除人口的社会存在归零周期", narrativeFunction: "制造紧迫感的核心机制", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+  ],
+  extractedRelations: [
+    { sourceName: "沈知微", targetName: "基层医疗网络", relationType: "member_of", evidenceText: "沈知微是社区医院的医生", spoilerLevel: "none" },
+    { sourceName: "城市数据管理局", targetName: "统一数据平台", relationType: "owns", evidenceText: "管理局维护并控制数据平台", spoilerLevel: "none" },
+    { sourceName: "沈知微", targetName: "加密处方", relationType: "owns", evidenceText: "沈知微收到加密处方并解密", spoilerLevel: "minor" },
+    { sourceName: "神秘联络人", targetName: "城市数据管理局", relationType: "enemy", evidenceText: "联络人试图揭露管理局的真相", spoilerLevel: "minor" },
+    { sourceName: "沈知微", targetName: "死亡记录", relationType: "related_to", evidenceText: "沈知微追查妹妹的死亡记录", spoilerLevel: "major" },
+  ],
   invalidOutput: { candidates: [] },
 };
 
@@ -397,6 +437,29 @@ const scienceFiction: AcceptanceSample = {
     canonConstraints: ["五份指令都必须包含部分事实。", "技术限制不能被临时奇迹绕过。"],
   }),
   developmentPlan: scifiPlan,
+  extractedAssets: [
+    { name: "导航代表", assetType: "character", description: "守护家族传统，相信导航层指令最接近原始任务", narrativeFunction: "群像主角之一，代表传统与秩序", evidenceText: "开发案「主要角色」章节", spoilerLevel: "none" },
+    { name: "生态代表", assetType: "character", description: "认为生存资源分配比政治更重要", narrativeFunction: "群像主角之一，代表务实与生存", evidenceText: "开发案「主要角色」章节", spoilerLevel: "none" },
+    { name: "工程代表", assetType: "character", description: "只想让飞船安全着陆，厌倦政治争斗", narrativeFunction: "群像主角之一，代表技术中立", evidenceText: "开发案「主要角色」章节", spoilerLevel: "none" },
+    { name: "档案代表", assetType: "character", description: "掌握最多历史但不确定哪些被篡改", narrativeFunction: "群像主角之一，代表真相与怀疑", evidenceText: "开发案「主要角色」章节", spoilerLevel: "none" },
+    { name: "无籍代表", assetType: "character", description: "亲眼看见真正天空的最不可靠也最诚实的人", narrativeFunction: "群像主角之一，代表边缘视角", evidenceText: "开发案「主要角色」章节", spoilerLevel: "minor" },
+    { name: "世代飞船", assetType: "location", description: "承载五个功能阶层的世代飞船", narrativeFunction: "核心场景，全部故事发生的封闭空间", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "导航层", assetType: "faction", description: "负责航线决策，掌握最新环境数据", narrativeFunction: "代表权威与方向的阶层", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "生态层", assetType: "faction", description: "管理维生系统和资源分配", narrativeFunction: "代表生存与稳定的阶层", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "工程层", assetType: "faction", description: "维护飞船物理结构", narrativeFunction: "代表技术与维护的阶层", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "档案层", assetType: "faction", description: "保存全部历史记录但实行信息管制", narrativeFunction: "代表记忆与控制的阶层", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "无籍层", assetType: "faction", description: "没有正式身份的工人，承担最危险任务", narrativeFunction: "代表被忽视阶层的视角", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+    { name: "五份登陆令", assetType: "item", description: "互相矛盾但各自合理的登陆指令", narrativeFunction: "核心冲突道具，驱动全部矛盾", evidenceText: "开发案「世界观设定」章节", spoilerLevel: "none" },
+  ],
+  extractedRelations: [
+    { sourceName: "导航代表", targetName: "导航层", relationType: "member_of", evidenceText: "导航代表属于导航层", spoilerLevel: "none" },
+    { sourceName: "生态代表", targetName: "生态层", relationType: "member_of", evidenceText: "生态代表属于生态层", spoilerLevel: "none" },
+    { sourceName: "工程代表", targetName: "工程层", relationType: "member_of", evidenceText: "工程代表属于工程层", spoilerLevel: "none" },
+    { sourceName: "档案代表", targetName: "档案层", relationType: "member_of", evidenceText: "档案代表属于档案层", spoilerLevel: "none" },
+    { sourceName: "无籍代表", targetName: "无籍层", relationType: "member_of", evidenceText: "无籍代表属于无籍层", spoilerLevel: "none" },
+    { sourceName: "导航层", targetName: "世代飞船", relationType: "location_of", evidenceText: "导航层是飞船的一部分", spoilerLevel: "none" },
+    { sourceName: "五份登陆令", targetName: "世代飞船", relationType: "location_of", evidenceText: "登陆令存在于飞船系统中", spoilerLevel: "none" },
+  ],
   invalidOutput: { candidates: [{ title: "缺少群像结构" }] },
 };
 
