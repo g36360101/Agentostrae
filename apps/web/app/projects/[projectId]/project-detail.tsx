@@ -4,6 +4,21 @@ import { ApiClient, ApiClientError } from "@agentos/api-client";
 import type { Project } from "@agentos/shared";
 import { useEffect, useMemo, useState } from "react";
 
+const formatDate = (value: string): string =>
+  new Intl.DateTimeFormat("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+
+const statusLabel: Record<string, string> = {
+  draft: "草稿",
+  active: "进行中",
+  archived: "已归档",
+};
+
 export function ProjectDetail({ projectId }: Readonly<{ projectId: string }>) {
   const api = useMemo(
     () =>
@@ -46,9 +61,18 @@ export function ProjectDetail({ projectId }: Readonly<{ projectId: string }>) {
   return (
     <article className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 lg:p-9">
       <div className="mb-8 border-b border-[var(--border)] pb-6">
-        <p className="mb-2 text-sm text-[var(--accent)]">项目工作台</p>
+        <div className="mb-3 flex items-center gap-3">
+          <p className="text-sm text-[var(--accent)]">项目工作台</p>
+          <span className="rounded-full border border-[var(--border)] px-2.5 py-0.5 text-xs text-[var(--muted)]">
+            {statusLabel[project.status] ?? project.status}
+          </span>
+        </div>
         <h1 className="mb-3 font-serif text-4xl">{project.title}</h1>
-        <p className="text-[var(--muted)]">{project.genre || "题材待定"}</p>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[var(--muted)]">
+          <span>{project.genre || "题材待定"}</span>
+          <span>·</span>
+          <span>更新于 {formatDate(project.updatedAt)}</span>
+        </div>
       </div>
 
       <section className="mb-8">
